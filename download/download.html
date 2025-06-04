@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
+    <title>BHG Wealth Download</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .bg {
+        max-width: 100vw;
+        height: 100vh;
+        background: url('./login-bg.png') no-repeat center;
+        background-size: 100% 100%;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .logo {
+        padding-top: 100px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .logo-bg {
+        display: block;
+        width: 140px;
+        height: 160px;
+        margin-bottom: 20px;
+      }
+
+      .logo-text {
+        color: #fff;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.3;
+      }
+
+      .btn {
+        position: absolute;
+        left: 50%;
+        bottom: 30%;
+        margin-left: -65px;
+        width: 130px;
+        height: 40px;
+        background: #be9670;
+        border-radius: 20px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #3e3e3e;
+        width: 100vw;
+        height: 80px;
+        color: #d8d8d8;
+      }
+
+      .icon {
+        width: 54px;
+        height: 60px;
+        background: url('./arrow.png') no-repeat center;
+        background-size: 100% 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+
+      .padding-lr {
+        padding: 15px 50px 15px 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="bg">
+      <div id="pop" class="mask" style="display: none">
+        <div class="padding-lr">点击右上角按钮，然后在弹出的菜单中，点击在浏览器中打开，即可安装</div>
+        <div class="icon"></div>
+      </div>
+      <div class="logo">
+        <img class="logo-bg" src="./logo.png" />
+        <div class="logo-text">BHG WEALTH</div>
+      </div>
+      <div class="btn" id="download">Download</div>
+    </div>
+  </body>
+</html>
+<script>
+  var browser = {
+    versions: (function () {
+      var u = navigator.userAgent,
+        app = navigator.appVersion
+      return {
+        //移动终端浏览器版本信息
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
+        iPad: u.indexOf('iPad') > -1, //是否iPad
+        webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+      }
+    })(),
+    language: (navigator.browserLanguage || navigator.language).toLowerCase()
+  }
+
+  var ua = navigator.userAgent.toLowerCase()
+  var isWeixin = ua.indexOf('micromessenger') != -1
+  if (isWeixin) {
+    document.getElementById('download').style.display = 'none'
+    document.getElementById('pop').style.display = 'block'
+  } else {
+    document.getElementById('download').style.display = 'flex'
+    document.getElementById('pop').style.display = 'none'
+  }
+  //   console.log(isWeixin)
+
+  document.querySelector('#download').addEventListener('click', function (evt) {
+    if (browser.versions.ios || browser.versions.iPhone || browser.versions.iPad) {
+      window.location = 'https://apps.apple.com/cn/app/bhg-wealth/id6470331028'
+    } else if (browser.versions.android) {
+      window.location = 'https://play.google.com/store/apps/details?id=uni.UNI9265F9E'
+    }
+  })
+</script>

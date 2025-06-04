@@ -1,0 +1,137 @@
+{
+    "name" : "ICCRM App",
+    "appid" : "__UNI__96C5C77",
+    "description" : "ICCRM App",
+    "versionName" : "1.0.0",
+    "versionCode" : 100,
+    "transformPx" : false,
+    /* 5+App特有相关 */
+    "app-plus" : {
+        "usingComponents" : true,
+        "nvueStyleCompiler" : "uni-app",
+        "compilerVersion" : 3,
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : true,
+            "waiting" : true,
+            "autoclose" : true,
+            "delay" : 0
+        },
+        /* 模块配置 */
+        "modules" : {
+            "Camera" : {},
+            "Push" : {}
+        },
+        /* 应用发布信息 */
+        "distribute" : {
+            /* android打包配置 */
+            "android" : {
+                "permissions" : [
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+                    "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                ],
+                "abiFilters" : [ "armeabi-v7a", "arm64-v8a" ],
+                "minSdkVersion" : 21,
+                "targetSdkVersion" : 34
+            },
+            /* ios打包配置 */
+            "ios" : {
+                "idfa" : false,
+                "privacyDescription" : {
+                    "NSPhotoLibraryUsageDescription" : "Used to upload pictures",
+                    "NSPhotoLibraryAddUsageDescription" : "for saving pictures"
+                }
+            },
+            /* SDK配置 */
+            "sdkConfigs" : {
+                "push" : {
+                    "unipush" : {
+                        "version" : "2",
+                        "offline" : true,
+                        "fcm" : {}
+                    }
+                }
+            },
+            "icons" : {
+                "android" : {
+                    "hdpi" : "static/icons/72x72.png",
+                    "xhdpi" : "static/icons/96x96.png",
+                    "xxhdpi" : "static/icons/144x144.png",
+                    "xxxhdpi" : "static/icons/192x192.png"
+                },
+                "ios" : {
+                    "appstore" : "static/icons/1024x1024.png",
+                    "ipad" : {
+                        "app" : "static/icons/76x76.png",
+                        "app@2x" : "static/icons/152x152.png",
+                        "notification" : "static/icons/20x20.png",
+                        "notification@2x" : "static/icons/40x40.png",
+                        "proapp@2x" : "static/icons/167x167.png",
+                        "settings" : "static/icons/29x29.png",
+                        "settings@2x" : "static/icons/58x58.png",
+                        "spotlight" : "static/icons/40x40.png",
+                        "spotlight@2x" : "static/icons/80x80.png"
+                    },
+                    "iphone" : {
+                        "app@2x" : "static/icons/120x120.png",
+                        "app@3x" : "static/icons/180x180.png",
+                        "notification@2x" : "static/icons/40x40.png",
+                        "notification@3x" : "static/icons/60x60.png",
+                        "settings@2x" : "static/icons/58x58.png",
+                        "settings@3x" : "static/icons/87x87.png",
+                        "spotlight@2x" : "static/icons/80x80.png",
+                        "spotlight@3x" : "static/icons/120x120.png"
+                    }
+                }
+            },
+            "splashscreen" : {
+                "iosStyle" : "storyboard",
+                "ios" : {
+                    "storyboard" : "/Users/hzsnq/Desktop/github/work/BHGCustomStoryboard.zip"
+                },
+                "androidStyle" : "common",
+                "android" : {
+                    "xxhdpi" : "/Users/hzsnq/Desktop/github/work/打包证书文件/bhg/1080x1882.png",
+                    "hdpi" : "/Users/hzsnq/Desktop/github/work/打包证书文件/bhg/480x762.png",
+                    "xhdpi" : "/Users/hzsnq/Desktop/github/work/打包证书文件/bhg/720x1242.png"
+                }
+            }
+        }
+    },
+    /* 快应用特有相关 */
+    "quickapp" : {},
+    /* 小程序特有相关 */
+    "mp-weixin" : {
+        "appid" : "",
+        "setting" : {
+            "urlCheck" : false
+        },
+        "usingComponents" : true
+    },
+    "mp-alipay" : {
+        "usingComponents" : true
+    },
+    "mp-baidu" : {
+        "usingComponents" : true
+    },
+    "mp-toutiao" : {
+        "usingComponents" : true
+    },
+    "uniStatistics" : {
+        "enable" : false
+    },
+    "vueVersion" : "3"
+}

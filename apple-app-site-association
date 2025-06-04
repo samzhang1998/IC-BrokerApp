@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+		{
+		  "appID": "843F9287WK.com.bchyper.haili",
+		  "paths": ["*"]
+		}
+    ]
+  }
+}

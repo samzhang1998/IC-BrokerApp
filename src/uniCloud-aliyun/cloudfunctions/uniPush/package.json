@@ -1,0 +1,8 @@
+{
+  "name": "uniPush",
+  "dependencies": {},
+  "main": "index.js",
+  "extensions": {
+    "uni-cloud-push": {}
+  }
+}
