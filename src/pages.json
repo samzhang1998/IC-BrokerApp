@@ -7,7 +7,25 @@
   },
   "pages": [
     {
-      "path": "pages/index/index",
+      "path": "pages/dashboard/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/product/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/profile/index",
       "style": {
         "navigationStyle": "custom"
       }
