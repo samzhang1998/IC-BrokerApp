@@ -42,7 +42,7 @@ export function useUser() {
    * @description 退出登录
    */
   const logOff = async () => {
-    const [e, r] = await api.logoff({})
+    const [e, r] = await api.userLogout({})
     if (!e && r) {
       uni.showToast({
         icon: 'none',
@@ -73,19 +73,19 @@ export function useUser() {
   const setPushId = async () => {
     const clientInfo = plus.push.getClientInfo()
     console.log(clientInfo, 'clientInfo')
-    if (clientInfo?.clientid) {
-      const lang = uni.getLocale()
-      const params = {
-        pushId: clientInfo?.clientid,
-        language: lang.includes('zh') ? 0 : 1
-      }
-      console.log('设置pushId', params)
-      const [e, r] = await api.editPushClientId(params)
-      if (!e && r) {
-        console.log('push', r)
-        console.log('push', clientInfo?.clientid)
-      }
-    }
+    // if (clientInfo?.clientid) {
+    //   const lang = uni.getLocale()
+    //   const params = {
+    //     pushId: clientInfo?.clientid,
+    //     language: lang.includes('zh') ? 0 : 1
+    //   }
+    //   console.log('设置pushId', params)
+    //   const [e, r] = await api.editPushClientId(params)
+    //   if (!e && r) {
+    //     console.log('push', r)
+    //     console.log('push', clientInfo?.clientid)
+    //   }
+    // }
   }
 
   return { token, roles, clientEmail, setUserInfo, loginOut, resetToken, setPushId, logOff }

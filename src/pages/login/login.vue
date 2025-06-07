@@ -28,7 +28,7 @@ const loginForm = ref<any>(null)
 onLoad(() => {
   if (token.value) {
     uni.reLaunch({
-      url: '/pages/index/index'
+      url: '/pages/dashboard/index'
     })
   }
 })
@@ -41,8 +41,9 @@ onShow(() => {
 const privacy = ref(false)
 
 const loginFormData = ref({
-  email: '',
-  password: ''
+  email: 'newtest@gmail.com',
+  password: 'asdf1234',
+  role: 'BROKER'
 })
 
 const rules = {
@@ -107,30 +108,31 @@ const handleLogin = () => {
 async function userLogin() {
   let params = loginFormData.value
   const [e, r] = await api.userLogin(params)
+
   if (!e && r) {
-    if (r?.success) {
-      let userInfo: IUserState = {
-        token: r.data.token,
-        roles: ['client'],
-        clientEmail: r.data.clientEmail
-      }
-      uni.setStorageSync('userInfo', userInfo)
-      setUserInfo(userInfo)
-      getInfo()
+    console.log('🚀 ~ userLogin ~ r:', r)
+
+    let userInfo: IUserState = {
+      token: `Bearer ${r.token}`,
+      roles: r.permissions,
+      clientEmail: r.email
     }
+    uni.setStorageSync('userInfo', userInfo)
+    setUserInfo(userInfo)
+    backToOne()
   }
 }
 
 const handleShowPrivate = () => {
-  uni.navigateTo({
-    url: '/pages/login/private'
-  })
+  // uni.navigateTo({
+  //   url: '/pages/login/private'
+  // })
 }
 
 const handleShowTerms = () => {
-  uni.navigateTo({
-    url: '/pages/login/terms'
-  })
+  // uni.navigateTo({
+  //   url: '/pages/login/terms'
+  // })
 }
 
 // const getType = async () => {
@@ -141,35 +143,6 @@ const handleShowTerms = () => {
 //     isRegister.value = r.data
 //   }
 // }
-
-async function getInfo() {
-  if (!token.value) return
-  let params = {}
-  const [e, r] = await api.getUserInfo(params)
-
-  if (!e && r) {
-    if (r?.success) {
-      // userInfo.value = r?.data || {}
-      pinStatus.value = r?.data?.enablePin || false
-      // const pages = getCurrentPages()
-      // const currentPage = pages[pages.length - 1]
-
-      // // 获取页面路径
-      // const pagePath = currentPage.route
-      // console.log('当前页面路径:', pagePath)
-      if (pinStatus.value) {
-        uni.redirectTo({
-          url: '/pages/user/checkPin?type=check'
-        })
-      } else {
-        // backToOne()
-        uni.redirectTo({
-          url: '/pages/index/index'
-        })
-      }
-    }
-  }
-}
 </script>
 
 <template>
@@ -183,9 +156,9 @@ async function getInfo() {
       </view>
     </view>
     <view class="logo">
-      <image class="bg" src="../../static/images/logo.png"></image>
+      <!-- <image class="bg" src="../../static/images/logo.png"></image>
       <view class="text">{{ $t('login.welcome') }}</view>
-      <view class="text">{{ $t('login.name') }}</view>
+      <view class="text">{{ $t('login.name') }}</view> -->
     </view>
 
     <view class="form">
@@ -195,10 +168,10 @@ async function getInfo() {
         </uni-forms-item>
         <uni-forms-item :label="$t('login.password') + ':'" name="password">
           <uni-easyinput v-model="loginFormData.password" placeholder="" type="password" />
-          <view class="flex justify-between align-center">
+          <!-- <view class="flex justify-between align-center">
             <view class="visitor" @click="handleVisitor">{{ $t('login.visitor') }}</view>
             <view class="forget" @click="handleForget">{{ $t('login.forget') }}?</view>
-          </view>
+          </view> -->
         </uni-forms-item>
       </uni-forms>
 
@@ -233,10 +206,12 @@ async function getInfo() {
     font-style: normal;
     font-weight: 400;
     padding: 0 60rpx;
+    display: none;
   }
 
   .logo {
     padding-top: 100rpx;
+    // min-height: 300rpx;
     display: flex;
     justify-content: center;
     flex-direction: column;

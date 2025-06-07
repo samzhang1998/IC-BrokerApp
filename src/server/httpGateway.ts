@@ -25,10 +25,11 @@ const httpRequestGateway = <T>(
       const toastFn = hideLoading()
       // console.log('response', response)
       const [e, r] = interceptorData(response)
-      // console.log('r', r)
-      if (e || r?.errorCode !== '0') {
-        toastFn(r.data?.message || r?.errorMessage || r.data?.errorMessage || 'network error')
-        if (r?.errorCode === '401') {
+      // console.log([e, r])
+      if (e) {
+        //todo 异常处理
+        toastFn(r.data?.errorMessage || 'network error')
+        if (r?.statusCode == '401') {
           resetToken()
         }
       }
@@ -54,7 +55,7 @@ const httpRequestGateway = <T>(
     //请求header
     const headers = {
       'content-type': method === 'POST' ? 'application/json' : 'application/x-www-form-urlencoded',
-      token: isToken ? uni.getStorageSync('userInfo')?.token || '' : ''
+      Authorization: isToken ? uni.getStorageSync('userInfo')?.token || '' : ''
     }
 
     uni.request({

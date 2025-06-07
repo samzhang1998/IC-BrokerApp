@@ -23,7 +23,7 @@ declare namespace Http {
   interface Params {
     method: string
     obj: object
-    isToken?:boolean
+    isToken?: boolean
   }
 }
 
@@ -59,6 +59,7 @@ interface FcResponse<T> {
   data: T
   success?: boolean
   errorMessage?: string
+  [key: string]: any
 }
 
 type ApiResponse<T> = Promise<[any, FcResponse<T> | undefined]>

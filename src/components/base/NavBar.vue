@@ -77,18 +77,18 @@ const handleToNotify = () => {
 }
 
 async function getNotify() {
-  let params = {
-    pageNum: 1,
-    pageSize: 10,
-    readFlag: false
-  }
-  const [e, r] = await api.getNotify(params)
-  if (!e && r) {
-    if (r?.success) {
-      // console.log('🚀 ~ file: NavBar.vue:62 ~ getNotify ~ r:', r)
-      notifyList.value = r?.data?.list || []
-    }
-  }
+  // let params = {
+  //   pageNum: 1,
+  //   pageSize: 10,
+  //   readFlag: false
+  // }
+  // const [e, r] = await api.getNotify(params)
+  // if (!e && r) {
+  //   if (r?.success) {
+  //     // console.log('🚀 ~ file: NavBar.vue:62 ~ getNotify ~ r:', r)
+  //     notifyList.value = r?.data?.list || []
+  //   }
+  // }
 }
 </script>
 <template>
@@ -105,7 +105,7 @@ async function getNotify() {
           <slot name="right" />
           <view class="pos-icon" v-if="props.isNotification">
             <image class="icon" src="../../static/icon/notifications.png" @click="handleToNotify"></image>
-            <div class="round" v-if="notifyList.length > 0 && userRole === 'client'"></div>
+            <div class="round"></div>
           </view>
         </view>
       </view>
@@ -142,9 +142,6 @@ async function getNotify() {
       align-items: center;
       width: 80rpx;
       height: 80rpx;
-      background: #fff;
-      box-shadow: 0px 8rpx 8rpx 0px #d5d5d540;
-      border-radius: 50%;
       .icon {
         width: 40rpx;
         height: 40rpx;
@@ -152,6 +149,14 @@ async function getNotify() {
 
       .pos-icon {
         position: relative;
+        width: 80rpx;
+        height: 80rpx;
+        background: #fff;
+        box-shadow: 0px 8rpx 8rpx 0px #d5d5d540;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         .round {
           position: absolute;

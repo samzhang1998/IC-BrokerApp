@@ -11,7 +11,7 @@ export function backFn(delta: number) {
       })
     } else {
       uni.redirectTo({
-        url: '/pages/index/index'
+        url: '/pages/dashboard/index'
       })
     }
   }
