@@ -19,10 +19,7 @@ const handleItem = (item: ITabBar) => {
   <view class="tab-bar flex justify-center align-center">
     <view v-for="(item, index) in tabBarList" :key="index" :class="selectKey === item.key ? 'item active' : 'item'">
       <view class="flex flex-direction justify-center align-center" @click="handleItem(item)">
-        <image
-          :class="item.key === 'home' ? 'icon1' : 'icon'"
-          :src="selectKey === item.key ? item.iconActivePath : item.iconPath"
-        />
+        <image class="icon" :src="selectKey === item.key ? item.iconActivePath : item.iconPath" />
         <!-- <view class="text">{{ item.name }}</view> -->
       </view>
     </view>
@@ -57,14 +54,9 @@ const handleItem = (item: ITabBar) => {
     color: #1e1e1e;
     font-weight: 400;
 
-    .icon1 {
-      width: 41rpx;
-      height: 45rpx;
-    }
-
     .icon {
-      width: 44rpx;
-      height: 44rpx;
+      width: 48rpx;
+      height: 48rpx;
     }
 
     .text {

@@ -22,6 +22,7 @@ audio,
 camera,
 image,
 video {
+  font-family: Inter;
   box-sizing: border-box;
 }
 
@@ -570,42 +571,8 @@ button:after {
 }
 
 .bar-title {
-  color: #828282;
-  font-size: 24rpx;
+  color: #0f0f0f;
+  font-size: 44rpx;
   font-style: normal;
-  font-weight: 600;
-  position: relative;
-}
-
-.bar-title + .bar-title {
-  margin-left: 30rpx;
-}
-
-.act {
-  color: #333;
-  font-size: 40rpx;
-  font-style: normal;
-  font-weight: 700;
-}
-
-.act::after {
-  content: '';
-  position: absolute;
-  bottom: -6rpx;
-  left: 0;
-  width: 100%;
-  height: 4rpx;
-  border-radius: 39rpx;
-  background: linear-gradient(180deg, #be9670 0%, rgba(190, 150, 112, 0.67) 100%);
-}
-
-.common-bg {
-  background: linear-gradient(0deg, #fff 0%, #fff 100%),
-    linear-gradient(0deg, rgba(228, 208, 189, 0.03) 9.72%, #fff 100%),
-    linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 37.32%);
-  min-height: 100vh;
-}
-
-.text-be9670 {
-  color: #be9670;
+  font-weight: 500;
 }

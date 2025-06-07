@@ -46,6 +46,7 @@ const statusBarStyle = computed(() => {
     width: `100%`
   }
 })
+// console.log('🚀 ~ statusBarStyle ~ statusBarStyle:', statusBarStyle.value)
 
 const notifyList = ref<AnyObj[]>([])
 const userRole = ref('')
@@ -101,7 +102,6 @@ async function getNotify() {
         </view>
         <view class="center" :style="titleStyle"> {{ props.title }} </view>
         <view class="right">
-          <!-- <uni-icons type="notification-filled" size="20" color="#BE9670" v-if="props.isNotification"></uni-icons> -->
           <slot name="right" />
           <view class="pos-icon" v-if="props.isNotification">
             <image class="icon" src="../../static/icon/notifications.png" @click="handleToNotify"></image>
@@ -140,9 +140,11 @@ async function getNotify() {
       display: flex;
       justify-content: center;
       align-items: center;
-      // width: 40rpx;
-      // height: 40rpx;
-      // background: #000;
+      width: 80rpx;
+      height: 80rpx;
+      background: #fff;
+      box-shadow: 0px 8rpx 8rpx 0px #d5d5d540;
+      border-radius: 50%;
       .icon {
         width: 40rpx;
         height: 40rpx;
