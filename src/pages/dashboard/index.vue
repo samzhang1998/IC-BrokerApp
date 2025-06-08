@@ -9,7 +9,9 @@ import { ApplicationList } from '@/components'
 const { token, roles } = useUser()
 const { langStatus } = useLocale()
 
-onMounted(() => {})
+onMounted(() => {
+  getProductList()
+})
 
 onShow(() => {})
 
@@ -71,6 +73,19 @@ const applicationList = ref([
     status: 3
   }
 ])
+
+async function getProductList() {
+  let params = {
+    offset: 1,
+    limit: 20
+    // brokerId: 1
+  }
+  console.log('🚀 ~ getProductList ~ params:', params)
+  const [e, r] = await api.getApplicationList(params)
+  if (!e && r) {
+    console.log('🚀 ~ getProductList ~ r:', r)
+  }
+}
 </script>
 
 <template>

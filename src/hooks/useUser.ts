@@ -3,7 +3,7 @@ import { useUserStoreHook } from '@/store/modules/user'
 export function useUser() {
   const userStoreHook = useUserStoreHook()
 
-  const { token, roles, clientEmail } = storeToRefs(userStoreHook)
+  const { token, roles, clientEmail, userId } = storeToRefs(userStoreHook)
 
   /**
    * @description 设置client信息
@@ -88,5 +88,5 @@ export function useUser() {
     // }
   }
 
-  return { token, roles, clientEmail, setUserInfo, loginOut, resetToken, setPushId, logOff }
+  return { token, roles, clientEmail, userId, setUserInfo, loginOut, resetToken, setPushId, logOff }
 }

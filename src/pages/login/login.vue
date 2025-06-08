@@ -28,7 +28,8 @@ const loginForm = ref<any>(null)
 onLoad(() => {
   if (token.value) {
     uni.reLaunch({
-      url: '/pages/dashboard/index'
+      // url: '/pages/dashboard/index'
+      url: '/pages/profile/index'
     })
   }
 })
@@ -38,10 +39,11 @@ onShow(() => {
   // getType()
 })
 
-const privacy = ref(false)
+const privacy = ref(true)
 
 const loginFormData = ref({
-  email: 'newtest@gmail.com',
+  // email: 'watson@starx.com.au',
+  email: 'john.doe2@example.com',
   password: 'asdf1234',
   role: 'BROKER'
 })
@@ -115,7 +117,8 @@ async function userLogin() {
     let userInfo: IUserState = {
       token: `Bearer ${r.token}`,
       roles: r.permissions,
-      clientEmail: r.email
+      clientEmail: r.email,
+      userId: r.id
     }
     uni.setStorageSync('userInfo', userInfo)
     setUserInfo(userInfo)

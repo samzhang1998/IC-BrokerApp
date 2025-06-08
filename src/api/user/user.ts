@@ -11,7 +11,7 @@ export function userLogin<T = any>(query: AnyObj): ApiResponse<T> {
   })
 }
 /**
- * @description 用户登录方法
+ * @description 用户退出登录
  * @param query 入参
  */
 export function userLogout<T = any>(query: AnyObj): ApiResponse<T> {
@@ -21,7 +21,19 @@ export function userLogout<T = any>(query: AnyObj): ApiResponse<T> {
   })
 }
 
+/**
+ * @description 获取用户信息
+ * @param query 入参
+ */
+export function getUserInfo<T = any>(id: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/brokers/${id}`,
+    obj: query || {}
+  })
+}
+
 export const userApi = {
   userLogin,
-  userLogout
+  userLogout,
+  getUserInfo
 }

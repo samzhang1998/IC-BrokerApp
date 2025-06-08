@@ -7,7 +7,8 @@ export const useUserStore = defineStore({
     return {
       token: '',
       roles: [],
-      clientEmail: ''
+      clientEmail: '',
+      userId: ''
     }
   },
   actions: {
@@ -20,12 +21,14 @@ export const useUserStore = defineStore({
       this.token = userInfo.token
       this.roles = userInfo.roles
       this.clientEmail = userInfo.clientEmail
+      this.userId = userInfo.userId
     },
     /** 登出 */
     logout() {
       this.token = ''
       this.roles = []
       this.clientEmail = ''
+      this.userId = ''
       uni.removeStorageSync('userInfo')
     },
     /** 重置 Token */
@@ -33,6 +36,7 @@ export const useUserStore = defineStore({
       this.token = ''
       this.roles = []
       this.clientEmail = ''
+      this.userId = ''
       uni.removeStorageSync('userInfo')
     }
   },

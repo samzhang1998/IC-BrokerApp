@@ -28,7 +28,7 @@ const httpRequestGateway = <T>(
       // console.log([e, r])
       if (e) {
         //todo 异常处理
-        toastFn(r.data?.errorMessage || 'network error')
+        toastFn(r.data?.errorMessage || JSON.stringify(r.data))
         if (r?.statusCode == '401') {
           resetToken()
         }
@@ -84,6 +84,26 @@ const http = {
   post: <T>(params: Http.Params): Promise<[any, FcResponse<T> | undefined]> =>
     httpRequestGateway(
       'POST',
+      params.method,
+      {
+        ...getCommonParams(),
+        ...params.obj
+      },
+      params?.isToken
+    ),
+  put: <T>(params: Http.Params): Promise<[any, FcResponse<T> | undefined]> =>
+    httpRequestGateway(
+      'PUT',
+      params.method,
+      {
+        ...getCommonParams(),
+        ...params.obj
+      },
+      params?.isToken
+    ),
+  delete: <T>(params: Http.Params): Promise<[any, FcResponse<T> | undefined]> =>
+    httpRequestGateway(
+      'DELETE',
       params.method,
       {
         ...getCommonParams(),

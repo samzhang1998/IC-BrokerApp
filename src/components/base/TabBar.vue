@@ -3,11 +3,19 @@
 import { useTabBar } from '@/hooks/useTabBar'
 const { tabBarList, selectKey, setSelectKey } = useTabBar()
 
+onShow(() => {
+  const pages = getCurrentPages()
+  const currentPage = pages[pages.length - 1]
+  const path = currentPage.route // 输出示例: "pages/index/index"
+  const find = tabBarList.value.find((item) => item.router === `/${path}`)
+  if (find) {
+    setSelectKey(find.key)
+  }
+})
+
 //点击事件
 const handleItem = (item: ITabBar) => {
   setSelectKey(item.key)
-  console.log(item)
-
   uni.reLaunch({
     url: item.router
   })

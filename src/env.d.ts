@@ -51,6 +51,7 @@ interface IUserState {
   token: string
   roles: string[]
   clientEmail: string
+  userId: string | number
 }
 
 interface FcResponse<T> {

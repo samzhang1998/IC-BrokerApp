@@ -6,7 +6,7 @@ import http from '@/server/httpGateway'
  */
 export function getProductList<T = any>(query: AnyObj): ApiResponse<T> {
   return http.get({
-    method: 'api/v1/products',
+    method: 'api/v1/products/search',
     obj: query
   })
 }

@@ -20,7 +20,8 @@ const navBar = ref({
 async function getProductList() {
   let params = {
     page: 1,
-    size: 10
+    size: 10,
+    name: ''
   }
   const [e, r] = await api.getProductList(params)
   if (!e && r) {
