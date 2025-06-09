@@ -19,9 +19,17 @@ const navBar = ref({
 
 const userInfo = ref<AnyObj>({})
 const isOverview = ref(false)
+const isCommissionAccount = ref(false)
+const isQualifications = ref(false)
 
 const handleShowOverview = () => {
   isOverview.value = !isOverview.value
+}
+const handleShowCommissionAccount = () => {
+  isCommissionAccount.value = !isCommissionAccount.value
+}
+const handleShowQualifications = () => {
+  isQualifications.value = !isQualifications.value
 }
 
 const handleLogout = () => {
@@ -159,13 +167,111 @@ async function getUserInfo() {
           </uni-forms-item>
         </uni-forms>
       </view>
-      <view class="line" @click="handleShowOverview">
+      <view class="line" @click="handleShowCommissionAccount">
         <view class="title">Commission Account</view>
         <uni-icons :type="isOverview ? 'bottom' : 'right'" color="#7A858E" size="20"></uni-icons>
       </view>
-      <view class="line" @click="handleShowOverview">
+      <view class="list" v-if="isCommissionAccount">
+        <view class="header">
+          <view class="title">Commission Account</view>
+          <uni-icons type="compose" color="#7A858E" size="20"></uni-icons>
+        </view>
+        <uni-forms class="form" ref="loginForm" :modelValue="userInfo" label-position="top">
+          <uni-forms-item class="item" label="Bank Name" name="bankName">
+            {{ userInfo?.bankName }}
+          </uni-forms-item>
+          <uni-forms-item class="item" label="Bank Account Name" name="bankAccountName">
+            {{ userInfo?.bankAccountName }}
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+          <uni-forms-item class="item" label="BSB" name="bsb">
+            {{ userInfo?.bsb }}
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+          <uni-forms-item class="item" label="Account No" name="accountNumber">
+            {{ userInfo?.accountNumber }}
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+          <uni-forms-item class="item" label="Contact Name for Commission" name="commissionContactName">
+            {{ userInfo?.commissionContactName }}
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+          <uni-forms-item class="item" label="Email for Commission" name="commissionContactEmail">
+            {{ userInfo?.commissionContactEmail }}
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+        </uni-forms>
+      </view>
+      <view class="line" @click="handleShowQualifications">
         <view class="title">Qualifications & Checklist</view>
         <uni-icons :type="isOverview ? 'bottom' : 'right'" color="#7A858E" size="20"></uni-icons>
+      </view>
+      <view class="list" v-if="isQualifications">
+        <!-- <view class="header">
+          <view class="title">Commission Account</view>
+          <uni-icons type="compose" color="#7A858E" size="20"></uni-icons>
+        </view> -->
+        <uni-forms class="form" ref="loginForm" :modelValue="userInfo" label-position="top">
+          <uni-forms-item class="item" label="CRN" name="bankName">
+            <!-- {{ userInfo?.bankName }} -->
+          </uni-forms-item>
+          <uni-forms-item class="item" label="ACL" name="bankAccountName">
+            <!-- {{ userInfo?.bankAccountName }} -->
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+          <uni-forms-item class="item" label="MFAA/FBAA" name="bsb">
+            <!-- {{ userInfo?.bsb }} -->
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+          <uni-forms-item class="item" label="AFCA 1" name="accountNumber">
+            <!-- {{ userInfo?.accountNumber }} -->
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+          <uni-forms-item class="item" label="AFCA 2" name="commissionContactName">
+            <!-- {{ userInfo?.commissionContactName }} -->
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+          <uni-forms-item class="item" label="Photographic ID" name="commissionContactEmail">
+            <!-- {{ userInfo?.commissionContactEmail }} -->
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+          <uni-forms-item class="item" label="Training Certificate" name="commissionContactEmail">
+            <!-- {{ userInfo?.commissionContactEmail }} -->
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+          <uni-forms-item class="item" label="Financial Service Certificate" name="commissionContactEmail">
+            <!-- {{ userInfo?.commissionContactEmail }} -->
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+          <uni-forms-item
+            class="item"
+            label="Bank Statement with bank details reflection corresponding name of agreement"
+            name="commissionContactEmail"
+          >
+            <!-- {{ userInfo?.commissionContactEmail }} -->
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+          <uni-forms-item
+            class="item"
+            label="Copy of current resume and a brief business description."
+            name="commissionContactEmail"
+          >
+            <!-- {{ userInfo?.commissionContactEmail }} -->
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+          <uni-forms-item class="item" label="Organisation chart/Corporate structure." name="commissionContactEmail">
+            <!-- {{ userInfo?.commissionContactEmail }} -->
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+          <uni-forms-item
+            class="item"
+            label="Trust Deed (if applying for accreditation with a Trust)"
+            name="commissionContactEmail"
+          >
+            <!-- {{ userInfo?.commissionContactEmail }} -->
+            <!-- <uni-easyinput /> -->
+          </uni-forms-item>
+        </uni-forms>
       </view>
     </view>
 
