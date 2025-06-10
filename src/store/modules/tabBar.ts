@@ -6,6 +6,7 @@ import user from '@/static/icon/user.png'
 import dashboardAct from '@/static/icon/dashboard-act.png'
 import applicationAct from '@/static/icon/application-act.png'
 import userAct from '@/static/icon/user-act.png'
+import productAct from '@/static/icon/product-act.png'
 export const useTabBarStore = defineStore({
   id: 'tabBar',
   state: (): ITabBarState => {
@@ -29,7 +30,7 @@ export const useTabBarStore = defineStore({
           key: 'product',
           name: 'Product',
           iconPath: product,
-          iconActivePath: dashboardAct,
+          iconActivePath: productAct,
           router: '/pages/product/index'
         },
         {
