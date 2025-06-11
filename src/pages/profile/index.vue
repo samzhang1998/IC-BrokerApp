@@ -43,6 +43,12 @@ async function getUserInfo() {
     userInfo.value = r
   }
 }
+
+const handleSetting = () => {
+  uni.navigateTo({
+    url: '/pages/profile/setting'
+  })
+}
 </script>
 
 <template>
@@ -66,7 +72,7 @@ async function getUserInfo() {
           </view>
           <view class="bottom">
             <view>Date Create: {{ userInfo?.createdAt }}</view>
-            <uni-icons type="gear-filled" color="#7A858E" size="20"></uni-icons>
+            <uni-icons type="gear-filled" color="#7A858E" size="20" @click="handleSetting"></uni-icons>
           </view>
         </view>
       </view>
@@ -85,46 +91,57 @@ async function getUserInfo() {
           </uni-forms-item>
           <uni-forms-item class="item" label="First Name" name="firstName">
             {{ userInfo?.firstName }}
+            <!-- <uni-easyinput v-model="userInfo.firstName" /> -->
             <!-- <uni-easyinput /> -->
           </uni-forms-item>
           <uni-forms-item class="item" label="Last Name" name="lastName">
             {{ userInfo?.lastName }}
+            <!-- <uni-easyinput v-model="userInfo.lastName" /> -->
             <!-- <uni-easyinput /> -->
           </uni-forms-item>
           <uni-forms-item class="item" label="Trading Business Name" name="businessName">
             {{ userInfo?.businessName }}
+            <!-- <uni-easyinput v-model="userInfo.businessName" /> -->
             <!-- <uni-easyinput /> -->
           </uni-forms-item>
           <uni-forms-item class="item" label="IC" name="ic">
             {{ userInfo?.ic }}
+            <uni-easyinput v-model="userInfo.ic" />
             <!-- <uni-easyinput /> -->
           </uni-forms-item>
           <uni-forms-item class="item" label="Accreditation Type" name="accreditationType">
             {{ userInfo?.accreditationType }}
+            <!-- <uni-easyinput v-model="userInfo.accreditationType" /> -->
             <!-- <uni-easyinput /> -->
           </uni-forms-item>
           <uni-forms-item class="item" label="Office Phone" name="phone">
             {{ userInfo?.phone }}
+            <!-- <uni-easyinput v-model="userInfo.phone" /> -->
             <!-- <uni-easyinput /> -->
           </uni-forms-item>
           <uni-forms-item class="item" label="FAX" name="fax">
             {{ userInfo?.fax }}
+            <!-- <uni-easyinput v-model="userInfo.fax" /> -->
             <!-- <uni-easyinput /> -->
           </uni-forms-item>
           <uni-forms-item class="item" label="BDM" name="bdmId">
             {{ userInfo?.bdmId }}
+            <!-- <uni-easyinput v-model="userInfo.bdmId" /> -->
             <!-- <uni-easyinput /> -->
           </uni-forms-item>
           <uni-forms-item class="item" label="ABN" name="abn">
             {{ userInfo?.abn }}
+            <!-- <uni-easyinput v-model="userInfo.abn" /> -->
             <!-- <uni-easyinput /> -->
           </uni-forms-item>
           <uni-forms-item class="item" label="Status" name="status">
             {{ userInfo?.status === 1 ? 'Active' : 'InActive' }}
+            <!-- <uni-easyinput v-model="userInfo.status" /> -->
             <!-- <uni-easyinput /> -->
           </uni-forms-item>
           <uni-forms-item class="item" label="Entity Type" name="entityType">
             {{ userInfo?.entityType }}
+            <!-- <uni-easyinput v-model="userInfo.entityType" /> -->
             <!-- <uni-easyinput /> -->
           </uni-forms-item>
           <uni-forms-item class="item" label="Website" name="password">
