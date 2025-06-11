@@ -99,6 +99,13 @@
     "watchEffect": "readonly",
     "watchPostEffect": "readonly",
     "watchSyncEffect": "readonly",
-    "api": "readonly"
+    "api": "readonly",
+    "DirectiveBinding": "readonly",
+    "MaybeRef": "readonly",
+    "MaybeRefOrGetter": "readonly",
+    "onWatcherCleanup": "readonly",
+    "useId": "readonly",
+    "useModel": "readonly",
+    "useTemplateRef": "readonly"
   }
 }
