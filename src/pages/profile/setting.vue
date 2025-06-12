@@ -32,6 +32,11 @@ async function getUserInfo() {
     userInfo.value = r
   }
 }
+
+async function editUserInfo() {
+  let params = {}
+  const [e, r] = await api.editUserInfo(1, params)
+}
 </script>
 
 <template>

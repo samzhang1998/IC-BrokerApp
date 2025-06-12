@@ -32,8 +32,20 @@ export function getUserInfo<T = any>(id: string | number, query?: AnyObj): ApiRe
   })
 }
 
+/**
+ * @description 编辑用户信息
+ * @param query 入参
+ */
+export function editUserInfo<T = any>(id: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.put({
+    method: `api/v1/brokers/${id}`,
+    obj: query || {}
+  })
+}
+
 export const userApi = {
   userLogin,
   userLogout,
-  getUserInfo
+  getUserInfo,
+  editUserInfo
 }
