@@ -1,7 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "verbatimModuleSyntax": true,
     "preserveValueImports": false,
     "importsNotUsedAsValues": "remove",
     "ignoreDeprecations": "5.0",
@@ -11,7 +10,7 @@
       "@/*": ["./src/*"]
     },
     "lib": ["esnext", "dom"],
-    "types": ["@dcloudio/types", "node"]
+    "types": ["@dcloudio/types", "node", "wot-design-uni/global"]
   },
   "include": [
     "src/**/*.ts",

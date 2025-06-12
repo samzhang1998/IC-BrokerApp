@@ -28,90 +28,24 @@ defineOptions({
 </script>
 
 <template>
-  <view class="application">
-    <view class="top">
-      <view class="flex align-center">
-        <view class="title">{{ application?.title || '' }}</view>
-        <view class="id">{{ application?.id || '' }}</view>
+  <view class="px-20rpx py-32rpx border border-#E8EBEE border-solid rounded-16rpx">
+    <view class="top flex-y-center justify-between">
+      <view class="flex-y-center gap-20rpx">
+        <view class="text-#384144 text-32rpx">{{ application?.title || '' }}</view>
+        <view class="id text-#7A858E text-28rpx">{{ application?.id || '' }}</view>
       </view>
-      <view class="time"> {{ application?.time || '' }} </view>
+      <view class="time text-#7A858E text-28rpx"> {{ application?.time || '' }} </view>
     </view>
-    <view class="bottom">
-      <view class="flex align-center">
-        <view class="status"></view>
-        <view class="value">${{ application?.value }}k</view>
-        <view class="loan">{{ application?.loan }}</view>
+    <view class="flex-y-center justify-between mt-20rpx pr-20rpx border border-#E8EBEE border-solid rounded-16rpx">
+      <view class="flex-y-center gap-20rpx pl-10rpx pr-20rpx h-88rpx justify-between">
+        <view class="w-12rpx h-68rpx bg-#EB0000 rounded-16rpx"></view>
+        <view class="text-#384144 text-28rpx">${{ application?.value }}k</view>
+        <view class="text-#7A858E text-28rpx ">{{ application?.loan }}</view>
       </view>
-      <view :class="application.status > 1 ? 'btn blue' : 'btn orange'">{{ statusComputed(application?.status) }}</view>
+      <view :class="[application.status > 1 ? 'text-#2196F3 bg-#2196F326' : 'text-#FF754C bg-#FF754C17', '  text-20rpx rounded-30rpx h-48rpx flex-center px-20rpx']">{{ statusComputed(application?.status) }}</view>
     </view>
   </view>
 </template>
 
 <style lang="scss" scoped>
-.application {
-  padding: 32rpx 20rpx;
-
-  .top {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    font-size: 24rpx;
-    color: #7a858e;
-    .title {
-      font-size: 32rpx;
-      font-weight: 400;
-      padding-right: 20rpx;
-    }
-  }
-
-  .bottom {
-    margin-top: 20rpx;
-    border: 2rpx solid #e8ebee;
-    height: 88rpx;
-    border-radius: 16rpx;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 10rpx;
-    padding-right: 20rpx;
-
-    .status {
-      width: 12rpx;
-      height: 68rpx;
-      border-radius: 16rpx;
-      background: #eb0000;
-      margin-right: 20rpx;
-    }
-
-    .value,
-    .loan {
-      color: #384144;
-      font-size: 28rpx;
-    }
-
-    .value {
-      margin-right: 20rpx;
-    }
-
-    .btn {
-      border-radius: 30rpx;
-      height: 48rpx;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 20rpx;
-      font-size: 20rpx;
-    }
-
-    .orange {
-      background: rgba(255, 117, 76, 0.09);
-      color: #ff754c;
-    }
-
-    .blue {
-      background: rgba(33, 150, 243, 0.15);
-      color: #2196f3;
-    }
-  }
-}
 </style>

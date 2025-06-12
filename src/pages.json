@@ -26,6 +26,12 @@
       }
     },
     {
+      "path": "pages/application/create",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/product/index",
       "style": {
         "navigationStyle": "custom"

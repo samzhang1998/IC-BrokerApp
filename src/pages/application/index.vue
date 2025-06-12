@@ -64,9 +64,9 @@ const handleActive = (index: number) => {
 
     <view class="content">
       <Search></Search>
-      <view class="tab">
-        <view class="flex align-center">
-          <view :class="tabActive === 0 ? 'item act' : 'item'" @click="handleActive(0)">
+      <view class="tab-wrapper">
+        <view class="flex-y-center">
+          <view :class="[tabActive === 0 ? 'item act' : 'item', 'flex-y-center shrink-0']" @click="handleActive(0)">
             <image class="icon" :src="tabActive === 0 ? progressTabAct : progressTab" mode="aspectFit"></image>
             In progress
           </view>
@@ -75,7 +75,7 @@ const handleActive = (index: number) => {
             Submitted
           </view>
         </view>
-        <view class="add-btn">
+        <view class="add-btn flex-y-center shrink-0">
           <uni-icons type="plusempty" color="#FF754C" size="16"></uni-icons>
           Add New Application
         </view>
@@ -94,7 +94,7 @@ const handleActive = (index: number) => {
 
 <style lang="scss" scoped>
 .content {
-  .tab {
+  .tab-wrapper {
     height: 68rpx;
     border-bottom: 1px solid #e8ebee;
     display: flex;

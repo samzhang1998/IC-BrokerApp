@@ -35,7 +35,8 @@
     "pinia": "2.0.28",
     "pinia-plugin-persist-uni": "^1.2.0",
     "vue": "^3.4.21",
-    "vue-i18n": "9.1.9"
+    "vue-i18n": "9.1.9",
+    "wot-design-uni": "^1.9.1"
   },
   "devDependencies": {
     "@dcloudio/types": "^3.4.8",
@@ -45,6 +46,7 @@
     "@dcloudio/vite-plugin-uni": "3.0.0-alpha-4060320250423001",
     "@rushstack/eslint-patch": "^1.5.1",
     "@types/node": "^20.8.4",
+    "@uni-helper/vite-plugin-uni-components": "^0.2.0",
     "@unocss/core": "^66.2.0",
     "@unocss/preset-uno": "^66.2.0",
     "@unocss/transformer-directives": "^66.2.0",

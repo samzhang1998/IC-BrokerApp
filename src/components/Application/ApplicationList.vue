@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import ApplicationItem from './ApplicationItem.vue'
+import { ApplicationItem } from '@/components'
+
 const props = defineProps({
   applicationList: {
     type: Array<AnyObj>,

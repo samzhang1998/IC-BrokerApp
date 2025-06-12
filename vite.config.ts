@@ -5,6 +5,8 @@ import uni from '@dcloudio/vite-plugin-uni'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { wrapperEnv } from './build/utils'
+import UniComponents from '@uni-helper/vite-plugin-uni-components'
+import { WotResolver } from '@uni-helper/vite-plugin-uni-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig(async ({ mode }: ConfigEnv): Promise<UserConfig> => {
@@ -37,6 +39,9 @@ export default defineConfig(async ({ mode }: ConfigEnv): Promise<UserConfig> => 
         extensions: ['vue'],
         // 配置文件生成位置
         dts: 'types/components.d.ts'
+      }),
+      UniComponents({
+        resolvers: [WotResolver()]
       }),
       uni()
     ],
