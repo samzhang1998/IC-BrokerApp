@@ -20,6 +20,11 @@ const statusComputed = computed(() => {
     }
   }
 })
+
+// 显式声明默认导出
+defineOptions({
+  name: 'ApplicationItem'
+})
 </script>
 
 <template>

@@ -7,13 +7,18 @@ import Components from 'unplugin-vue-components/vite'
 import { wrapperEnv } from './build/utils'
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
+export default defineConfig(async ({ mode }: ConfigEnv): Promise<UserConfig> => {
   const root = process.cwd()
   const env = loadEnv(mode, root)
   const viteEnv = wrapperEnv(env)
   const { VITE_DROP_CONSOLE } = viteEnv
+  
+  // 动态导入 UnoCSS 以避免 ESM 兼容性问题
+  const UnoCSS = (await import('unocss/vite')).default
+  
   return {
     plugins: [
+      UnoCSS(),
       AutoImport({
         dts: 'types/auto-imports.d.ts', // 可以自定义文件生成的位置，默认是根目录下
         imports: ['vue', 'uni-app', 'pinia'],
