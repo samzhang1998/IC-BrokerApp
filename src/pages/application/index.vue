@@ -51,6 +51,12 @@ const applicationList = ref([
 const handleActive = (index: number) => {
   tabActive.value = index
 }
+
+const handleToCreate = () => {
+  uni.navigateTo({
+    url: '/pages/application/create'
+  })
+}
 </script>
 
 <template>
@@ -75,7 +81,7 @@ const handleActive = (index: number) => {
             Submitted
           </view>
         </view>
-        <view class="add-btn flex-y-center shrink-0">
+        <view class="add-btn flex-y-center shrink-0" @click="handleToCreate">
           <uni-icons type="plusempty" color="#FF754C" size="16"></uni-icons>
           Add New Application
         </view>
