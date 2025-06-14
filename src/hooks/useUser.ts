@@ -71,8 +71,11 @@ export function useUser() {
    * @description 设置推送id
    */
   const setPushId = async () => {
+    //#ifdef APP-PLUS
     const clientInfo = plus.push.getClientInfo()
     console.log(clientInfo, 'clientInfo')
+    //#endif
+
     // if (clientInfo?.clientid) {
     //   const lang = uni.getLocale()
     //   const params = {

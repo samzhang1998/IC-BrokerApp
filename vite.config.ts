@@ -14,10 +14,10 @@ export default defineConfig(async ({ mode }: ConfigEnv): Promise<UserConfig> => 
   const env = loadEnv(mode, root)
   const viteEnv = wrapperEnv(env)
   const { VITE_DROP_CONSOLE } = viteEnv
-  
+
   // 动态导入 UnoCSS 以避免 ESM 兼容性问题
   const UnoCSS = (await import('unocss/vite')).default
-  
+
   return {
     plugins: [
       UnoCSS(),
@@ -31,17 +31,18 @@ export default defineConfig(async ({ mode }: ConfigEnv): Promise<UserConfig> => 
           globalsPropValue: 'readonly' // Default `true`, (true | false | 'readonly' | 'readable' | 'writable' | 'writeable')
         }
       }),
-      Components({
-        // 指定组件位置，默认是src/components
-        dirs: ['src/components/base'],
-        // ui库解析器
-        // resolvers: [ElementPlusResolver()],
-        extensions: ['vue'],
-        // 配置文件生成位置
-        dts: 'types/components.d.ts'
-      }),
+      // Components({
+      //   // 指定组件位置，默认是src/components
+      //   // dirs: ['src/components/base'],
+      //   // ui库解析器
+      //   // resolvers: [ElementPlusResolver()],
+      //   // extensions: ['vue'],
+      //   // 配置文件生成位置
+      //   dts: 'types/components.d.ts'
+      // }),
       UniComponents({
-        resolvers: [WotResolver()]
+        resolvers: [WotResolver()],
+        dts: 'types/components.d.ts'
       }),
       uni()
     ],
