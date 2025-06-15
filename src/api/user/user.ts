@@ -43,9 +43,44 @@ export function editUserInfo<T = any>(id: string | number, query?: AnyObj): ApiR
   })
 }
 
+/**
+ * @description QualificationTypes
+ * @param query 入参
+ */
+export function getQualificationTypes<T = any>(query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/brokers/qualification-types`,
+    obj: query || {}
+  })
+}
+/**
+ * @description QualificationTypes
+ * @param query 入参
+ */
+export function getQualification<T = any>(id: string | number, qId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/brokers/${id}/qualifications/${qId}`,
+    obj: query || {}
+  })
+}
+
+/**
+ * @description 编辑Qualificatio
+ * @param query 入参
+ */
+export function editQualification<T = any>(id: string | number, qId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.put({
+    method: `api/v1/brokers/${id}/qualifications/${qId}/fields`,
+    obj: query || {}
+  })
+}
+
 export const userApi = {
   userLogin,
   userLogout,
   getUserInfo,
-  editUserInfo
+  editUserInfo,
+  getQualificationTypes,
+  editQualification,
+  getQualification
 }

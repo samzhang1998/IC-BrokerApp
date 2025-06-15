@@ -119,7 +119,7 @@ async function getNotify() {
   // background: #000;
   position: sticky;
   top: 0;
-  z-index: 98;
+  z-index: 9;
 
   .container {
     padding: 20px;

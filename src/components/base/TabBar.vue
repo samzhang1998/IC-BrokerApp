@@ -42,7 +42,7 @@ const handleItem = (item: ITabBar) => {
   left: 50%;
   transform: translateX(-50%);
   bottom: 0;
-  z-index: 98;
+  z-index: 9;
   box-shadow: 0 -1rpx 6rpx rgba(0, 0, 0, 0.1);
   height: calc(150rpx + env(safe-area-inset-bottom) / 2);
   padding-bottom: calc(env(safe-area-inset-bottom) / 2);

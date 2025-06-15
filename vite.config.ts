@@ -60,6 +60,9 @@ export default defineConfig(async ({ mode }: ConfigEnv): Promise<UserConfig> => 
     // },
     esbuild: {
       pure: VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : []
+    },
+    optimizeDeps: {
+      exclude: process.env.UNI_PLATFORM === 'h5' && process.env.NODE_ENV === 'development' ? ['wot-design-uni'] : []
     }
   }
 })
