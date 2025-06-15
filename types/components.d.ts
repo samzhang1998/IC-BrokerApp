@@ -7,8 +7,14 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AppCard: typeof import('./../src/components/Application/AppCard.vue')['default']
     ApplicationItem: typeof import('./../src/components/Application/ApplicationItem.vue')['default']
     ApplicationList: typeof import('./../src/components/Application/ApplicationList.vue')['default']
+    BaseNavBar: typeof import('./../src/components/base/BaseNavBar.vue')['default']
+    BasePage: typeof import('./../src/components/base/BasePage.vue')['default']
+    CellItem: typeof import('./../src/components/Application/CellItem.vue')['default']
+    CheckBadge: typeof import('./../src/components/Application/CheckBadge.vue')['default']
+    CollapseItem: typeof import('./../src/components/Application/CollapseItem.vue')['default']
     NavBar: typeof import('./../src/components/base/NavBar.vue')['default']
     NoData: typeof import('./../src/components/base/NoData.vue')['default']
     RouterLink: (typeof import('vue-router'))['RouterLink']
@@ -18,5 +24,11 @@ declare module 'vue' {
     TabBar: typeof import('./../src/components/base/TabBar.vue')['default']
     Toast: typeof import('./../src/components/base/Toast.vue')['default']
     WdButton: typeof import('wot-design-uni/components/wd-button/wd-button.vue')['default']
+    WdCell: typeof import('wot-design-uni/components/wd-cell/wd-cell.vue')['default']
+    WdCellGroup: typeof import('wot-design-uni/components/wd-cell-group/wd-cell-group.vue')['default']
+    WdCollapse: typeof import('wot-design-uni/components/wd-collapse/wd-collapse.vue')['default']
+    WdCollapseItem: typeof import('wot-design-uni/components/wd-collapse-item/wd-collapse-item.vue')['default']
+    WdIcon: typeof import('wot-design-uni/components/wd-icon/wd-icon.vue')['default']
+    WdNavbar: typeof import('wot-design-uni/components/wd-navbar/wd-navbar.vue')['default']
   }
 }

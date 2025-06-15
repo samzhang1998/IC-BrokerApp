@@ -1,29 +1,30 @@
 <template>
-  <view>
-    <uni-nav-bar v-bind="navBar">
-      <template #default>
-        <view class="bar-title act">Create Application</view>
-      </template>
-      <template #right> </template>
-    </uni-nav-bar>
-    <wd-button>主要按钮</wd-button>
-    <wd-button type="success">成功按钮</wd-button>
-    <wd-button type="info">信息按钮</wd-button>
-    <wd-button type="warning">警告按钮</wd-button>
-    <wd-button type="error">危险按钮</wd-button>
-  </view>
+  <BasePage title="Create Application" hasBack>
+    <view class="border border-#E8EBEE border-solid rounded-lg px-3 py-3 bg-#FCFCFC">
+      <text class="text-28rpx font-bold">Application ID</text>
+      <view class="flex-col mt-3 gap-1">
+        <view class="flex items-center gap-1">
+          <text class="text-24rpx font-bold">Doc Type:</text>
+          <text class="text-24rpx">Full Doc</text>
+        </view>
+        <view>
+          <text class="text-24rpx font-bold">Application Type:</text>
+          <text class="text-24rpx">Loan</text>
+        </view>
+      </view>
+    </view>
+    <view>
+      <AppCard title="Current Situation" v-model:data="currentSituationItems"> </AppCard>
+      <AppCard title="New Requirements" v-model:data="newRequirementsItems"> </AppCard>
+      <AppCard title="Summary" v-model:data="applicationSummaryItems"> </AppCard>
+    </view>
+    <view class="flex-col gap-1 mt-3 w-full">
+      <wd-button type="primary" block class="bg-#FF754C!" size="large">Submit</wd-button>
+      <wd-button type="text" class="text-#7A858E! underline">Save as draft</wd-button>
+    </view>
+  </BasePage>
 </template>
 
 <script setup lang="ts">
-const navBar = ref({
-  isNotification: true,
-  backgroundColor: '#fff',
-  title: 'Create Application',
-  leftIcon: 'back',
-  border: false
-})
+import { currentSituationItems, newRequirementsItems, applicationSummaryItems } from './constants'
 </script>
-
-<style scoped>
-
-</style>
