@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { useLocale } from '@/hooks/useLocale'
-import { useUser } from '@/hooks/useUser'
+// import { useLocale } from '@/hooks/useLocale'
+// import { useUser } from '@/hooks/useUser'
 import { Search } from '@/components'
-
-const { token, roles } = useUser()
-const { langStatus } = useLocale()
 
 onMounted(() => {
   getProductList()
@@ -17,15 +14,18 @@ const navBar = ref({
   backgroundColor: '#fff'
 })
 
+const productList = ref<AnyObj[]>([])
+
 async function getProductList() {
   let params = {
-    page: 1,
+    page: 0,
     size: 10,
     name: ''
   }
   const [e, r] = await api.getProductList(params)
   if (!e && r) {
     console.log(r)
+    productList.value = r?.content || []
   }
 }
 
@@ -64,23 +64,40 @@ const infoList = ref([
     <view class="content">
       <Search></Search>
       <view class="list">
-        <view class="item" v-for="item in 10" :key="item">
+        <view class="item" v-for="item in productList" :key="item.name">
           <view class="top">
-            <view class="cover"></view>
-            <view class="info">
-              <view class="title">IC Blue</view>
-              <view class="rate">Interest Rate: 5.4%</view>
-              <view class="rate">Interest Rate: 5.4%</view>
+            <view class="cover">
+              <image :src="item.logoUrl" v-if="item.logoUrl"></image>
+            </view>
+            <view class="info flex-1">
+              <view class="title">{{ item.name }}</view>
+              <view class="rate">Interest Rate: {{ item.interestRate }}%</view>
+              <view class="rate">Comparison Rate: {{ item.comparisonRate }}%</view>
+              <wd-button class="btn" size="small">
+                <wd-icon name="download1" size="16px"></wd-icon>
+                Download Brochure
+              </wd-button>
             </view>
           </view>
           <view class="desc">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam,
+            {{ item.description }}
           </view>
           <view class="tips">
-            <view class="tip" v-for="item in infoList" :key="item.title">
-              <view class="type">{{ item.title }}</view>
-              <view class="value">{{ item.value }}</view>
+            <view class="tip">
+              <view class="type">Repayment Type</view>
+              <view class="value">{{ item.repaymentType }}</view>
+            </view>
+            <view class="tip">
+              <view class="type">Application Fees</view>
+              <view class="value">${{ item.applicationFee }}</view>
+            </view>
+            <view class="tip">
+              <view class="type">Loan to Value Rate</view>
+              <view class="value">MAX {{ item.loanToValueRate }} %</view>
+            </view>
+            <view class="tip">
+              <view class="type">Ongoing Fee</view>
+              <view class="value">{{ item.ongoingFee }}</view>
             </view>
           </view>
         </view>
@@ -110,8 +127,15 @@ const infoList = ref([
         .cover {
           background: #d9d9d9;
           width: 240rpx;
-          height: 280rpx;
+          min-height: 280rpx;
           border-radius: 10rpx;
+          overflow: hidden;
+
+          .image {
+            width: 100%;
+            height: 100%;
+            display: block;
+          }
         }
 
         .info {
@@ -138,6 +162,14 @@ const infoList = ref([
         }
 
         .rate + .rate {
+          margin-top: 20rpx;
+        }
+
+        .btn {
+          background: #ff754c;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           margin-top: 20rpx;
         }
       }

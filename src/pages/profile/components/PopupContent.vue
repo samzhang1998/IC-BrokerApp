@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useUser } from '@/hooks/useUser'
+
+const { userId } = useUser()
+
 const props = defineProps<{
   type: string
   title: string
@@ -20,12 +24,20 @@ const columns = ref([
   }
 ])
 
+const urlComputed = computed(() => {
+  return `api/v1/brokers/${userId.value}/qualifications/5/upload`
+})
+
 function handleConfirm({ value }: any) {
   formData.value.typeValue = value
 }
 
 function handleClick() {
   emits('edit', formData.value)
+}
+
+const saveFileList = (list: AnyObj[]) => {
+  console.log('🚀 ~ saveFileList ~ list:', list)
 }
 </script>
 
@@ -56,10 +68,14 @@ function handleClick() {
           <wd-calendar class="item" v-model="formData.expiredDate" />
         </uni-forms-item>
         <uni-forms-item label="File" name="filePath">
-          <view class="item flex items-center justify-center gap-2">
-            <view class="upload">Upload File</view>
-            <wd-icon name="upload" color="#FF754C" size="22px"></wd-icon>
-          </view>
+          <Upload @saveList="saveFileList" height="88rpx" :requestUrl="urlComputed">
+            <template #default>
+              <view class="item flex items-center justify-center gap-2">
+                <view class="upload">Upload File</view>
+                <wd-icon name="upload" color="#FF754C" size="22px"></wd-icon>
+              </view>
+            </template>
+          </Upload>
         </uni-forms-item>
       </view>
       <view v-if="type === 'Item'">
@@ -67,10 +83,14 @@ function handleClick() {
           <view class="item flex items-center text">{{ title }}</view>
         </uni-forms-item>
         <uni-forms-item label="File" name="filePath">
-          <view class="item flex items-center justify-center gap-2">
-            <view class="upload">Upload File</view>
-            <wd-icon name="upload" color="#FF754C" size="22px"></wd-icon>
-          </view>
+          <Upload @saveList="saveFileList">
+            <template #default>
+              <view class="item flex items-center justify-center gap-2">
+                <view class="upload">Upload File</view>
+                <wd-icon name="upload" color="#FF754C" size="22px"></wd-icon>
+              </view>
+            </template>
+          </Upload>
         </uni-forms-item>
       </view>
     </uni-forms>
