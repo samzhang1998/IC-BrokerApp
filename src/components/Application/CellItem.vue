@@ -1,5 +1,5 @@
 <template>
-  <wd-cell title-width="100%" custom-class="cell-item">
+  <wd-cell title-width="100%" custom-class="cell-item" @click="handleClick" is-link>
     <template #title>
       <view class="flex-y-center h-full gap-3 w-full" :style="{ paddingLeft }">
         <CheckBadge :checked="checked" />
@@ -19,9 +19,15 @@ const props = withDefaults(defineProps<IProps>(), {
   level: 2
 })
 
+const emit = defineEmits(['click'])
+
 const paddingLeft = computed(() => {
   return props.level ? props.level * 10 + 'rpx' : '0'
 })
+
+const handleClick = () => {
+  emit('click')
+}
 </script>
 
 <style scoped lang="scss">

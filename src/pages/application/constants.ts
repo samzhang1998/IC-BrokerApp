@@ -1,19 +1,20 @@
-import type { IItem } from '@/components/Application/AppCard.vue'
-
-export const currentSituationItems = ref<IItem[]>([
+export const currentSituationItems = ref<Application.IItem[]>([
   {
     title: 'Borrower and Guarantor',
     children: [
       {
         title: 'Personal Applicants',
+        name: 'personalApplicants',
         checked: true
       },
       {
         title: 'Company Applicants',
+        name: 'companyApplicants',
         checked: true
       },
       {
         title: 'Trust Applicants',
+        name: 'trustApplicants',
         checked: true
       }
     ]
@@ -23,18 +24,22 @@ export const currentSituationItems = ref<IItem[]>([
     children: [
       {
         title: 'Existing Properties',
+        name: 'existingProperties',
         checked: true
       },
       {
         title: 'Other Assets',
+        name: 'otherAssets',
         checked: true
       },
       {
         title: 'Mortgage Liabilities',
+        name: 'mortgageLiabilities',
         checked: true
       },
       {
         title: 'Other Liabilities',
+        name: 'otherLiabilities',
         checked: true
       }
     ]
@@ -44,18 +49,20 @@ export const currentSituationItems = ref<IItem[]>([
     children: [
       {
         title: 'Other Income',
+        name: 'otherIncome',
         checked: true
       }
     ]
   }
 ])
 
-export const newRequirementsItems = ref<IItem[]>([
+export const newRequirementsItems = ref<Application.IItem[]>([
   {
     title: 'New Real Estate',
     children: [
       {
         title: 'New Purchase',
+        name: 'newPurchase',
         checked: true
       }
     ]
@@ -65,6 +72,7 @@ export const newRequirementsItems = ref<IItem[]>([
     children: [
       {
         title: 'New Loans',
+        name: 'newLoans',
         checked: true
       }
     ]
@@ -74,6 +82,7 @@ export const newRequirementsItems = ref<IItem[]>([
     children: [
       {
         title: 'Contribution Funds',
+        name: 'contributionFunds',
         checked: true
       }
     ]
@@ -83,22 +92,25 @@ export const newRequirementsItems = ref<IItem[]>([
     children: [
       {
         title: 'Lending Guarantee',
+        name: 'lendingGuarantee',
         checked: true
       }
     ]
   }
 ])
 
-export const applicationSummaryItems = ref<IItem[]>([
+export const applicationSummaryItems = ref<Application.IItem[]>([
   {
     title: 'Application Summary',
     children: [
       {
         title: 'Summary Data',
+        name: 'summaryData',
         checked: true
       },
       {
         title: 'Statement of Position',
+        name: 'statementOfPosition',
         checked: true
       }
     ]

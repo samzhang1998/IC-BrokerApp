@@ -19,6 +19,7 @@
                 v-if="!child.children || child.children.length === 0"
                 :title="child.title"
                 :checked="child.checked"
+                @click="handleItemClick(child.name ?? '', child)"
               />
               <CollapseItem
                 v-else
@@ -28,15 +29,24 @@
                 :checked="isCollapseChecked(child)"
               >
                 <wd-cell-group border>
-                  <template v-for="grandChild in child.children" :key="grandChild.title">
-                    <CellItem :title="grandChild.title" :checked="grandChild.checked" />
+                  <template v-for="grandChild in child.children" :key="grandChild.name">
+                    <CellItem
+                      :title="grandChild.title"
+                      :checked="grandChild.checked"
+                      @click="handleItemClick(grandChild.name ?? '', grandChild)"
+                    />
                   </template>
                 </wd-cell-group>
               </CollapseItem>
             </template>
           </wd-cell-group>
         </CollapseItem>
-        <CellItem v-else :title="item.title" :class="{ checked: item.checked }" />
+        <CellItem
+          v-else
+          :title="item.title"
+          :class="{ checked: item.checked }"
+          @click="handleItemClick(item.name ?? '', item)"
+        />
       </template>
     </wd-collapse>
   </view>
@@ -48,13 +58,7 @@ import { ref, onMounted, watch } from 'vue'
 interface IProps {
   title: string
   checked?: boolean
-  data?: IItem[]
-}
-
-export interface IItem {
-  title: string
-  checked?: boolean
-  children?: IItem[]
+  data?: Application.IItem[]
 }
 
 const props = withDefaults(defineProps<IProps>(), {
@@ -78,11 +82,17 @@ watch(
 )
 
 // 判断折叠项是否选中
-const isCollapseChecked = (collapseItem: IItem): boolean => {
+const isCollapseChecked = (collapseItem: Application.IItem): boolean => {
   if (collapseItem.children && collapseItem.children.length > 0) {
     return collapseItem.children.every((item) => isCollapseChecked(item))
   }
   return collapseItem.checked ?? false
+}
+
+const emit = defineEmits(['item-click'])
+
+const handleItemClick = (name: string, item: Application.IItem) => {
+  emit('item-click', name, item)
 }
 </script>
 

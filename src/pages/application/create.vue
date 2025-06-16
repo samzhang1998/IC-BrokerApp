@@ -14,17 +14,56 @@
       </view>
     </view>
     <view>
-      <AppCard title="Current Situation" v-model:data="currentSituationItems"> </AppCard>
-      <AppCard title="New Requirements" v-model:data="newRequirementsItems"> </AppCard>
-      <AppCard title="Summary" v-model:data="applicationSummaryItems"> </AppCard>
+      <AppCard title="Current Situation" v-model:data="currentSituationItems" @item-click="handleItemClick"> </AppCard>
+      <AppCard title="New Requirements" v-model:data="newRequirementsItems" @item-click="handleItemClick"> </AppCard>
+      <AppCard title="Summary" v-model:data="applicationSummaryItems" @item-click="handleItemClick"> </AppCard>
     </view>
     <view class="flex-col gap-1 mt-3 w-full">
       <wd-button type="primary" block class="bg-#FF754C!" size="large">Submit</wd-button>
       <wd-button type="text" class="text-#7A858E! underline">Save as draft</wd-button>
     </view>
+    <wd-action-sheet v-model="show" :actions="actions" @close="close" @select="select" cancel-text="Cancel" />
   </BasePage>
 </template>
 
 <script setup lang="ts">
 import { currentSituationItems, newRequirementsItems, applicationSummaryItems } from './constants'
+
+const show = ref<boolean>(false)
+const actions = ref([
+  {
+    name: 'Borrower'
+  },
+  {
+    name: 'Guarantor'
+  }
+])
+
+function showActions() {
+  show.value = true
+}
+
+function close() {
+  show.value = false
+}
+
+const handleItemClick = (name: string, item: Application.IItem) => {
+  console.log(name, item)
+  switch (name) {
+    case 'personalApplicants':
+      showActions()
+      break
+    default:
+      break
+  }
+}
+
+function select({ item, index }: { item: Application.IItem; index: number }) {
+  console.log(`当前选中项: ${item.name}, 下标: ${index}`)
+  if (item.name === 'Borrower') {
+    uni.navigateTo({
+      url: '/pages/application/borrowerForm'
+    })
+  }
+}
 </script>
