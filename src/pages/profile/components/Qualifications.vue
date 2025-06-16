@@ -37,7 +37,7 @@ async function getQualificationTypes() {
 
 function handleEdit(item: AnyObj) {
   console.log('🚀 ~ handleEdit ~ item:', item)
-  const callback = (value: AnyObj) => {
+  const callback = (value?: AnyObj) => {
     const typeArray: AnyObj = {
       'Group 1': 'Certification',
       'Group 2': 'TypeSelect',
@@ -47,11 +47,12 @@ function handleEdit(item: AnyObj) {
     popupType.value = typeArray[item.category]
     popupTitle.value = item.name
     currentItem.value = item
-    popupData.value = value
+    // popupData.value = value
     console.log('🚀 ~ callback ~ popupData.value:', popupData.value)
     handleClose()
   }
-  getQualification(item.id, callback)
+  callback()
+  // getQualification(item.id, callback)
 }
 
 function handleClose() {

@@ -6,7 +6,7 @@ import dashboard2 from '@/static/icon/dashboard-2.png'
 import dashboard3 from '@/static/icon/dashboard-3.png'
 import dashboard4 from '@/static/icon/dashboard-4.png'
 import { ApplicationList } from '@/components'
-const { token, roles } = useUser()
+const { userId } = useUser()
 const { langStatus } = useLocale()
 
 onMounted(() => {
@@ -76,9 +76,9 @@ const applicationList = ref([
 
 async function getProductList() {
   let params = {
-    offset: 1,
-    limit: 20
-    // brokerId: 1
+    offset: 0,
+    limit: 20,
+    brokerId: userId.value
   }
   console.log('🚀 ~ getProductList ~ params:', params)
   const [e, r] = await api.getApplicationList(params)
