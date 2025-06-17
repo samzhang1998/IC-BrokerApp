@@ -32,6 +32,12 @@
       }
     },
     {
+      "path": "pages/application/borrowerSummary",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/application/borrowerForm",
       "style": {
         "navigationStyle": "custom"
