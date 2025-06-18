@@ -116,3 +116,46 @@ export const applicationSummaryItems = ref<Application.IItem[]>([
     ]
   }
 ])
+
+export const borrowerSummaryItems = ref<Application.IItem[]>([
+  {
+    title: 'Contact Details',
+    name: 'contactDetails',
+    checked: true
+  },
+  {
+    title: 'Other Details',
+    name: 'otherDetails',
+    checked: true
+  },
+  {
+    title: 'Employment',
+    name: 'employment',
+    checked: true
+  },
+  {
+    title: 'PAYG-Primary Employment',
+    name: 'paygPrimaryEmployment',
+    checked: true
+  },
+  {
+    title: 'Self Employment - Primary Employment',
+    name: 'selfEmploymentPrimaryEmployment',
+    checked: true
+  },
+  {
+    title: 'Proof of Identity',
+    name: 'proofOfIdentity',
+    checked: true
+  },
+  {
+    title: 'Australian Driver Licence',
+    name: 'australianDriverLicence',
+    checked: true
+  },
+  {
+    title: 'Australian Passport',
+    name: 'australianPassport',
+    checked: true
+  }
+])

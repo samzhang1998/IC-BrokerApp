@@ -46,6 +46,7 @@
           :title="item.title"
           :class="{ checked: item.checked }"
           @click="handleItemClick(item.name ?? '', item)"
+          :checked="item.checked"
         />
       </template>
     </wd-collapse>

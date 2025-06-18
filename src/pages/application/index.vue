@@ -11,7 +11,9 @@ import { ApplicationItem, Search } from '@/components'
 const { token, roles } = useUser()
 const { langStatus } = useLocale()
 
-onMounted(() => {})
+onMounted(() => {
+  fetchApplicationList()
+})
 
 onShow(() => {})
 
@@ -21,32 +23,19 @@ const navBar = ref({
 })
 
 const tabActive = ref(0)
-const applicationList = ref([
-  {
-    id: 'IC4578',
-    title: 'James',
-    time: '15 Mar, 09:45:12',
-    loan: 'Car Loan',
-    value: '200.0',
-    status: 1
-  },
-  {
-    id: 'IC4579',
-    title: 'James',
-    time: '15 Mar, 09:45:12',
-    loan: 'Car Loan',
-    value: '200.0',
-    status: 2
-  },
-  {
-    id: 'IC4580',
-    title: 'James',
-    time: '15 Mar, 09:45:12',
-    loan: 'Car Loan',
-    value: '200.0',
-    status: 3
+const applicationList = ref<Application.IApplication[]>([])
+
+const fetchApplicationList = async () => {
+  const [e, res] = await api.getApplicationList({
+    limit: 10,
+    offset: 0,
+    status: 'DRAFT'
+  })
+  if (!e && res) {
+    console.log(res)
+    applicationList.value = res.content
   }
-])
+}
 
 const handleActive = (index: number) => {
   tabActive.value = index

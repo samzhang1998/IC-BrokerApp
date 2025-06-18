@@ -1,10 +1,8 @@
 <script lang="ts" setup>
-const props = defineProps({
-  application: {
-    type: Object as PropType<AnyObj>,
-    default: () => {}
-  }
-})
+interface IProps {
+  application: Application.IApplication
+}
+const props = defineProps<IProps>()
 
 const statusComputed = computed(() => {
   return (status: number) => {
@@ -31,21 +29,26 @@ defineOptions({
   <view class="px-20rpx py-32rpx border border-#E8EBEE border-solid rounded-16rpx">
     <view class="top flex-y-center justify-between">
       <view class="flex-y-center gap-20rpx">
-        <view class="text-#384144 text-32rpx">{{ application?.title || '' }}</view>
-        <view class="id text-#7A858E text-28rpx">{{ application?.id || '' }}</view>
+        <view class="text-#384144 text-32rpx">{{ application?.applicationName || '' }}</view>
+        <view class="id text-#7A858E text-28rpx">{{ application?.referenceNumber || '' }}</view>
       </view>
-      <view class="time text-#7A858E text-28rpx"> {{ application?.time || '' }} </view>
+      <view class="time text-#7A858E text-28rpx"> {{ application?.createTime || '' }} </view>
     </view>
     <view class="flex-y-center justify-between mt-20rpx pr-20rpx border border-#E8EBEE border-solid rounded-16rpx">
       <view class="flex-y-center gap-20rpx pl-10rpx pr-20rpx h-88rpx justify-between">
         <view class="w-12rpx h-68rpx bg-#EB0000 rounded-16rpx"></view>
         <view class="text-#384144 text-28rpx">${{ application?.value }}k</view>
-        <view class="text-#7A858E text-28rpx ">{{ application?.loan }}</view>
+        <view class="text-#7A858E text-28rpx">{{ application?.loan }}</view>
       </view>
-      <view :class="[application.status > 1 ? 'text-#2196F3 bg-#2196F326' : 'text-#FF754C bg-#FF754C17', '  text-20rpx rounded-30rpx h-48rpx flex-center px-20rpx']">{{ statusComputed(application?.status) }}</view>
+      <view
+        :class="[
+          application.status > 1 ? 'text-#2196F3 bg-#2196F326' : 'text-#FF754C bg-#FF754C17',
+          '  text-20rpx rounded-30rpx h-48rpx flex-center px-20rpx'
+        ]"
+        >{{ statusComputed(application?.status) }}</view
+      >
     </view>
   </view>
 </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
