@@ -1,14 +1,22 @@
 <script setup lang="ts">
 import { useUser } from '@/hooks/useUser'
+import { getFilenameFromUrl } from '@/utils'
+
+import useProfile from '../hooks/useProfile'
+
+const { getQualification } = useProfile()
+import dayjs from 'dayjs'
 
 const { userId } = useUser()
 
 const props = defineProps<{
   type: string
   title: string
+  id: string | number | undefined
 }>()
 
 const emits = defineEmits(['edit'])
+const isShow = ref(false)
 
 const formData = ref<AnyObj>({
   typeValue: '',
@@ -17,15 +25,95 @@ const formData = ref<AnyObj>({
   filePath: ''
 })
 
-const columns = ref([
-  {
-    text: 'Professional',
-    value: 'Professional'
+const popupData = ref<AnyObj>({})
+
+const typeComputed = computed(() => {
+  let result: AnyObj = {
+    nameText: 'Name',
+    dateText: 'Expiry Date',
+    columns: []
   }
-])
+  if (popupData.value.id === 8 || popupData.value.id === 7) {
+    result.dateText = 'Completion Date'
+  }
+
+  if (popupData.value.id === 4) {
+    result.nameText = 'Certification Number'
+  }
+
+  if (popupData.value.id === 3 || popupData.value.id === 5) {
+    result.columns = [
+      {
+        text: 'Company',
+        value: 'Company'
+      },
+      {
+        text: 'Individual',
+        value: 'Individual'
+      },
+      {
+        text: 'Company & Individual',
+        value: 'Company & Individual'
+      }
+    ]
+  }
+
+  if (popupData.value.id === 8) {
+    result.columns = [
+      {
+        text: 'Cert IV',
+        value: 'Cert IV'
+      },
+      {
+        text: 'Diploma',
+        value: 'Diploma'
+      }
+    ]
+  }
+
+  if (popupData.value.id === 4) {
+    result.columns = [
+      {
+        text: 'MFAA',
+        value: 'MFAA'
+      },
+      {
+        text: 'FBAA',
+        value: 'FBAA'
+      }
+    ]
+  }
+
+  if (popupData.value.id === 6) {
+    result.columns = [
+      {
+        text: 'Passport',
+        value: 'Passport'
+      },
+      {
+        text: 'DL',
+        value: 'DL'
+      }
+    ]
+  }
+  if (popupData.value.id === 7) {
+    result.columns = [
+      {
+        text: 'AML',
+        value: 'AML'
+      },
+      {
+        text: 'CTF',
+        value: 'CTF'
+      }
+    ]
+  }
+
+  return result
+})
 
 const urlComputed = computed(() => {
-  return `api/v1/brokers/${userId.value}/qualifications/5/upload`
+  return `api/v1/brokers/${userId.value}/qualifications/${popupData.value.id}/upload`
 })
 
 function handleConfirm({ value }: any) {
@@ -33,18 +121,62 @@ function handleConfirm({ value }: any) {
 }
 
 function handleClick() {
-  emits('edit', formData.value)
+  let params: AnyObj = {}
+  if (props.type === 'Certification') {
+    params.numberValue = formData.value.numberValue
+  } else if (props.type === 'Item') {
+    params.filePath = formData.value.filePath
+  } else {
+    params = JSON.parse(JSON.stringify(formData.value))
+    params.expiredDate = dayjs(params.expiredDate).format('YYYY-MM-DD')
+  }
+  emits('edit', params)
+  isShow.value = false
+  formData.value = {
+    typeValue: '',
+    numberValue: '',
+    expiredDate: null,
+    filePath: ''
+  }
 }
+
+watch(
+  () => props.id,
+  (newVal) => {
+    if (newVal) {
+      getQualification(String(newVal), setInfo)
+    }
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+)
 
 const saveFileList = (list: AnyObj[]) => {
   console.log('🚀 ~ saveFileList ~ list:', list)
+  if (list.length > 0) {
+    formData.value.filePath = list[0].url
+  }
+}
+
+function setInfo(r: AnyObj) {
+  popupData.value = r
+  formData.value.typeValue = r?.typeValue || ''
+  formData.value.numberValue = r?.numberValue || ''
+  if (r?.expiredDate) {
+    formData.value.expiredDate = dayjs(r.expiredDate).valueOf()
+  }
+  formData.value.filePath = r?.filePath || ''
+  console.log(popupData.value)
+  isShow.value = true
 }
 </script>
 
 <template>
   <view class="content">
     <view class="flex items-center justify-center title">{{ type === 'Item' ? 'Extra Checklist file' : title }}</view>
-    <uni-forms class="form" :model="formData" label-position="top">
+    <uni-forms class="form" :model="formData" label-position="top" v-if="isShow">
       <view v-if="type === 'Certification'">
         <uni-forms-item label="Certification Number" name="numberValue">
           <uni-easyinput :inputBorder="false" class="item flex items-center" v-model="formData.numberValue" />
@@ -54,20 +186,24 @@ const saveFileList = (list: AnyObj[]) => {
         <uni-forms-item label="Type" name="typeValue">
           <wd-picker
             class="item"
-            :columns="columns"
+            :columns="typeComputed.columns"
             value-key="value"
             label-key="text"
             v-model="formData.typeValue"
             @confirm="handleConfirm"
           />
         </uni-forms-item>
-        <uni-forms-item label="Certification Number" name="numberValue">
+        <uni-forms-item :label="typeComputed.nameText" name="numberValue">
           <uni-easyinput :inputBorder="false" class="item flex items-center" v-model="formData.numberValue" />
         </uni-forms-item>
-        <uni-forms-item label="Expired Date" name="expiredDate">
+        <uni-forms-item :label="typeComputed.dateText" name="expiredDate">
           <wd-calendar class="item" v-model="formData.expiredDate" />
         </uni-forms-item>
         <uni-forms-item label="File" name="filePath">
+          <view class="flex justify-between items-center" v-if="formData.filePath">
+            {{ getFilenameFromUrl(formData.filePath) }}
+            <wd-icon name="file" color="#FF754C" size="22px"></wd-icon>
+          </view>
           <Upload @saveList="saveFileList" height="88rpx" :requestUrl="urlComputed">
             <template #default>
               <view class="item flex items-center justify-center gap-2">
@@ -80,10 +216,16 @@ const saveFileList = (list: AnyObj[]) => {
       </view>
       <view v-if="type === 'Item'">
         <uni-forms-item label="Item">
-          <view class="item flex items-center text">{{ title }}</view>
+          <view class="item flex items-center justify-between text">
+            {{ title }}
+          </view>
         </uni-forms-item>
         <uni-forms-item label="File" name="filePath">
-          <Upload @saveList="saveFileList">
+          <view class="flex justify-between items-center" v-if="formData.filePath">
+            {{ getFilenameFromUrl(formData.filePath) }}
+            <wd-icon name="file" color="#FF754C" size="22px"></wd-icon>
+          </view>
+          <Upload @saveList="saveFileList" height="88rpx" :requestUrl="urlComputed">
             <template #default>
               <view class="item flex items-center justify-center gap-2">
                 <view class="upload">Upload File</view>

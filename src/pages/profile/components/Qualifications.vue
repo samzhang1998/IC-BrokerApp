@@ -11,7 +11,6 @@ const currentItem = ref<AnyObj>({})
 const show = ref(false)
 const popupType = ref<string>('')
 const popupTitle = ref<string>('')
-const popupData = ref<AnyObj>({})
 
 onMounted(() => {
   getQualificationTypes()
@@ -37,26 +36,23 @@ async function getQualificationTypes() {
 
 function handleEdit(item: AnyObj) {
   console.log('🚀 ~ handleEdit ~ item:', item)
-  const callback = (value?: AnyObj) => {
-    const typeArray: AnyObj = {
-      'Group 1': 'Certification',
-      'Group 2': 'TypeSelect',
-      'Group 3': 'TypeSelect',
-      'Group 4': 'Item'
-    }
-    popupType.value = typeArray[item.category]
-    popupTitle.value = item.name
-    currentItem.value = item
-    // popupData.value = value
-    console.log('🚀 ~ callback ~ popupData.value:', popupData.value)
-    handleClose()
+  const typeArray: AnyObj = {
+    'Group 1': 'Certification',
+    'Group 2': 'TypeSelect',
+    'Group 3': 'TypeSelect',
+    'Group 4': 'Item'
   }
-  callback()
-  // getQualification(item.id, callback)
+  popupType.value = typeArray[item.category]
+  popupTitle.value = item.name
+  currentItem.value = item
+  handleClose()
 }
 
 function handleClose() {
   show.value = !show.value
+  if (!show.value) {
+    currentItem.value = {}
+  }
 }
 </script>
 
@@ -78,7 +74,7 @@ function handleClose() {
     :safe-area-inset-bottom="true"
     @close="handleClose"
   >
-    <PopupContent :type="popupType" :title="popupTitle" @edit="handleSaveEdit"></PopupContent>
+    <PopupContent :type="popupType" :title="popupTitle" :id="currentItem.id" @edit="handleSaveEdit"></PopupContent>
   </wd-popup>
 </template>
 

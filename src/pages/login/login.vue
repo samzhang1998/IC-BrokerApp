@@ -42,9 +42,9 @@ onShow(() => {
 const privacy = ref(true)
 
 const loginFormData = ref({
-  // email: 'watson@starx.com.au',
-  email: 'john.doe2@example.com',
-  password: 'asdf1234',
+  email: 'watson@starx.com.au',
+  // email: 'john.doe2@example.com',
+  password: 'zxcv1234',
   role: 'BROKER'
 })
 
