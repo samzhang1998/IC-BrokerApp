@@ -38,15 +38,13 @@ export default {
         formData: {}
       },
       // accept: 'application/pdf',
-      formats: 'png,jpg,pdf',
+      formats: 'pdf,doc,docx,jpg,png',
       debug: false,
       files: new Map(),
       btnLoading: false
     }
   },
   mounted() {
-    console.log('2222')
-
     // this.option.formData.entityId = this.entityId
     // this.option.formData.fundId = this.fundId
     // console.log(this.option.formData)
@@ -87,7 +85,9 @@ export default {
     },
     //完成上传
     onuploadEnd(item) {
-      // console.log(`${item.name}已上传结束，上传状态=${item.type}`)
+      console.log(item)
+
+      console.log(`${item.name}已上传结束，上传状态=${item.type}`)
       if (item['responseText']) {
         // console.log('演示服务器返回的字符串JSON转Object对象')
         const responseText = JSON.parse(item.responseText)
@@ -105,6 +105,9 @@ export default {
           uni.hideLoading()
           this.showToastDesc(responseText.errorMessage || '上传失败，请重试')
         }
+      } else {
+        uni.hideLoading()
+        this.showToastDesc(item.errorMessage || 'error')
       }
     },
     onprogre(item) {

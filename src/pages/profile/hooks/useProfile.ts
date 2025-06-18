@@ -16,10 +16,10 @@ export default function useProfile() {
     }
   }
 
-  async function getQualification(qId: string, fn: (value: AnyObj) => void) {
+  async function getQualification(qId: string, fn?: (value: AnyObj) => void) {
     const [e, r] = await api.getQualification(userId.value, qId)
     if (!e && r) {
-      fn(r)
+      fn && fn(r)
     }
   }
 

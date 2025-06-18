@@ -14,43 +14,38 @@ const navBar = ref({
   backgroundColor: '#fff'
 })
 
+const pageNum = ref(0)
+
 const productList = ref<AnyObj[]>([])
 
 async function getProductList() {
   let params = {
-    page: 0,
-    size: 10,
+    page: pageNum.value,
+    size: 20,
     name: ''
   }
   const [e, r] = await api.getProductList(params)
   if (!e && r) {
-    console.log(r)
-    productList.value = r?.content || []
+    if (pageNum.value === 0) {
+      productList.value = r?.content || []
+    } else {
+      if (r?.content.length <= 0) {
+        pageNum.value = pageNum.value - 1
+        uni.showToast({
+          icon: 'none',
+          title: `There's no more`
+        })
+      } else {
+        productList.value = productList.value.concat(r?.content || [])
+      }
+    }
   }
 }
 
-const infoList = ref([
-  {
-    id: 1,
-    title: 'Repayment Type',
-    value: 'Interest Only'
-  },
-  {
-    id: 2,
-    title: 'Application Fees',
-    value: '$450'
-  },
-  {
-    id: 3,
-    title: 'Loan to Value Rate',
-    value: 'Max 70%'
-  },
-  {
-    id: 4,
-    title: 'Ongoing Fee',
-    value: 'N/A'
-  }
-])
+onReachBottom(() => {
+  pageNum.value = pageNum.value + 1
+  getProductList()
+})
 </script>
 
 <template>
@@ -67,7 +62,7 @@ const infoList = ref([
         <view class="item" v-for="item in productList" :key="item.name">
           <view class="top">
             <view class="cover">
-              <image :src="item.logoUrl" v-if="item.logoUrl"></image>
+              <image :src="item.logoUrl" v-if="item.logoUrl" mode="aspectFill"></image>
             </view>
             <view class="info flex-1">
               <view class="title">{{ item.name }}</view>
@@ -127,7 +122,7 @@ const infoList = ref([
         .cover {
           background: #d9d9d9;
           width: 240rpx;
-          min-height: 280rpx;
+          height: 280rpx;
           border-radius: 10rpx;
           overflow: hidden;
 
