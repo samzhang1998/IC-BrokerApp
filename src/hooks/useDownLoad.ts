@@ -185,5 +185,5 @@ export function useDownLoad() {
       }
     })
   }
-  return { downloadFile, downloadFileUrl }
+  return { downloadFile, downloadFileUrl, openFileUrl }
 }

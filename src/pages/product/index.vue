@@ -1,7 +1,11 @@
 <script setup lang="ts">
 // import { useLocale } from '@/hooks/useLocale'
 // import { useUser } from '@/hooks/useUser'
+
 import { Search } from '@/components'
+import { useDownLoad } from '@/hooks/useDownLoad'
+
+const { downloadFileUrl } = useDownLoad()
 
 onMounted(() => {
   getProductList()
@@ -68,7 +72,7 @@ onReachBottom(() => {
               <view class="title">{{ item.name }}</view>
               <view class="rate">Interest Rate: {{ item.interestRate }}%</view>
               <view class="rate">Comparison Rate: {{ item.comparisonRate }}%</view>
-              <wd-button class="btn" size="small">
+              <wd-button class="btn" size="small" @click.stop="downloadFileUrl(item.logoUrl)">
                 <wd-icon name="download1" size="16px"></wd-icon>
                 Download Brochure
               </wd-button>

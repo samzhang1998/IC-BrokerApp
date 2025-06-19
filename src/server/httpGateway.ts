@@ -56,7 +56,7 @@ const httpRequestGateway = <T>(
     const appNetworkResponseComplete = () => {}
     //请求header
     const headers = {
-      'content-type': method === 'GET' ? 'application/x-www-form-urlencoded' : 'application/json',
+      'content-type': method === 'POST' ? 'application/json' : 'application/x-www-form-urlencoded',
       Authorization: isToken ? uni.getStorageSync('userInfo')?.token || '' : ''
     }
 
