@@ -21,12 +21,15 @@
 
 <script setup lang="ts">
 import { api } from '@/api'
+import { useUserStore } from '@/store/modules/user'
+
+const userStore = useUserStore()
 
 const formData = reactive({
-  applicationName: '',
-  applicationType: '',
-  brokerId: '',
-  bdmId: ''
+  name: '',
+  documentType: '',
+  brokerId: userStore.userInfo.id,
+  bdmId: userStore.userInfo.bdmId
 })
 
 const columns = ref(['Full Doc', 'Low Doc', 'Expat Doc', 'Lease Doc'])
