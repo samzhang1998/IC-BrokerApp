@@ -4,11 +4,11 @@
       <view class="flex-col gap-4 flex-1">
         <view class="flex-col gap-3">
           <text class="text-28rpx">Application Name*</text>
-          <wd-input type="text" v-model="formData.applicationName" />
+          <wd-input type="text" v-model="formData.name" />
         </view>
         <view class="flex-col gap-3">
           <text class="text-28rpx">Documentation Type</text>
-          <wd-picker :columns="columns" v-model="formData.applicationType" @confirm="handleConfirm" />
+          <wd-picker :columns="columns" v-model="formData.documentType" @confirm="handleConfirm" />
         </view>
       </view>
       <view class="flex-col gap-1 mt-3 w-full">
@@ -35,7 +35,7 @@ const formData = reactive({
 const columns = ref(['Full Doc', 'Low Doc', 'Expat Doc', 'Lease Doc'])
 
 const handleConfirm = ({ value }: { value: string }) => {
-  formData.applicationType = value
+  formData.documentType = value
 }
 
 const handleCreate = async () => {
