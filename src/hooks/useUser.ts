@@ -30,11 +30,6 @@ export function useUser() {
         title: r?.data || ''
       })
       userStoreHook.logout()
-      // setTimeout(() => {
-      //   uni.redirectTo({
-      //     url: '/pages/login/login'
-      //   })
-      // }, 1000)
     }
   }
 
@@ -49,11 +44,6 @@ export function useUser() {
         title: 'Logout successful'
       })
       userStoreHook.logout()
-      // setTimeout(() => {
-      //   uni.redirectTo({
-      //     url: '/pages/login/login'
-      //   })
-      // }, 1000)
     }
   }
 
@@ -75,20 +65,6 @@ export function useUser() {
     const clientInfo = plus.push.getClientInfo()
     console.log(clientInfo, 'clientInfo')
     //#endif
-
-    // if (clientInfo?.clientid) {
-    //   const lang = uni.getLocale()
-    //   const params = {
-    //     pushId: clientInfo?.clientid,
-    //     language: lang.includes('zh') ? 0 : 1
-    //   }
-    //   console.log('设置pushId', params)
-    //   const [e, r] = await api.editPushClientId(params)
-    //   if (!e && r) {
-    //     console.log('push', r)
-    //     console.log('push', clientInfo?.clientid)
-    //   }
-    // }
   }
 
   return { token, roles, clientEmail, userId, setUserInfo, loginOut, resetToken, setPushId, logOff }

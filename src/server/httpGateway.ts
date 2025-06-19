@@ -2,10 +2,8 @@ import { wrapperEnv } from '@/utils/env'
 import { showLoading, hideLoading } from './serviceLoading'
 import { getCommonParams } from './commonParams'
 import interceptorData from './interceptors'
-import { useUser } from '@/hooks/useUser'
 
 const { VITE_APP_BASE_URL } = wrapperEnv
-const { resetToken } = useUser()
 
 const httpRequestGateway = <T>(
   method: Http.method,
@@ -30,7 +28,11 @@ const httpRequestGateway = <T>(
         //todo 异常处理
         toastFn(r.data?.errorMessage || JSON.stringify(r.data))
         if (r?.statusCode == '401') {
-          resetToken()
+          // 延迟导入避免循环依赖
+          import('@/hooks/useUser').then(({ useUser }) => {
+            const { resetToken } = useUser()
+            resetToken()
+          })
         }
       }
       resolve([e, r])

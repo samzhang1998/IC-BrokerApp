@@ -1,0 +1,20 @@
+.wd-input {
+  border: 1px solid #e8ebee;
+  border-radius: 16rpx;
+  padding: 10rpx 20rpx;
+
+  &::after {
+    display: none;
+  }
+}
+
+.wd-picker {
+  .wd-picker__cell {
+    border: 1px solid #e8ebee;
+    border-radius: 16rpx;
+
+    .wd-icon {
+      transform: rotate(90deg);
+    }
+  }
+}

@@ -1,7 +1,7 @@
 <template>
-  <view>
+  <view class="flex-col h-screen">
     <BaseNavBar :title="title" :hasBack="hasBack"></BaseNavBar>
-    <view class="p-4">
+    <view class="p-4 flex-1">
       <slot></slot>
     </view>
   </view>
@@ -15,6 +15,4 @@ interface IProps {
 const props = defineProps<IProps>()
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

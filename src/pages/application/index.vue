@@ -24,13 +24,14 @@ const navBar = ref({
 
 const tabActive = ref(0)
 const applicationList = ref<Application.IApplication[]>([])
+const searchParams = ref({
+  limit: 10,
+  offset: 0,
+  status: 'DRAFT'
+})
 
 const fetchApplicationList = async () => {
-  const [e, res] = await api.getApplicationList({
-    limit: 10,
-    offset: 0,
-    status: 'DRAFT'
-  })
+  const [e, res] = await api.getApplicationList(searchParams.value)
   if (!e && res) {
     console.log(res)
     applicationList.value = res.content
@@ -39,6 +40,8 @@ const fetchApplicationList = async () => {
 
 const handleActive = (index: number) => {
   tabActive.value = index
+  searchParams.value.status = index === 0 ? 'DRAFT' : 'SUBMITTED'
+  fetchApplicationList()
 }
 
 const handleToCreate = () => {
@@ -63,7 +66,7 @@ const handleToCreate = () => {
         <view class="flex-y-center">
           <view :class="[tabActive === 0 ? 'item act' : 'item', 'flex-y-center shrink-0']" @click="handleActive(0)">
             <image class="icon" :src="tabActive === 0 ? progressTabAct : progressTab" mode="aspectFit"></image>
-            In progress
+            Draft
           </view>
           <view :class="tabActive === 1 ? 'item act' : 'item'" @click="handleActive(1)">
             <image class="icon" :src="tabActive === 1 ? applicationTabAct : applicationTab" mode="aspectFit"></image>
@@ -77,7 +80,7 @@ const handleToCreate = () => {
       </view>
 
       <view class="list">
-        <view class="item" v-for="item in applicationList" :key="item.id">
+        <view class="item" v-for="item in applicationList" :key="item.applicationId">
           <ApplicationItem :application="item"></ApplicationItem>
         </view>
       </view>

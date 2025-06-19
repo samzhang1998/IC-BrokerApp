@@ -6,6 +6,7 @@
     "dev:app-ios-prod": "uni -p app-ios --mode prod",
     "dev:h5": "uni --mode dev",
     "dev:h5-prod": "uni --mode prod",
+    "dev-prod": "uni --mode prod",
     "build:app-android-prod": "uni build -p app-android --mode prod",
     "build:app-ios-prod": "uni build -p app-ios --mode prod",
     "type-check": "vue-tsc --noEmit",

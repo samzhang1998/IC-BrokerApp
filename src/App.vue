@@ -28,4 +28,5 @@ onHide(() => {
 </script>
 <style lang="scss">
 @import url('./style/common.scss');
+@import url('./style/wot.scss');
 </style>

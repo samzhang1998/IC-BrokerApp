@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { useUser } from '@/hooks/useUser'
+import { useUserStoreHook } from '@/store/modules/user'
 import { ProfileKey } from './types'
 import { Overview, Qualifications, CommissionAccount } from './components'
+
 const { resetToken, userId } = useUser()
+const userStore = useUserStoreHook()
 
 onMounted(() => {
   if (userId.value) {
-    getUserInfo()
+    userStore.getUserInfo()
   } else {
     handleLogout()
   }
@@ -19,19 +22,11 @@ const navBar = ref({
   backgroundColor: '#fff'
 })
 
-const userInfo = ref<AnyObj>({})
+const userInfo = computed(() => userStore.userInfo)
 const value = ref<string[]>([''])
 
 const handleLogout = () => {
   resetToken()
-}
-
-async function getUserInfo() {
-  const [e, r] = await api.getUserInfo(userId.value)
-  if (!e && r) {
-    console.log('🚀 ~ getUserInfo ~ r:', r)
-    userInfo.value = r
-  }
 }
 
 const handleSetting = () => {
@@ -41,7 +36,7 @@ const handleSetting = () => {
 }
 
 const handleReset = () => {
-  getUserInfo()
+  userStore.getUserInfo()
 }
 
 provide(ProfileKey, {

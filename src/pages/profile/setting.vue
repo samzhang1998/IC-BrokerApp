@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { useUser } from '@/hooks/useUser'
+import { useUserStoreHook } from '@/store/modules/user'
 const { resetToken, userId } = useUser()
+const userStore = useUserStoreHook()
+
 import settingIcon from '@/static/icon/setting-icon.png'
 import settingLang from '@/static/icon/setting-lang.png'
 import settingUser from '@/static/icon/setting-user.png'
@@ -12,11 +15,11 @@ const navBar = ref({
   backgroundColor: '#fff'
 })
 
-const userInfo = ref<AnyObj>({})
+const userInfo = computed(() => userStore.userInfo)
 
 onMounted(() => {
   if (userId.value) {
-    getUserInfo()
+    userStore.getUserInfo()
   } else {
     handleLogout()
   }
@@ -24,13 +27,6 @@ onMounted(() => {
 
 const handleLogout = () => {
   resetToken()
-}
-
-async function getUserInfo() {
-  const [e, r] = await api.getUserInfo(userId.value)
-  if (!e && r) {
-    userInfo.value = r
-  }
 }
 
 async function editUserInfo() {
