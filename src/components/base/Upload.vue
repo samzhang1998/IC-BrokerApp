@@ -85,8 +85,6 @@ export default {
     },
     //完成上传
     onuploadEnd(item) {
-      console.log(item)
-
       console.log(`${item.name}已上传结束，上传状态=${item.type}`)
       if (item['responseText']) {
         // console.log('演示服务器返回的字符串JSON转Object对象')

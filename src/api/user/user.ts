@@ -47,9 +47,9 @@ export function editUserInfo<T = any>(id: string | number, query?: AnyObj): ApiR
  * @description QualificationTypes
  * @param query 入参
  */
-export function getQualificationTypes<T = any>(query?: AnyObj): ApiResponse<T> {
+export function getQualificationTypes<T = any>(id: string | number, query?: AnyObj): ApiResponse<T> {
   return http.get({
-    method: `api/v1/brokers/qualification-types`,
+    method: `api/v1/brokers/${id}/qualifications`,
     obj: query || {}
   })
 }

@@ -3,10 +3,17 @@ import { useUser } from '@/hooks/useUser'
 import { getFilenameFromUrl } from '@/utils'
 
 import useProfile from '../hooks/useProfile'
+import { useDownLoad } from '@/hooks/useDownLoad'
 
+const { downloadFileUrl } = useDownLoad()
 const { getQualification } = useProfile()
 import dayjs from 'dayjs'
-
+downloadFileUrl(
+  'http://ic-crm.oss-ap-southeast-1.aliyuncs.com/documents/app_1_11111_1750333705941.pdf?Expires=1750347634&OSSAccessKeyId=LTAI5tL37zeyMfudVzPL9vyZ&Signature=8YAVZopNhWQ8II7saGTm6JhzELk%3D'
+)
+// downloadFileUrl(
+//   'https://ic-crm.oss-ap-southeast-1.aliyuncs.com/documents/app 1 11111 1750333705941pdf'
+// )
 const { userId } = useUser()
 
 const props = defineProps<{
@@ -21,8 +28,7 @@ const isShow = ref(false)
 const formData = ref<AnyObj>({
   typeValue: '',
   numberValue: '',
-  expiredDate: null,
-  filePath: ''
+  expiredDate: null
 })
 
 const popupData = ref<AnyObj>({})
@@ -113,7 +119,7 @@ const typeComputed = computed(() => {
 })
 
 const urlComputed = computed(() => {
-  return `api/v1/brokers/${userId.value}/qualifications/${popupData.value.id}/upload`
+  return `api/v1/brokers/${userId.value}/qualifications/${popupData.value.qualificationTypeId}/upload`
 })
 
 function handleConfirm({ value }: any) {
@@ -125,19 +131,20 @@ function handleClick() {
   if (props.type === 'Certification') {
     params.numberValue = formData.value.numberValue
   } else if (props.type === 'Item') {
-    params.filePath = formData.value.filePath
+    // params.filePath = formData.value.filePath
   } else {
     params = JSON.parse(JSON.stringify(formData.value))
     params.expiredDate = dayjs(params.expiredDate).format('YYYY-MM-DD')
   }
   emits('edit', params)
-  isShow.value = false
-  formData.value = {
-    typeValue: '',
-    numberValue: '',
-    expiredDate: null,
-    filePath: ''
-  }
+  setTimeout(() => {
+    isShow.value = false
+    formData.value = {
+      typeValue: '',
+      numberValue: '',
+      expiredDate: null
+    }
+  }, 300)
 }
 
 watch(
@@ -156,7 +163,7 @@ watch(
 const saveFileList = (list: AnyObj[]) => {
   console.log('🚀 ~ saveFileList ~ list:', list)
   if (list.length > 0) {
-    formData.value.filePath = list[0].url
+    popupData.value.filePath = list[0].url
   }
 }
 
@@ -167,8 +174,7 @@ function setInfo(r: AnyObj) {
   if (r?.expiredDate) {
     formData.value.expiredDate = dayjs(r.expiredDate).valueOf()
   }
-  formData.value.filePath = r?.filePath || ''
-  console.log(popupData.value)
+  // formData.value.filePath = r?.filePath || ''
   isShow.value = true
 }
 </script>
@@ -199,10 +205,15 @@ function setInfo(r: AnyObj) {
         <uni-forms-item :label="typeComputed.dateText" name="expiredDate">
           <wd-calendar class="item" v-model="formData.expiredDate" />
         </uni-forms-item>
-        <uni-forms-item label="File" name="filePath">
-          <view class="flex justify-between items-center" v-if="formData.filePath">
-            {{ getFilenameFromUrl(formData.filePath) }}
-            <wd-icon name="file" color="#FF754C" size="22px"></wd-icon>
+        <uni-forms-item label="File">
+          <view class="flex justify-between items-center" v-if="popupData.filePath">
+            {{ getFilenameFromUrl(popupData.filePath) }}
+            <wd-icon
+              name="file"
+              color="#FF754C"
+              size="22px"
+              @click.stop="downloadFileUrl(popupData.filePath)"
+            ></wd-icon>
           </view>
           <Upload @saveList="saveFileList" height="88rpx" :requestUrl="urlComputed">
             <template #default>
@@ -220,10 +231,15 @@ function setInfo(r: AnyObj) {
             {{ title }}
           </view>
         </uni-forms-item>
-        <uni-forms-item label="File" name="filePath">
-          <view class="flex justify-between items-center" v-if="formData.filePath">
-            {{ getFilenameFromUrl(formData.filePath) }}
-            <wd-icon name="file" color="#FF754C" size="22px"></wd-icon>
+        <uni-forms-item label="File">
+          <view class="flex justify-between items-center" v-if="popupData.filePath">
+            {{ getFilenameFromUrl(popupData.filePath) }}
+            <wd-icon
+              name="file"
+              color="#FF754C"
+              size="22px"
+              @click.stop="downloadFileUrl(popupData.filePath)"
+            ></wd-icon>
           </view>
           <Upload @saveList="saveFileList" height="88rpx" :requestUrl="urlComputed">
             <template #default>

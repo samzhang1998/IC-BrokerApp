@@ -20,7 +20,7 @@ const navBar = ref({
 })
 
 const userInfo = ref<AnyObj>({})
-const value = ref<string[]>([''])
+const value = ref<string[]>(['qualifications'])
 
 const handleLogout = () => {
   resetToken()

@@ -3,6 +3,9 @@ import { PopupContent } from './'
 // import { ProfileKey } from '../types'
 // import { injectStrict } from '@/utils'
 import useProfile from '../hooks/useProfile'
+import { useUser } from '@/hooks/useUser'
+
+const { userId } = useUser()
 
 const { editQualification, getQualification } = useProfile()
 
@@ -16,6 +19,16 @@ onMounted(() => {
   getQualificationTypes()
 })
 
+const statusComputed = computed(() => {
+  return function (item: AnyObj) {
+    console.log(item)
+    // 看一下给接口加一个isComplete字段来表示
+    // 如果status是Approved那就是绿色，
+    // status是Pending，如果isComplete是false就是红色，isComplete是true是白色
+    return item.status === 'Approved' ? 'green' : item.isComplete ? '' : 'red'
+  }
+})
+
 const handleSaveEdit = async (formData: AnyObj) => {
   console.log('🚀 ~ handleSaveEdit ~ formData:', formData)
   editQualification(currentItem.value.id, formData, handleReset)
@@ -27,7 +40,7 @@ const handleReset = () => {
 }
 
 async function getQualificationTypes() {
-  const [e, r] = await api.getQualificationTypes()
+  const [e, r] = await api.getQualificationTypes(userId.value)
   if (!e && r) {
     console.log('🚀 ~ getQualificationTypes ~ r:', r)
     qualificationList.value = (r as any) || []
@@ -43,7 +56,7 @@ function handleEdit(item: AnyObj) {
     'Group 4': 'Item'
   }
   popupType.value = typeArray[item.category]
-  popupTitle.value = item.name
+  popupTitle.value = item.qualificationTypeName
   currentItem.value = item
   handleClose()
 }
@@ -60,8 +73,8 @@ function handleClose() {
   <view class="list">
     <view class="item" v-for="item in qualificationList" :key="item.id">
       <view class="flex items-center flex-1">
-        <view class="icon"></view>
-        <view class="title">{{ item.name }}</view>
+        <view class="icon" :class="statusComputed(item)"></view>
+        <view class="title">{{ item.qualificationTypeName }}</view>
       </view>
       <uni-icons type="compose" color="#7A858E" size="20" @click="handleEdit(item)"></uni-icons>
     </view>
@@ -74,7 +87,12 @@ function handleClose() {
     :safe-area-inset-bottom="true"
     @close="handleClose"
   >
-    <PopupContent :type="popupType" :title="popupTitle" :id="currentItem.id" @edit="handleSaveEdit"></PopupContent>
+    <PopupContent
+      :type="popupType"
+      :title="popupTitle"
+      :id="currentItem.qualificationTypeId"
+      @edit="handleSaveEdit"
+    ></PopupContent>
   </wd-popup>
 </template>
 
@@ -95,6 +113,13 @@ function handleClose() {
       height: 30rpx;
       border: 1px dashed #384144;
       border-radius: 50%;
+    }
+
+    .green {
+      border: 1px dashed #0be554;
+    }
+    .red {
+      border: 1px dashed #ff754c;
     }
 
     .title {
