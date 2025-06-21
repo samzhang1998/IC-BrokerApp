@@ -5,7 +5,7 @@
 import { Search } from '@/components'
 import { useDownLoad } from '@/hooks/useDownLoad'
 
-const { downloadFileUrl } = useDownLoad()
+const { downloadFileUrl, downloadFile } = useDownLoad()
 
 onMounted(() => {
   getProductList()
@@ -46,6 +46,10 @@ async function getProductList() {
   }
 }
 
+function handleDownload(url: string) {
+  downloadFile(`api/v1/file/download?filePath=${url}`)
+}
+
 onReachBottom(() => {
   pageNum.value = pageNum.value + 1
   getProductList()
@@ -72,7 +76,7 @@ onReachBottom(() => {
               <view class="title">{{ item.name }}</view>
               <view class="rate">Interest Rate: {{ item.interestRate }}%</view>
               <view class="rate">Comparison Rate: {{ item.comparisonRate }}%</view>
-              <wd-button class="btn" size="small" @click.stop="downloadFileUrl(item.logoUrl)">
+              <wd-button class="btn" size="small" @click.stop="handleDownload(item.logoUrl)">
                 <wd-icon name="download1" size="16px"></wd-icon>
                 Download Brochure
               </wd-button>

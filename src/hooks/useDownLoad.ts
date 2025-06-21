@@ -5,14 +5,23 @@ export function useDownLoad() {
   const { VITE_APP_BASE_URL } = wrapperEnv
 
   function downloadFile(params: string) {
-    // console.log(params)
+    //获取params传入的文件类型
+    //http://ic-crm.oss-ap-southeast-1.aliyuncs.com/product/product_8_logo?Expires=1750472721&OSSAccessKeyId=LTAI5tL37zeyMfudVzPL9vyZ&Signature=L2NrFzdA%2BiEvwxD9LE%2FcNb5JLyw%3D
+    //获取上面这个链接的文件类型
+    const fileType = params.split('?')[0].split('.').pop()
+    console.log('fileType', fileType)
+    console.log('params', params)
     uni.showLoading({
       title: 'Loading...',
       mask: true
     })
+    const headers = {
+      Authorization: uni.getStorageSync('userInfo')?.token || ''
+    }
     uni.downloadFile({
       url: `${VITE_APP_BASE_URL}${params}`,
       responseType: 'blob',
+      header: headers,
       success: (res) => {
         if (res.statusCode === 200) {
           console.log('下载成功')

@@ -5,15 +5,10 @@ import { getFilenameFromUrl } from '@/utils'
 import useProfile from '../hooks/useProfile'
 import { useDownLoad } from '@/hooks/useDownLoad'
 
-const { downloadFileUrl } = useDownLoad()
+const { downloadFile } = useDownLoad()
 const { getQualification } = useProfile()
 import dayjs from 'dayjs'
-downloadFileUrl(
-  'http://ic-crm.oss-ap-southeast-1.aliyuncs.com/documents/app_1_11111_1750333705941.pdf?Expires=1750347634&OSSAccessKeyId=LTAI5tL37zeyMfudVzPL9vyZ&Signature=8YAVZopNhWQ8II7saGTm6JhzELk%3D'
-)
-// downloadFileUrl(
-//   'https://ic-crm.oss-ap-southeast-1.aliyuncs.com/documents/app 1 11111 1750333705941pdf'
-// )
+
 const { userId } = useUser()
 
 const props = defineProps<{
@@ -177,6 +172,14 @@ function setInfo(r: AnyObj) {
   // formData.value.filePath = r?.filePath || ''
   isShow.value = true
 }
+
+function strCut(str: string) {
+  return str.split('?')[0]
+}
+
+function handleDownload(url: string) {
+  downloadFile(`api/v1/file/download?filePath=${url}`)
+}
 </script>
 
 <template>
@@ -207,13 +210,8 @@ function setInfo(r: AnyObj) {
         </uni-forms-item>
         <uni-forms-item label="File">
           <view class="flex justify-between items-center" v-if="popupData.filePath">
-            {{ getFilenameFromUrl(popupData.filePath) }}
-            <wd-icon
-              name="file"
-              color="#FF754C"
-              size="22px"
-              @click.stop="downloadFileUrl(popupData.filePath)"
-            ></wd-icon>
+            {{ strCut(getFilenameFromUrl(popupData.filePath)) }}
+            <wd-icon name="file" color="#FF754C" size="22px" @click.stop="handleDownload(popupData.filePath)"></wd-icon>
           </view>
           <Upload @saveList="saveFileList" height="88rpx" :requestUrl="urlComputed">
             <template #default>
@@ -233,13 +231,8 @@ function setInfo(r: AnyObj) {
         </uni-forms-item>
         <uni-forms-item label="File">
           <view class="flex justify-between items-center" v-if="popupData.filePath">
-            {{ getFilenameFromUrl(popupData.filePath) }}
-            <wd-icon
-              name="file"
-              color="#FF754C"
-              size="22px"
-              @click.stop="downloadFileUrl(popupData.filePath)"
-            ></wd-icon>
+            {{ strCut(getFilenameFromUrl(popupData.filePath)) }}
+            <wd-icon name="file" color="#FF754C" size="22px" @click.stop="handleDownload(popupData.filePath)"></wd-icon>
           </view>
           <Upload @saveList="saveFileList" height="88rpx" :requestUrl="urlComputed">
             <template #default>
@@ -256,7 +249,7 @@ function setInfo(r: AnyObj) {
   </view>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .content {
   width: 100vw;
   min-height: 400rpx;
@@ -295,6 +288,18 @@ function setInfo(r: AnyObj) {
   .btn {
     background: #ff754c;
     color: #fff;
+  }
+}
+
+::v-deep .wd-picker {
+  .wd-picker__cell {
+    border: none !important;
+  }
+  .wd-picker__cell {
+    padding: 5px 0 !important;
+  }
+  .wd-picker__value-wraper {
+    border: none !important;
   }
 }
 </style>

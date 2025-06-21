@@ -6,6 +6,7 @@
     :option="option"
     :formats="formats"
     :debug="debug"
+    :webview="webviewUrl"
     @uploadEnd="onuploadEnd"
     @progress="onprogre"
     @change="change"
@@ -16,7 +17,7 @@
 </template>
 <script>
 import { wrapperEnv } from '@/utils/env'
-const { VITE_APP_BASE_URL } = wrapperEnv
+const { VITE_APP_BASE_URL, VITE_APP_UPLOAD_HTML_URL } = wrapperEnv
 export default {
   props: {
     height: { type: String, default: '88rpx' },
@@ -27,7 +28,7 @@ export default {
   data() {
     return {
       imageValue: [], //文件存放列表
-      // webviewUrl: `${VITE_APP_UPLOAD_HTML_URL}`,
+      webviewUrl: `${VITE_APP_UPLOAD_HTML_URL}`,
       option: {
         url: `${VITE_APP_BASE_URL}${this.requestUrl}`, //服务器地址
         name: 'file',
@@ -44,11 +45,7 @@ export default {
       btnLoading: false
     }
   },
-  mounted() {
-    // this.option.formData.entityId = this.entityId
-    // this.option.formData.fundId = this.fundId
-    // console.log(this.option.formData)
-  },
+  mounted() {},
   methods: {
     async toTemplatePage() {
       if (!this.imageValue.length) {
@@ -166,27 +163,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-// .upload {
-//   height: 266rpx;
-//   border-radius: 20rpx;
-//   border: 4rpx dashed #e8e8e8;
-//   background: #fbfafa;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-
-//   .img {
-//     width: 140rpx;
-//     height: 140rpx;
-//   }
-
-//   .text {
-//     color: #828282;
-//     font-size: 28rpx;
-//     font-style: normal;
-//     font-weight: 400;
-//   }
-// }
-</style>
+<style lang="scss"></style>

@@ -9,7 +9,8 @@ const httpRequestGateway = <T>(
   method: Http.method,
   headersMethod: string,
   query: AnyObj,
-  isToken = true
+  isToken = true,
+  contentType?: string
 ): Promise<[any, FcResponse<T> | undefined]> => {
   return new Promise((resolve) => {
     showLoading()
@@ -56,7 +57,7 @@ const httpRequestGateway = <T>(
     const appNetworkResponseComplete = () => {}
     //请求header
     const headers = {
-      'content-type': method === 'POST' ? 'application/json' : 'application/x-www-form-urlencoded',
+      'content-type': contentType || (method === 'POST' ? 'application/json' : 'application/x-www-form-urlencoded'),
       Authorization: isToken ? uni.getStorageSync('userInfo')?.token || '' : ''
     }
 
@@ -81,7 +82,8 @@ const http = {
         ...getCommonParams(),
         ...params.obj
       },
-      params?.isToken
+      params?.isToken,
+      params?.contentType
     ),
   post: <T>(params: Http.Params): Promise<[any, FcResponse<T> | undefined]> =>
     httpRequestGateway(
@@ -91,7 +93,8 @@ const http = {
         ...getCommonParams(),
         ...params.obj
       },
-      params?.isToken
+      params?.isToken,
+      params?.contentType
     ),
   put: <T>(params: Http.Params): Promise<[any, FcResponse<T> | undefined]> =>
     httpRequestGateway(
@@ -101,7 +104,8 @@ const http = {
         ...getCommonParams(),
         ...params.obj
       },
-      params?.isToken
+      params?.isToken,
+      params?.contentType
     ),
   delete: <T>(params: Http.Params): Promise<[any, FcResponse<T> | undefined]> =>
     httpRequestGateway(
@@ -111,7 +115,8 @@ const http = {
         ...getCommonParams(),
         ...params.obj
       },
-      params?.isToken
+      params?.isToken,
+      params?.contentType
     )
 }
 export default http
