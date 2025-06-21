@@ -48,7 +48,7 @@ const statusBarStyle = computed(() => {
 })
 // console.log('🚀 ~ statusBarStyle ~ statusBarStyle:', statusBarStyle.value)
 
-const notifyList = ref<AnyObj[]>([])
+const notifyListLength = ref<number>(0)
 const userRole = ref('')
 
 onMounted(() => {
@@ -64,9 +64,9 @@ const handleBack = () => {
 
 const handleToNotify = () => {
   if (token.value) {
-    notifyList.value = []
+    // notifyListLength.value
     uni.navigateTo({
-      url: '/pages/notification/notification'
+      url: '/pages/notifications/index'
     })
   } else {
     uni.showToast({
@@ -77,18 +77,10 @@ const handleToNotify = () => {
 }
 
 async function getNotify() {
-  // let params = {
-  //   pageNum: 1,
-  //   pageSize: 10,
-  //   readFlag: false
-  // }
-  // const [e, r] = await api.getNotify(params)
-  // if (!e && r) {
-  //   if (r?.success) {
-  //     // console.log('🚀 ~ file: NavBar.vue:62 ~ getNotify ~ r:', r)
-  //     notifyList.value = r?.data?.list || []
-  //   }
-  // }
+  const [e, r] = await api.unreadCount()
+  if (!e && r) {
+    notifyListLength.value = r?.data?.unreadCount || 0
+  }
 }
 </script>
 <template>
@@ -105,7 +97,7 @@ async function getNotify() {
           <slot name="right" />
           <view class="pos-icon" v-if="props.isNotification">
             <image class="icon" src="../../static/icon/notifications.png" @click="handleToNotify"></image>
-            <div class="round"></div>
+            <div class="round" v-if="notifyListLength > 0"></div>
           </view>
         </view>
       </view>
@@ -162,8 +154,8 @@ async function getNotify() {
           position: absolute;
           width: 10rpx;
           height: 10rpx;
-          top: 2rpx;
-          right: 6rpx;
+          top: 10rpx;
+          right: 10rpx;
           background: #e92c2c;
           border-radius: 5000rpx;
         }

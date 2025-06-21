@@ -1,6 +1,10 @@
 <template>
   <BasePage title="Password" hasBack>
     <view class="flex-col h-full">
+      <view class="text">
+        Password must be 8-16 characters and be some combination of letters, number, and/or special characters(cannot be
+        only numbers)
+      </view>
       <wd-form ref="form" :model="formData" :rules="rules" class="flex-1">
         <view class="flex-col gap-4">
           <view class="flex-col gap-3">
@@ -78,3 +82,11 @@ const handleCreate = async () => {
   }
 }
 </script>
+
+<style>
+.text {
+  color: #7a858e;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+</style>
