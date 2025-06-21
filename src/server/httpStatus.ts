@@ -1,5 +1,6 @@
 export const httpStatus: Array<Http.HttpStatus> = [
   { statusCode: 200, msg: '', name: 'SUCCESS' },
+  { statusCode: 201, msg: '', name: 'SUCCESS' },
   { statusCode: 204, msg: '没有资源可返回', name: 'NO_CONTENT' },
   { statusCode: 400, msg: '请求报文中存在语法错误', name: 'CLIENT_ERROR' },
   { statusCode: 401, msg: '需要鉴权', name: 'AUTHENTICATE' },

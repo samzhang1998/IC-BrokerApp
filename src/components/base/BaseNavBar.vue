@@ -1,5 +1,13 @@
 <template>
-  <wd-navbar :title="title" :left-arrow="false" @click-left="handleClickLeft" :bordered="false" fixed placeholder>
+  <wd-navbar
+    :title="title"
+    :left-arrow="false"
+    @click-left="handleClickLeft"
+    :bordered="false"
+    fixed
+    placeholder
+    safeAreaInsetTop
+  >
     <template #left>
       <wd-button type="primary" @click="handleClickLeft" size="small" class="back-btn" v-if="hasBack">
         <wd-icon name="thin-arrow-left" color="#FF754C" size="22rpx"></wd-icon>

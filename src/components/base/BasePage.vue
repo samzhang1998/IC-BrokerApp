@@ -1,6 +1,6 @@
 <template>
   <view class="flex-col h-screen">
-    <BaseNavBar :title="title" :hasBack="hasBack"></BaseNavBar>
+    <BaseNavBar :title="title" :hasBack="hasBack" class="min-h-88rpx"></BaseNavBar>
     <view class="p-4 flex-1">
       <slot></slot>
     </view>

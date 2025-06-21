@@ -1,16 +1,14 @@
 <script lang="ts" setup>
-import { ApplicationItem } from '@/components'
-
 const props = defineProps({
   applicationList: {
-    type: Array<AnyObj>,
+    type: Array<Application.IApplication>,
     default: () => []
   }
 })
 </script>
 
 <template>
-  <view class="item" v-for="item in applicationList" :key="item.id">
+  <view class="item" v-for="item in applicationList" :key="item.applicationId">
     <ApplicationItem :application="item"></ApplicationItem>
   </view>
 </template>

@@ -1,5 +1,8 @@
 import type { InjectionKey } from 'vue'
 import { inject } from 'vue'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import dayjs from 'dayjs'
+dayjs.extend(customParseFormat)
 
 /**
  * @description: 返回网络路径的文件名
@@ -159,4 +162,8 @@ export function deepClone<T>(source: T): T {
             Object.create(Object.getPrototypeOf(source))
           )
         : (source as T)
+}
+
+export function formatDate(date: string, format = 'DD MMM') {
+  return dayjs(date, 'DD-MM-YYYY').format(format)
 }

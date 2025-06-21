@@ -1,16 +1,31 @@
 <template>
   <BasePage title="Create Application" hasBack>
     <view class="flex-col h-full">
-      <view class="flex-col gap-4 flex-1">
-        <view class="flex-col gap-3">
-          <text class="text-28rpx">Application Name*</text>
-          <wd-input type="text" v-model="formData.name" />
+      <wd-form ref="form" :model="formData" :rules="rules" class="flex-1">
+        <view class="flex-col gap-4">
+          <view class="flex-col gap-3">
+            <text class="text-28rpx">Application Name*</text>
+            <wd-input
+              type="text"
+              v-model="formData.name"
+              placeholder="Enter application name"
+              :rules="rules.name"
+              prop="name"
+            />
+          </view>
+          <view class="flex-col gap-3">
+            <text class="text-28rpx">Documentation Type</text>
+            <wd-picker
+              :columns="columns"
+              v-model="formData.documentType"
+              @confirm="handleConfirm"
+              placeholder="Select documentation type"
+              :rules="rules.documentType"
+              prop="documentType"
+            />
+          </view>
         </view>
-        <view class="flex-col gap-3">
-          <text class="text-28rpx">Documentation Type</text>
-          <wd-picker :columns="columns" v-model="formData.documentType" @confirm="handleConfirm" />
-        </view>
-      </view>
+      </wd-form>
       <view class="flex-col gap-1 mt-3 w-full">
         <wd-button type="primary" block class="bg-#FF754C!" size="large" @click="handleCreate">Create</wd-button>
         <wd-button type="text" class="text-#7A858E! underline">Save as draft</wd-button>
@@ -22,9 +37,12 @@
 <script setup lang="ts">
 import { api } from '@/api'
 import { useUserStore } from '@/store/modules/user'
+import { useApplicationStore } from '@/store/modules/application'
 
 const userStore = useUserStore()
+const applicationStore = useApplicationStore()
 
+const form = ref()
 const formData = reactive({
   name: '',
   documentType: '',
@@ -34,14 +52,25 @@ const formData = reactive({
 
 const columns = ref(['Full Doc', 'Low Doc', 'Expat Doc', 'Lease Doc'])
 
+const rules = ref({
+  name: [{ required: true, message: 'Please enter application name' }],
+  documentType: [{ required: true, message: 'Please select documentation type' }]
+})
+
 const handleConfirm = ({ value }: { value: string }) => {
   formData.documentType = value
 }
 
 const handleCreate = async () => {
+  const { valid } = await form.value.validate()
+  if (!valid) return
   const [e, r] = await api.createApplication(formData)
+  console.log('🚀 ~ handleCreate ~ r:', r)
   if (!e && r) {
-    console.log(r)
+    applicationStore.applicationInfo = r as unknown as Application.IApplication
+    uni.navigateTo({
+      url: `/pages/application/overview?id=${r.applicationId}`
+    })
   }
 }
 </script>

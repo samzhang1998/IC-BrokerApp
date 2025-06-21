@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import dayjs from 'dayjs'
+import { formatDate } from '@/utils'
 interface IProps {
   application: Application.IApplication
 }
@@ -34,7 +34,7 @@ defineOptions({
         <view class="id text-#7A858E text-28rpx">{{ application?.referenceNumber || '' }}</view>
       </view>
       <view class="time text-#7A858E text-28rpx flex-shrink-0">
-        {{ application?.createTime ? dayjs(application?.createTime).format('DD MMM') : '' }}
+        {{ application?.createTime ? formatDate(application?.createTime) : '' }}
       </view>
     </view>
     <view class="flex-y-center justify-between mt-20rpx pr-20rpx border border-#E8EBEE border-solid rounded-16rpx">

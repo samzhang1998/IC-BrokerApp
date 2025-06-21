@@ -5,17 +5,17 @@ export const currentSituationItems = ref<Application.IItem[]>([
       {
         title: 'Personal Applicants',
         name: 'personalApplicants',
-        checked: true
+        checked: false
       },
       {
         title: 'Company Applicants',
         name: 'companyApplicants',
-        checked: true
+        checked: false
       },
       {
         title: 'Trust Applicants',
         name: 'trustApplicants',
-        checked: true
+        checked: false
       }
     ]
   },
@@ -25,22 +25,22 @@ export const currentSituationItems = ref<Application.IItem[]>([
       {
         title: 'Existing Properties',
         name: 'existingProperties',
-        checked: true
+        checked: false
       },
       {
         title: 'Other Assets',
         name: 'otherAssets',
-        checked: true
+        checked: false
       },
       {
         title: 'Mortgage Liabilities',
         name: 'mortgageLiabilities',
-        checked: true
+        checked: false
       },
       {
         title: 'Other Liabilities',
         name: 'otherLiabilities',
-        checked: true
+        checked: false
       }
     ]
   },
@@ -50,7 +50,7 @@ export const currentSituationItems = ref<Application.IItem[]>([
       {
         title: 'Other Income',
         name: 'otherIncome',
-        checked: true
+        checked: false
       }
     ]
   }
@@ -63,7 +63,7 @@ export const newRequirementsItems = ref<Application.IItem[]>([
       {
         title: 'New Purchase',
         name: 'newPurchase',
-        checked: true
+        checked: false
       }
     ]
   },
@@ -73,7 +73,7 @@ export const newRequirementsItems = ref<Application.IItem[]>([
       {
         title: 'New Loans',
         name: 'newLoans',
-        checked: true
+        checked: false
       }
     ]
   },
@@ -83,7 +83,7 @@ export const newRequirementsItems = ref<Application.IItem[]>([
       {
         title: 'Contribution Funds',
         name: 'contributionFunds',
-        checked: true
+        checked: false
       }
     ]
   },
@@ -93,7 +93,7 @@ export const newRequirementsItems = ref<Application.IItem[]>([
       {
         title: 'Lending Guarantee',
         name: 'lendingGuarantee',
-        checked: true
+        checked: false
       }
     ]
   }
@@ -106,12 +106,12 @@ export const applicationSummaryItems = ref<Application.IItem[]>([
       {
         title: 'Summary Data',
         name: 'summaryData',
-        checked: true
+        checked: false
       },
       {
         title: 'Statement of Position',
         name: 'statementOfPosition',
-        checked: true
+        checked: false
       }
     ]
   }
@@ -121,41 +121,41 @@ export const borrowerSummaryItems = ref<Application.IItem[]>([
   {
     title: 'Contact Details',
     name: 'contactDetails',
-    checked: true
+    checked: false
   },
   {
     title: 'Other Details',
     name: 'otherDetails',
-    checked: true
+    checked: false
   },
   {
     title: 'Employment',
     name: 'employment',
-    checked: true
+    checked: false
   },
   {
     title: 'PAYG-Primary Employment',
     name: 'paygPrimaryEmployment',
-    checked: true
+    checked: false
   },
   {
     title: 'Self Employment - Primary Employment',
     name: 'selfEmploymentPrimaryEmployment',
-    checked: true
+    checked: false
   },
   {
     title: 'Proof of Identity',
     name: 'proofOfIdentity',
-    checked: true
+    checked: false
   },
   {
     title: 'Australian Driver Licence',
     name: 'australianDriverLicence',
-    checked: true
+    checked: false
   },
   {
     title: 'Australian Passport',
     name: 'australianPassport',
-    checked: true
+    checked: false
   }
 ])

@@ -1,15 +1,15 @@
 <template>
   <BasePage title="Create Application" hasBack>
     <view class="border border-#E8EBEE border-solid rounded-lg px-3 py-3 bg-#FCFCFC">
-      <text class="text-28rpx font-bold">Application ID</text>
+      <text class="text-28rpx font-bold">{{ applicationInfo?.referenceNumber }}</text>
       <view class="flex-col mt-3 gap-1">
         <view class="flex items-center gap-1">
-          <text class="text-24rpx font-bold">Doc Type:</text>
-          <text class="text-24rpx">Full Doc</text>
+          <text class="text-24rpx font-bold">Application Name:</text>
+          <text class="text-24rpx">{{ applicationInfo?.applicationName }}</text>
         </view>
-        <view>
-          <text class="text-24rpx font-bold">Application Type:</text>
-          <text class="text-24rpx">Loan</text>
+        <view class="flex items-center gap-1">
+          <text class="text-24rpx font-bold">Documentation Type:</text>
+          <text class="text-24rpx">{{ applicationInfo?.documentType }}</text>
         </view>
       </view>
     </view>
@@ -28,6 +28,11 @@
 
 <script setup lang="ts">
 import { currentSituationItems, newRequirementsItems, applicationSummaryItems } from './constants'
+import { useApplicationStore } from '@/store/modules/application'
+
+const applicationStore = useApplicationStore()
+const { applicationInfo } = toRefs(applicationStore)
+console.log('🚀 ~ applicationInfo:', applicationInfo.value)
 
 const show = ref<boolean>(false)
 const actions = ref([
@@ -62,7 +67,7 @@ function select({ item, index }: { item: Application.IItem; index: number }) {
   console.log(`当前选中项: ${item.name}, 下标: ${index}`)
   if (item.name === 'Borrower') {
     uni.navigateTo({
-      url: '/pages/application/borrowerForm'
+      url: '/pages/application/borrowerSummary'
     })
   }
 }
