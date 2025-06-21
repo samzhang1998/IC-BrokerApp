@@ -10,7 +10,7 @@ export function useUser() {
    */
   const setUserInfo = (item: IUserState) => {
     if (item?.token) {
-      setPushId()
+      setPushId(item.userId)
     }
     return userStoreHook.login(item)
   }
@@ -60,10 +60,20 @@ export function useUser() {
   /**
    * @description 设置推送id
    */
-  const setPushId = async () => {
+  const setPushId = async (id: string | number) => {
     //#ifdef APP-PLUS
     const clientInfo = plus.push.getClientInfo()
-    console.log(clientInfo, 'clientInfo')
+    console.log('🚀 ~ setPushId ~ clientInfo:', clientInfo)
+    const params = {
+      deviceToken: clientInfo.clientid,
+      brokerId: userId.value || id,
+      platform: uni.getSystemInfoSync().platform
+    }
+    console.log('🚀 ~ setPushId ~ params:', params)
+    const [e, r] = await api.updatePushId(params)
+    if (!e && r) {
+      console.log(r, 'r')
+    }
     //#endif
   }
 

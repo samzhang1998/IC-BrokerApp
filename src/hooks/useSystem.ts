@@ -29,19 +29,7 @@ export function useSystem() {
 
       if (data?.pushType === 0) {
         uni.navigateTo({
-          url: '/pages/notification/notification'
-        })
-      } else if (data?.pushType === 1) {
-        uni.reLaunch({
-          url: '/pages/investment/index'
-        })
-      } else if (data?.pushType === 2) {
-        uni.reLaunch({
-          url: '/pages/event/index'
-        })
-      } else if (data?.pushType === 3) {
-        uni.navigateTo({
-          url: `/pages/investment/purchaseDetails?pId=${data.purchaseId}&fId=${data.fundId}`
+          url: '/pages/notifications/index'
         })
       }
     })

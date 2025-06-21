@@ -60,8 +60,7 @@
                 "push" : {
                     "unipush" : {
                         "version" : "2",
-                        "offline" : true,
-                        "fcm" : {}
+                        "offline" : true
                     }
                 }
             },
@@ -100,14 +99,9 @@
             "splashscreen" : {
                 "iosStyle" : "storyboard",
                 "ios" : {
-                    "storyboard" : "/Users/hzsnq/Desktop/github/work/BHGCustomStoryboard.zip"
+                    "storyboard" : "/Users/hzsnq/Desktop/github/work/CRMCustomStoryboard.zip"
                 },
-                "androidStyle" : "common",
-                "android" : {
-                    "xxhdpi" : "/Users/hzsnq/Desktop/github/work/打包证书文件/bhg/1080x1882.png",
-                    "hdpi" : "/Users/hzsnq/Desktop/github/work/打包证书文件/bhg/480x762.png",
-                    "xhdpi" : "/Users/hzsnq/Desktop/github/work/打包证书文件/bhg/720x1242.png"
-                }
+                "androidStyle" : "common"
             }
         }
     },

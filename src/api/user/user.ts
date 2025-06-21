@@ -87,6 +87,17 @@ export function editQualification<T = any>(id: string | number, qId: string | nu
   })
 }
 
+/**
+ * @description 更新推送id
+ * @param query 入参
+ */
+export function updatePushId<T = any>(query: AnyObj): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/device-tokens`,
+    obj: query
+  })
+}
+
 export const userApi = {
   userLogin,
   userLogout,
@@ -95,5 +106,6 @@ export const userApi = {
   getQualificationTypes,
   editQualification,
   getQualification,
-  updatePassword
+  updatePassword,
+  updatePushId
 }
