@@ -34,7 +34,6 @@ declare module 'vue' {
     WdDatePicker: typeof import('wot-design-uni/components/wd-date-picker/wd-date-picker.vue')['default']
     WdDatetimePicker: typeof import('wot-design-uni/components/wd-datetime-picker/wd-datetime-picker.vue')['default']
     WdForm: typeof import('wot-design-uni/components/wd-form/wd-form.vue')['default']
-    WdFormItem: typeof import('wot-design-uni/components/wd-form-item/wd-form-item.vue')['default']
     WdIcon: typeof import('wot-design-uni/components/wd-icon/wd-icon.vue')['default']
     WdInput: typeof import('wot-design-uni/components/wd-input/wd-input.vue')['default']
     WdNavbar: typeof import('wot-design-uni/components/wd-navbar/wd-navbar.vue')['default']

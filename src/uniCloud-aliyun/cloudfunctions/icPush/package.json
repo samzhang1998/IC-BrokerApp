@@ -1,0 +1,8 @@
+{
+  "name": "icPush",
+  "dependencies": {},
+  "main": "index.js",
+  "extensions": {
+    "uni-cloud-push": {}
+  }
+}

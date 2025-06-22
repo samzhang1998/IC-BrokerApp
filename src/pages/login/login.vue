@@ -28,8 +28,8 @@ const loginForm = ref<any>(null)
 onLoad(() => {
   if (token.value) {
     uni.reLaunch({
-      // url: '/pages/dashboard/index'
-      url: '/pages/profile/index'
+      url: '/pages/dashboard/index'
+      // url: '/pages/profile/index'
     })
   }
 })

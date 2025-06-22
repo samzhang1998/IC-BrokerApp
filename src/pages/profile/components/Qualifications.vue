@@ -7,7 +7,7 @@ import { useUser } from '@/hooks/useUser'
 
 const { userId } = useUser()
 
-const { editQualification, getQualification } = useProfile()
+const { editQualification } = useProfile()
 
 const qualificationList = ref<AnyObj[]>([])
 const currentItem = ref<AnyObj>({})
@@ -21,10 +21,6 @@ onMounted(() => {
 
 const statusComputed = computed(() => {
   return function (item: AnyObj) {
-    console.log(item)
-    // 看一下给接口加一个isComplete字段来表示
-    // 如果status是Approved那就是绿色，
-    // status是Pending，如果isComplete是false就是红色，isComplete是true是白色
     return item.status === 'Approved' ? 'green' : item.isComplete ? '' : 'red'
   }
 })

@@ -31,6 +31,16 @@ export function getUserInfo<T = any>(id: string | number, query?: AnyObj): ApiRe
     obj: query || {}
   })
 }
+/**
+ * @description 修改用户密码
+ * @param query 入参
+ */
+export function updatePassword<T = any>(id: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/brokers/${id}/password`,
+    obj: query || {}
+  })
+}
 
 /**
  * @description 编辑用户信息
@@ -39,7 +49,8 @@ export function getUserInfo<T = any>(id: string | number, query?: AnyObj): ApiRe
 export function editUserInfo<T = any>(id: string | number, query?: AnyObj): ApiResponse<T> {
   return http.put({
     method: `api/v1/brokers/${id}`,
-    obj: query || {}
+    obj: query || {},
+    contentType: 'application/json'
   })
 }
 
@@ -71,7 +82,19 @@ export function getQualification<T = any>(id: string | number, qId: string | num
 export function editQualification<T = any>(id: string | number, qId: string | number, query?: AnyObj): ApiResponse<T> {
   return http.put({
     method: `api/v1/brokers/${id}/qualifications/${qId}/fields`,
-    obj: query || {}
+    obj: query || {},
+    contentType: 'application/x-www-form-urlencoded'
+  })
+}
+
+/**
+ * @description 更新推送id
+ * @param query 入参
+ */
+export function updatePushId<T = any>(query: AnyObj): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/device-tokens`,
+    obj: query
   })
 }
 
@@ -82,5 +105,7 @@ export const userApi = {
   editUserInfo,
   getQualificationTypes,
   editQualification,
-  getQualification
+  getQualification,
+  updatePassword,
+  updatePushId
 }

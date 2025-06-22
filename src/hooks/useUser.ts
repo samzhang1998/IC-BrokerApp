@@ -3,14 +3,14 @@ import { useUserStoreHook } from '@/store/modules/user'
 export function useUser() {
   const userStoreHook = useUserStoreHook()
 
-  const { token, roles, clientEmail, userId } = storeToRefs(userStoreHook)
+  const { token, roles, clientEmail, userId, userInfo } = storeToRefs(userStoreHook)
 
   /**
    * @description 设置client信息
    */
   const setUserInfo = (item: IUserState) => {
     if (item?.token) {
-      setPushId()
+      setPushId(item.userId)
     }
     return userStoreHook.login(item)
   }
@@ -60,12 +60,22 @@ export function useUser() {
   /**
    * @description 设置推送id
    */
-  const setPushId = async () => {
+  const setPushId = async (id: string | number) => {
     //#ifdef APP-PLUS
     const clientInfo = plus.push.getClientInfo()
-    console.log(clientInfo, 'clientInfo')
+    console.log('🚀 ~ setPushId ~ clientInfo:', clientInfo)
+    const params = {
+      deviceToken: clientInfo.clientid,
+      brokerId: userId.value || id,
+      platform: uni.getSystemInfoSync().platform
+    }
+    console.log('🚀 ~ setPushId ~ params:', params)
+    const [e, r] = await api.updatePushId(params)
+    if (!e && r) {
+      console.log(r, 'r')
+    }
     //#endif
   }
 
-  return { token, roles, clientEmail, userId, setUserInfo, loginOut, resetToken, setPushId, logOff }
+  return { token, roles, clientEmail, userId, userInfo, setUserInfo, loginOut, resetToken, setPushId, logOff }
 }

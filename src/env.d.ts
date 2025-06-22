@@ -24,6 +24,7 @@ declare namespace Http {
     method: string
     obj: object
     isToken?: boolean
+    contentType?: string
   }
 }
 

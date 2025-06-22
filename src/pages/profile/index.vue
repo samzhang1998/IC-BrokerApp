@@ -60,7 +60,7 @@ provide(ProfileKey, {
           <view class="top">
             <view class="left">
               <view class="name">{{ userInfo?.firstName }}{{ userInfo?.lastName }}</view>
-              <view class="broker">Broker ID: {{ userInfo?.id }}</view>
+              <view class="broker">Broker ID: {{ userInfo?.brokerId }}</view>
             </view>
             <view class="right">{{ userInfo?.status === 1 ? 'Active' : 'InActive' }}</view>
           </view>
@@ -97,6 +97,7 @@ provide(ProfileKey, {
     // height: 274rpx;
     border-radius: 20rpx;
     padding: 20rpx;
+    margin-bottom: 20rpx;
 
     .box {
       background: #ffffff;

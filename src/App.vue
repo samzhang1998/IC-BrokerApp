@@ -13,11 +13,11 @@ onLaunch(() => {
 
   //设置用户信息
   const info: IUserState = uni.getStorageSync('userInfo')
-  // console.log('info', info)
+  console.log('info', info)
   setUserInfo(info)
 
   //监听推送消息
-  // pushMessage()
+  pushMessage()
 })
 onShow(() => {
   console.log('App Show')
