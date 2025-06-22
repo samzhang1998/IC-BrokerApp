@@ -52,7 +52,7 @@ export function updateBorrower<T = any>(
   borrowerId: string | number,
   query?: AnyObj
 ): ApiResponse<T> {
-  return http.put({
+  return http.putJson({
     method: `api/v1/application/${applicationId}/borrowers/${borrowerId}`,
     obj: query || {}
   })

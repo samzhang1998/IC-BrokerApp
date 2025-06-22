@@ -107,6 +107,14 @@ const http = {
       params?.isToken,
       params?.contentType
     ),
+  putJson: <T>(params: Http.Params): Promise<[any, FcResponse<T> | undefined]> =>
+    httpRequestGateway(
+      'PUT',
+      params.method,
+      { ...getCommonParams(), ...params.obj },
+      params?.isToken,
+      'application/json'
+    ),
   delete: <T>(params: Http.Params): Promise<[any, FcResponse<T> | undefined]> =>
     httpRequestGateway(
       'DELETE',
