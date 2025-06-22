@@ -1,6 +1,6 @@
 <template>
   <BasePage title="Notification" hasBack>
-    <view class="flex-col h-full content">
+    <view class="flex-col h-full">
       <view class="flex items-center justify-between" v-if="todayList.length > 0">
         <view class="text">
           Today
@@ -116,9 +116,6 @@ onReachBottom(() => {
 </script>
 
 <style lang="scss" scoped>
-.content {
-  padding: 70rpx 0 50rpx;
-}
 .text {
   color: #7a858e;
   font-size: 32rpx;

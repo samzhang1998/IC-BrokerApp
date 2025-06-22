@@ -1,5 +1,5 @@
 <template>
-  <view class="flex-col h-screen">
+  <view class="h-screen">
     <BaseNavBar :title="title" :hasBack="hasBack" class="min-h-88rpx" @click-left="handleClickLeft"></BaseNavBar>
     <view class="p-4 flex-1">
       <slot></slot>
