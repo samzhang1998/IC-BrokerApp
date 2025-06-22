@@ -44,7 +44,19 @@
       }
     },
     {
+      "path": "pages/application/householdForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/application/borrowerForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/detail",
       "style": {
         "navigationStyle": "custom"
       }

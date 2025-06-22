@@ -5,11 +5,16 @@ import applicationTab from '@/static/icon/application-tab.png'
 import applicationTabAct from '@/static/icon/application-tab-cur.png'
 import progressTab from '@/static/icon/application-tab0.png'
 import progressTabAct from '@/static/icon/application-tab0-cur.png'
+import { useApplicationStore } from '@/store/modules/application'
 
 import { ApplicationItem, Search } from '@/components'
+import { useUserStore } from '@/store/modules/user'
 
 const { token, roles } = useUser()
 const { langStatus } = useLocale()
+const applicationStore = useApplicationStore()
+const userStore = useUserStore()
+const { userInfo } = toRefs(userStore)
 
 onMounted(() => {
   fetchApplicationList()
@@ -27,7 +32,8 @@ const applicationList = ref<Application.IApplication[]>([])
 const searchParams = ref({
   limit: 10,
   offset: 0,
-  status: 'DRAFT'
+  status: 'DRAFT',
+  brokerId: userInfo.value?.id
 })
 
 const fetchApplicationList = async () => {
@@ -49,6 +55,11 @@ const handleToCreate = () => {
     url: '/pages/application/create'
   })
 }
+
+onShow(() => {
+  console.log('onShow')
+  applicationStore.reset()
+})
 </script>
 
 <template>
@@ -79,8 +90,8 @@ const handleToCreate = () => {
         </view>
       </view>
 
-      <view class="list">
-        <view class="item" v-for="item in applicationList" :key="item.applicationId">
+      <view class="p-4 flex-col gap-20rpx">
+        <view v-for="item in applicationList" :key="item.applicationId">
           <ApplicationItem :application="item"></ApplicationItem>
         </view>
       </view>
@@ -139,19 +150,6 @@ const handleToCreate = () => {
       color: #ff754c;
       margin-left: 30rpx;
       font-size: 24rpx;
-    }
-  }
-
-  .list {
-    padding: 32rpx 40rpx;
-
-    .item {
-      background: #fcfcfc;
-      border-radius: 16rpx;
-    }
-
-    .item + .item {
-      margin-top: 20rpx;
     }
   }
 }

@@ -13,10 +13,16 @@ export const useApplicationStore = defineStore(
       }
     }
 
+    const reset = () => {
+      applicationInfo.value = {} as Application.IApplication
+      currentBorrower.value = {} as Application.IBorrowerDetail
+    }
+
     return {
       applicationInfo,
       setApplicationInfo,
-      currentBorrower
+      currentBorrower,
+      reset
     }
   },
   {

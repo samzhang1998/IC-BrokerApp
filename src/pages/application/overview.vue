@@ -1,5 +1,5 @@
 <template>
-  <BasePage title="Create Application" hasBack>
+  <BasePage :title="applicationInfo?.applicationName || 'Create Application'" hasBack>
     <view class="border border-#E8EBEE border-solid rounded-lg px-3 py-3 bg-#FCFCFC">
       <text class="text-28rpx font-bold">{{ applicationInfo?.referenceNumber }}</text>
       <view class="flex-col mt-3 gap-1">
@@ -37,6 +37,8 @@ const handleItemClick = (name: string, item: Application.IItem) => {
   console.log(name, item)
   switch (name) {
     case 'personalApplicants':
+    case 'companyApplicants':
+    case 'trustApplicants':
       uni.navigateTo({
         url: `/pages/application/borrowerSummary?type=${name}&id=${applicationInfo.value?.applicationId}`
       })
@@ -61,5 +63,9 @@ onLoad((options) => {
   if (options?.id) {
     getApplicationDetail(options.id)
   }
+})
+
+onUnload(() => {
+  applicationStore.reset()
 })
 </script>

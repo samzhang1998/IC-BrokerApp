@@ -118,14 +118,6 @@ export const applicationSummaryItems = ref<Application.IItem[]>([
 ])
 
 export const borrowerSummaryItems = ref<Application.IItem[]>([
-  // {
-  //   title: 'New Applicant - Borrower',
-  //   name: 'newApplicantBorrower',
-  //   checked: false,
-  //   children: [
-
-  //   ]
-  // },
   {
     title: 'Contact Details',
     name: 'contactDetails',
@@ -170,5 +162,13 @@ export const borrowerSummaryItems = ref<Application.IItem[]>([
         checked: false
       }
     ]
+  }
+])
+
+export const companyApplicantSummaryItems = ref<Application.IItem[]>([
+  {
+    title: 'Company Details',
+    name: 'companyDetails',
+    checked: false
   }
 ])

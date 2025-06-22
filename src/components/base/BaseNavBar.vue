@@ -1,13 +1,5 @@
 <template>
-  <wd-navbar
-    :title="title"
-    :left-arrow="false"
-    @click-left="handleClickLeft"
-    :bordered="false"
-    fixed
-    placeholder
-    safeAreaInsetTop
-  >
+  <wd-navbar :title="title" :left-arrow="false" :bordered="false" fixed placeholder safeAreaInsetTop>
     <template #left>
       <wd-button type="primary" @click="handleClickLeft" size="small" class="back-btn" v-if="hasBack">
         <wd-icon name="thin-arrow-left" color="#FF754C" size="22rpx"></wd-icon>
@@ -25,8 +17,10 @@ const props = withDefaults(defineProps<IProps>(), {
   hasBack: true
 })
 
+const emit = defineEmits(['click-left'])
+
 function handleClickLeft() {
-  uni.navigateBack()
+  emit('click-left')
 }
 </script>
 

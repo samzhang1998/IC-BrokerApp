@@ -12,6 +12,17 @@ export function getApplicationList<T = any>(query: AnyObj): ApiResponse<T> {
 }
 
 /**
+ * @description 获取活跃的申请列表
+ * @param query 入参
+ */
+export function getApplicationListByActive<T = any>(query: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: 'api/v1/application/active',
+    obj: query
+  })
+}
+
+/**
  * @description 创建申请
  * @param query 入参
  */
@@ -58,11 +69,62 @@ export function updateBorrower<T = any>(
   })
 }
 
+/**
+ * @description 创建家庭开支
+ * @param applicationId 申请ID
+ * @param borrowerId 借款人ID
+ * @param query 入参
+ */
+export function createHousehold<T = any>(
+  applicationId: string | number,
+  borrowerId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/application/${applicationId}/borrowers/${borrowerId}/livingexpenses`,
+    obj: query || {}
+  })
+}
+
+export function getCompanyApplicants<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/companyapplicants`,
+    obj: query || {}
+  })
+}
+
+export function createCompanyApplicant<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/application/${applicationId}/companyapplicants`,
+    obj: query || {}
+  })
+}
+
+export function getTrustApplicants<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/trustapplicants`,
+    obj: query || {}
+  })
+}
+
+export function createTrustApplicant<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/application/${applicationId}/trustapplicants`,
+    obj: query || {}
+  })
+}
+
 export const applicationApi = {
   getApplicationList,
+  getApplicationListByActive,
   createApplication,
   getApplicationDetail,
   getBorrowerDetails,
   createBorrower,
-  updateBorrower
+  updateBorrower,
+  createHousehold,
+  getCompanyApplicants,
+  getTrustApplicants,
+  createCompanyApplicant,
+  createTrustApplicant
 }

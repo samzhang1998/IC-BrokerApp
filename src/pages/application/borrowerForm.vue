@@ -1,5 +1,5 @@
 <template>
-  <BasePage title="Create Application" hasBack>
+  <BasePage :title="applicationInfo?.applicationName || 'Create Application'" hasBack>
     <view class="head-wrap flex-y-center justify-between h-88rpx mb-32rpx">
       <view class="text-28rpx font-bold">
         {{ currentBorrower?.firstName }} ({{ currentBorrower?.applicantType }})
@@ -12,6 +12,9 @@
       </FormItem>
       <FormItem label="Name Title">
         <wd-picker :columns="nameTitleColumns" v-model="formData.nameTitle" placeholder="Select name title" />
+      </FormItem>
+      <FormItem label="First Name">
+        <wd-input type="text" v-model="formData.firstName" placeholder="Enter first name" />
       </FormItem>
       <FormItem label="Middle Name">
         <wd-input type="text" v-model="formData.middleName" placeholder="Enter middle name" />
@@ -63,9 +66,6 @@
           placeholder="Select marital status"
         />
       </FormItem>
-      <FormItem label="Spouse">
-        <wd-input type="text" v-model="formData.spouse" placeholder="Enter spouse" />
-      </FormItem>
       <FormItem label="Next of Kin">
         <wd-input type="text" v-model="formData.kinId" placeholder="Enter Next of Kin ID" />
       </FormItem>
@@ -73,7 +73,17 @@
         <wd-picker :columns="kinRelationColumns" v-model="formData.kinRelation" placeholder="Select kin relation" />
       </FormItem>
       <FormItem label="Household and Living Expenses" labelBold>
-        <wd-input type="text" v-model="formData.livingExpensesId" placeholder="Enter living expenses" />
+        <view class="flex-y-center gap-20rpx">
+          <wd-input
+            type="text"
+            v-model="formData.livingExpensesId"
+            placeholder="Enter living expenses"
+            class="flex-1"
+          />
+          <view class="bg-#FF754C! rounded-full p-0 flex-center text-white p-1" @click="handleCreateHousehold">
+            <wd-icon name="add" size="18px"></wd-icon>
+          </view>
+        </view>
       </FormItem>
       <FormItem label="Solicitor">
         <wd-input type="text" v-model="formData.solicitorId" placeholder="Enter solicitor" />
@@ -101,7 +111,7 @@ watch(
     if (newVal) {
       const cleanNewVal = { ...newVal } as any
       for (const key in cleanNewVal) {
-        if (cleanNewVal[key] === null) {
+        if (cleanNewVal[key] === null && key !== 'address') {
           cleanNewVal[key] = ''
         }
       }
@@ -121,7 +131,8 @@ const handleSubmit = async () => {
   if (!valid) return
   const [e, r] = await api.updateBorrower(applicationInfo.value?.applicationId || '', currentBorrower.value?.id || '', {
     ...formData,
-    applicationId: applicationInfo.value?.applicationId
+    applicationId: applicationInfo.value?.applicationId,
+    type: currentBorrower.value?.applicantType
   })
   if (!e && r) {
     uni.showToast({
@@ -129,6 +140,12 @@ const handleSubmit = async () => {
       icon: 'success'
     })
   }
+}
+
+const handleCreateHousehold = () => {
+  uni.navigateTo({
+    url: `/pages/application/householdForm?applicationId=${applicationInfo.value?.applicationId}`
+  })
 }
 </script>
 

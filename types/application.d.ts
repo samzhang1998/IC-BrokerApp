@@ -174,4 +174,46 @@ declare namespace Application {
       }
     ]
   }
+
+  interface IHousehold {
+    applicationId: number
+    name: string
+    adultsCount: number
+    dependantsCount: number
+    expensesJson: string
+  }
+
+  interface ICompanyApplicant {
+    abn: string
+    acn: string
+    applicationId: number
+    companyName: string
+    dataJson: string
+    dateRegistered: string
+    id: number
+    incomeJson: string
+    numberOfDirectors: number
+    officePhone: string
+    registeredAddress: string
+    registeredCountry: string
+    registeredGst: string
+    registeredState: string
+    tradingAddress: string
+    type: string
+  }
+
+  interface ITrustApplicant {
+    id: number
+    applicationId: number
+    established: string
+    trustStructure: string
+    trustPurpose: string
+    trustName: string
+    establishmentDate: string
+    numberOfTrustees: number
+    numberOfBeneficiaries: number
+    officePhone: string
+    dataJson: string
+    incomeJson: string
+  }
 }

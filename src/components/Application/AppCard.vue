@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed, useAttrs, getCurrentInstance } from 'vue'
+import { ref, watch, computed, getCurrentInstance } from 'vue'
 import editLight from '@/static/icon/edit-light.png'
 
 interface IProps {
@@ -106,9 +106,6 @@ const handleItemClick = (name: string, item: Application.IItem) => {
 const handleHeaderClick = () => {
   emit('header-click')
 }
-
-const attrs = useAttrs()
-console.log('🚀 ~ attrs:', attrs)
 
 const isEdit = computed(() => {
   // 使用 getCurrentInstance 来检测事件监听器

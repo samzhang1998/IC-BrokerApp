@@ -5,7 +5,12 @@ import dashboard1 from '@/static/icon/dashboard-1.png'
 import dashboard2 from '@/static/icon/dashboard-2.png'
 import dashboard3 from '@/static/icon/dashboard-3.png'
 import dashboard4 from '@/static/icon/dashboard-4.png'
-import { ApplicationList } from '@/components'
+import { ApplicationItem } from '@/components'
+import { useUserStore } from '@/store/modules/user'
+
+const userStore = useUserStore()
+const { userInfo } = toRefs(userStore)
+
 const { userId } = useUser()
 const { langStatus } = useLocale()
 
@@ -47,33 +52,6 @@ const dashboardList = ref([
   }
 ])
 
-const applicationList = ref([
-  {
-    id: 'IC4578',
-    title: 'James',
-    time: '15 Mar, 09:45:12',
-    loan: 'Car Loan',
-    value: '200.0',
-    status: 1
-  },
-  {
-    id: 'IC4579',
-    title: 'James',
-    time: '15 Mar, 09:45:12',
-    loan: 'Car Loan',
-    value: '200.0',
-    status: 2
-  },
-  {
-    id: 'IC4580',
-    title: 'James',
-    time: '15 Mar, 09:45:12',
-    loan: 'Car Loan',
-    value: '200.0',
-    status: 3
-  }
-])
-
 async function getProductList() {
   let params = {
     offset: 0,
@@ -86,6 +64,20 @@ async function getProductList() {
     console.log('🚀 ~ getProductList ~ r:', r)
   }
 }
+
+const applicationList = ref<Application.IApplication[]>([])
+
+const fetchApplicationList = async () => {
+  const [e, res] = await api.getApplicationListByActive({})
+  if (!e && res) {
+    console.log(res)
+    applicationList.value = res.content
+  }
+}
+
+onShow(() => {
+  fetchApplicationList()
+})
 </script>
 
 <template>
@@ -116,7 +108,11 @@ async function getProductList() {
             <uni-icons type="bottom" color="#7A858E" size="16"></uni-icons>
           </view>
         </view>
-        <ApplicationList :applicationList="applicationList"></ApplicationList>
+        <view class="p-4 flex-col gap-20rpx">
+          <view v-for="item in applicationList" :key="item.applicationId">
+            <ApplicationItem :application="item"></ApplicationItem>
+          </view>
+        </view>
       </view>
     </view>
 
