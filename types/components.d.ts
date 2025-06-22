@@ -31,7 +31,6 @@ declare module 'vue' {
     WdCellGroup: typeof import('wot-design-uni/components/wd-cell-group/wd-cell-group.vue')['default']
     WdCollapse: typeof import('wot-design-uni/components/wd-collapse/wd-collapse.vue')['default']
     WdCollapseItem: typeof import('wot-design-uni/components/wd-collapse-item/wd-collapse-item.vue')['default']
-    WdDatePicker: typeof import('wot-design-uni/components/wd-date-picker/wd-date-picker.vue')['default']
     WdDatetimePicker: typeof import('wot-design-uni/components/wd-datetime-picker/wd-datetime-picker.vue')['default']
     WdForm: typeof import('wot-design-uni/components/wd-form/wd-form.vue')['default']
     WdIcon: typeof import('wot-design-uni/components/wd-icon/wd-icon.vue')['default']
