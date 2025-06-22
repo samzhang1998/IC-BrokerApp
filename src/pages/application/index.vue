@@ -40,7 +40,7 @@ const fetchApplicationList = async () => {
 
 const handleActive = (index: number) => {
   tabActive.value = index
-  searchParams.value.status = index === 0 ? 'DRAFT' : 'SUBMITTED'
+  searchParams.value.status = index === 0 ? 'DRAFT' : 'ACTIVE'
   fetchApplicationList()
 }
 

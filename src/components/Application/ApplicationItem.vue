@@ -20,6 +20,12 @@ const statusComputed = computed(() => {
   }
 })
 
+const handleClick = () => {
+  uni.navigateTo({
+    url: `/pages/application/overview?id=${props.application.applicationId}`
+  })
+}
+
 // 显式声明默认导出
 defineOptions({
   name: 'ApplicationItem'
@@ -27,7 +33,7 @@ defineOptions({
 </script>
 
 <template>
-  <view class="px-20rpx py-32rpx border border-#E8EBEE border-solid rounded-16rpx">
+  <view class="px-20rpx py-32rpx border border-#E8EBEE border-solid rounded-16rpx" @click="handleClick">
     <view class="top flex-y-center justify-between">
       <view class="flex-y-center gap-20rpx">
         <view class="text-#384144 text-32rpx">{{ application?.applicationName || '' }}</view>

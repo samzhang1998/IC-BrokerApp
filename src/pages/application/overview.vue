@@ -22,53 +22,44 @@
       <wd-button type="primary" block class="bg-#FF754C!" size="large">Submit</wd-button>
       <wd-button type="text" class="text-#7A858E! underline">Save as draft</wd-button>
     </view>
-    <wd-action-sheet v-model="show" :actions="actions" @close="close" @select="select" cancel-text="Cancel" />
   </BasePage>
 </template>
 
 <script setup lang="ts">
 import { currentSituationItems, newRequirementsItems, applicationSummaryItems } from './constants'
 import { useApplicationStore } from '@/store/modules/application'
+import { api } from '@/api'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo } = toRefs(applicationStore)
-console.log('🚀 ~ applicationInfo:', applicationInfo.value)
-
-const show = ref<boolean>(false)
-const actions = ref([
-  {
-    name: 'Borrower'
-  },
-  {
-    name: 'Guarantor'
-  }
-])
-
-function showActions() {
-  show.value = true
-}
-
-function close() {
-  show.value = false
-}
 
 const handleItemClick = (name: string, item: Application.IItem) => {
   console.log(name, item)
   switch (name) {
     case 'personalApplicants':
-      showActions()
+      uni.navigateTo({
+        url: `/pages/application/borrowerSummary?type=${name}&id=${applicationInfo.value?.applicationId}`
+      })
       break
     default:
       break
   }
 }
 
-function select({ item, index }: { item: Application.IItem; index: number }) {
-  console.log(`当前选中项: ${item.name}, 下标: ${index}`)
-  if (item.name === 'Borrower') {
-    uni.navigateTo({
-      url: '/pages/application/borrowerSummary'
-    })
+const getApplicationDetail = async (id: string | undefined) => {
+  if (!id) return
+  const [e, r] = await api.getApplicationDetail(id)
+  if (!e && r) {
+    applicationStore.setApplicationInfo({
+      ...r,
+      applicationId: Number(id)
+    } as unknown as Application.IApplication)
   }
 }
+
+onLoad((options) => {
+  if (options?.id) {
+    getApplicationDetail(options.id)
+  }
+})
 </script>

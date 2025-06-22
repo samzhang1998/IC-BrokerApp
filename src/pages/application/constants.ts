@@ -118,6 +118,14 @@ export const applicationSummaryItems = ref<Application.IItem[]>([
 ])
 
 export const borrowerSummaryItems = ref<Application.IItem[]>([
+  // {
+  //   title: 'New Applicant - Borrower',
+  //   name: 'newApplicantBorrower',
+  //   checked: false,
+  //   children: [
+
+  //   ]
+  // },
   {
     title: 'Contact Details',
     name: 'contactDetails',
@@ -131,31 +139,36 @@ export const borrowerSummaryItems = ref<Application.IItem[]>([
   {
     title: 'Employment',
     name: 'employment',
-    checked: false
+    checked: false,
+    children: [
+      {
+        title: 'PAYG-Primary Employment',
+        name: 'paygPrimaryEmployment',
+        checked: false
+      },
+      {
+        title: 'Self Employment - Primary Employment',
+        name: 'selfEmploymentPrimaryEmployment',
+        checked: false
+      }
+    ]
   },
-  {
-    title: 'PAYG-Primary Employment',
-    name: 'paygPrimaryEmployment',
-    checked: false
-  },
-  {
-    title: 'Self Employment - Primary Employment',
-    name: 'selfEmploymentPrimaryEmployment',
-    checked: false
-  },
+
   {
     title: 'Proof of Identity',
     name: 'proofOfIdentity',
-    checked: false
-  },
-  {
-    title: 'Australian Driver Licence',
-    name: 'australianDriverLicence',
-    checked: false
-  },
-  {
-    title: 'Australian Passport',
-    name: 'australianPassport',
-    checked: false
+    checked: false,
+    children: [
+      {
+        title: 'Australian Driver Licence',
+        name: 'australianDriverLicence',
+        checked: false
+      },
+      {
+        title: 'Australian Passport',
+        name: 'australianPassport',
+        checked: false
+      }
+    ]
   }
 ])

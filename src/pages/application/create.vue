@@ -1,30 +1,26 @@
 <template>
   <BasePage title="Create Application" hasBack>
     <view class="flex-col h-full">
-      <wd-form ref="form" :model="formData" :rules="rules" class="flex-1">
-        <view class="flex-col gap-4">
-          <view class="flex-col gap-3">
-            <text class="text-28rpx">Application Name*</text>
-            <wd-input
-              type="text"
-              v-model="formData.name"
-              placeholder="Enter application name"
-              :rules="rules.name"
-              prop="name"
-            />
-          </view>
-          <view class="flex-col gap-3">
-            <text class="text-28rpx">Documentation Type</text>
-            <wd-picker
-              :columns="columns"
-              v-model="formData.documentType"
-              @confirm="handleConfirm"
-              placeholder="Select documentation type"
-              :rules="rules.documentType"
-              prop="documentType"
-            />
-          </view>
-        </view>
+      <wd-form ref="form" :model="formData" :rules="rules" class="flex-1 flex-col gap-4">
+        <FormItem label="Application Name" required>
+          <wd-input
+            type="text"
+            v-model="formData.name"
+            placeholder="Enter application name"
+            :rules="rules.name"
+            prop="name"
+          />
+        </FormItem>
+        <FormItem label="Documentation Type">
+          <wd-picker
+            :columns="columns"
+            v-model="formData.documentType"
+            @confirm="handleConfirm"
+            placeholder="Select documentation type"
+            :rules="rules.documentType"
+            prop="documentType"
+          />
+        </FormItem>
       </wd-form>
       <view class="flex-col gap-1 mt-3 w-full">
         <wd-button type="primary" block class="bg-#FF754C!" size="large" @click="handleCreate">Create</wd-button>
@@ -65,7 +61,6 @@ const handleCreate = async () => {
   const { valid } = await form.value.validate()
   if (!valid) return
   const [e, r] = await api.createApplication(formData)
-  console.log('🚀 ~ handleCreate ~ r:', r)
   if (!e && r) {
     applicationStore.applicationInfo = r as unknown as Application.IApplication
     uni.navigateTo({
