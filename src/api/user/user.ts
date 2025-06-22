@@ -37,7 +37,7 @@ export function getUserInfo<T = any>(id: string | number, query?: AnyObj): ApiRe
  */
 export function updatePassword<T = any>(id: string | number, query?: AnyObj): ApiResponse<T> {
   return http.post({
-    method: `api/v1/users/${id}/password`,
+    method: `api/v1/brokers/${id}/password`,
     obj: query || {}
   })
 }

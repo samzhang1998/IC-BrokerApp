@@ -54,9 +54,9 @@
 
 <script setup lang="ts">
 import { api } from '@/api'
-import { useUserStore } from '@/store/modules/user'
 
-const userStore = useUserStore()
+import { useUser } from '@/hooks/useUser'
+const { userInfo, resetToken } = useUser()
 
 const form = ref()
 const formData = reactive({
@@ -66,19 +66,17 @@ const formData = reactive({
 })
 
 const rules = ref({
-  oldPassword: [{ required: true, message: 'Please enter application name' }],
-  newPassword: [{ required: true, message: 'Please select documentation type' }],
-  confirmPassword: [{ required: true, message: 'Please select documentation type' }]
+  oldPassword: [{ required: true, message: 'Please enter Current Password' }],
+  newPassword: [{ required: true, message: 'Please enter New Password' }],
+  confirmPassword: [{ required: true, message: 'Please enter Confirm New Password' }]
 })
 
 const handleCreate = async () => {
   const { valid } = await form.value.validate()
   if (!valid) return
-  const [e, r] = await api.updatePassword(userStore.userInfo.id, formData)
-  console.log('🚀 ~ handleCreate ~ r:', r)
+  const [e, r] = await api.updatePassword(userInfo.value.id, formData)
   if (!e && r) {
-    console.log(r)
-    userStore.resetToken()
+    resetToken()
   }
 }
 </script>

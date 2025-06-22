@@ -1,10 +1,10 @@
 <template>
   <BasePage title="Notification" hasBack>
     <view class="flex-col h-full">
-      <view class="flex items-center justify-between">
+      <view class="flex items-center justify-between" v-if="todayList.length > 0">
         <view class="text">
           Today
-          <text v-if="todayList.length > 0" class="text-primary">{{ todayList.length }}</text>
+          <text class="text-primary">{{ todayList.length }}</text>
         </view>
         <!-- <view class="read-all" @click="handleReadAll">Read All</view> -->
       </view>

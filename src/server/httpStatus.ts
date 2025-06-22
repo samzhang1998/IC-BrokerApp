@@ -20,7 +20,7 @@ export const HttpFn: AnyObj = {
     return [false, data?.data]
   },
   NO_CONTENT: function (data: any) {
-    return [true, data]
+    return [false, data]
   },
   CLIENT_ERROR: function (data: any) {
     return [true, data]
