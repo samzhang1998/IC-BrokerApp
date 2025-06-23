@@ -6,7 +6,7 @@
           <check-badge></check-badge>
           <text class="text-28rpx font-bold">{{ headerMap[type].title }}</text>
         </view>
-        <view class="bg-#ff754c! rounded-full flex-center text-white" @click="showActions">
+        <view class="bg-#ff754c! rounded-full flex-center text-white w-40rpx h-40rpx" @click="showActions">
           <wd-icon name="add1" size="22px"></wd-icon>
         </view>
       </view>

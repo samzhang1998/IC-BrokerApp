@@ -112,7 +112,7 @@ const handleCompanyHeaderClick = (borrower: Application.ICompanyApplicant) => {
 const handleTrustHeaderClick = (borrower: Application.ITrustApplicant) => {
   applicationStore.currentTrustApplicant = borrower
   uni.navigateTo({
-    url: `/pages/application/borrowerForm`
+    url: `/pages/application/trustForm`
   })
 }
 const handleItemClick = (name: string, item: Application.IItem) => {
