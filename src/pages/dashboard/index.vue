@@ -1,24 +1,9 @@
 <script setup lang="ts">
-import { useLocale } from '@/hooks/useLocale'
-import { useUser } from '@/hooks/useUser'
 import dashboard1 from '@/static/icon/dashboard-1.png'
 import dashboard2 from '@/static/icon/dashboard-2.png'
 import dashboard3 from '@/static/icon/dashboard-3.png'
 import dashboard4 from '@/static/icon/dashboard-4.png'
 import { ApplicationItem } from '@/components'
-import { useUserStore } from '@/store/modules/user'
-
-const userStore = useUserStore()
-const { userInfo } = toRefs(userStore)
-
-const { userId } = useUser()
-const { langStatus } = useLocale()
-
-onMounted(() => {
-  getProductList()
-})
-
-onShow(() => {})
 
 const navBar = ref({
   isNotification: true,
@@ -52,16 +37,14 @@ const dashboardList = ref([
   }
 ])
 
-async function getProductList() {
-  let params = {
-    offset: 0,
-    limit: 20,
-    brokerId: userId.value
-  }
-  console.log('🚀 ~ getProductList ~ params:', params)
-  const [e, r] = await api.getApplicationList(params)
+async function getStatistics() {
+  const [e, r] = await api.getStatistics({})
   if (!e && r) {
-    console.log('🚀 ~ getProductList ~ r:', r)
+    // console.log('🚀 ~ getStatistics ~ r:', r)
+    dashboardList.value[0].value = r[0].count
+    dashboardList.value[1].value = r[5].count
+    dashboardList.value[2].value = r[6].count
+    dashboardList.value[3].value = r[11].count
   }
 }
 
@@ -77,6 +60,7 @@ const fetchApplicationList = async () => {
 
 onShow(() => {
   fetchApplicationList()
+  getStatistics()
 })
 </script>
 
@@ -133,7 +117,7 @@ onShow(() => {
       width: calc(50% - 10rpx);
       height: 192rpx;
       border: 2rpx solid #e1e1e1;
-      padding: 20rpx 30rpx;
+      padding: 20rpx 20rpx;
       display: flex;
       flex-direction: column;
       justify-content: space-between;

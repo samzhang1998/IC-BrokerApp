@@ -10,7 +10,18 @@ export function getProductList<T = any>(query: AnyObj): ApiResponse<T> {
     obj: query
   })
 }
+/**
+ * @description 获取首页statistics
+ * @param query 入参
+ */
+export function getStatistics<T = any>(query: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: 'api/v1/application/statistics',
+    obj: query
+  })
+}
 
 export const productApi = {
-  getProductList
+  getProductList,
+  getStatistics
 }

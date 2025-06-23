@@ -24,5 +24,8 @@ declare module 'vue' {
     TabBar: typeof import('./../src/components/base/TabBar.vue')['default']
     Toast: typeof import('./../src/components/base/Toast.vue')['default']
     Upload: typeof import('./../src/components/base/Upload.vue')['default']
+    WdButton: typeof import('wot-design-uni/components/wd-button/wd-button.vue')['default']
+    WdIcon: typeof import('wot-design-uni/components/wd-icon/wd-icon.vue')['default']
+    WdNavbar: typeof import('wot-design-uni/components/wd-navbar/wd-navbar.vue')['default']
   }
 }
