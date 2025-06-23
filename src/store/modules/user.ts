@@ -9,7 +9,7 @@ export const useUserStore = defineStore(
     const token = ref('')
     const roles = ref<string[]>([])
     const clientEmail = ref('')
-    const userId = ref('')
+    const userId = ref<string | number>('')
     const userInfo = ref<AnyObj>({})
 
     // 设置角色数组
@@ -22,8 +22,10 @@ export const useUserStore = defineStore(
       token.value = userInfo.token
       roles.value = userInfo.roles
       clientEmail.value = userInfo.clientEmail
-      userId.value = String(userInfo.userId)
-      getUserInfo()
+      userId.value = userInfo.userId
+      if (userId.value) {
+        getUserInfo()
+      }
     }
 
     // 获取用户信息

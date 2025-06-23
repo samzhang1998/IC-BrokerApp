@@ -51,13 +51,6 @@ const statusBarStyle = computed(() => {
 const notifyListLength = ref<number>(0)
 const userRole = ref('')
 
-onMounted(() => {
-  if (token.value && props.isNotification) {
-    userRole.value = roles.value.includes('client') ? 'client' : 'visitor'
-    getNotify()
-  }
-})
-
 const handleBack = () => {
   backToOne()
 }
@@ -75,6 +68,12 @@ const handleToNotify = () => {
     })
   }
 }
+
+onShow(() => {
+  if (token.value && props.isNotification) {
+    getNotify()
+  }
+})
 
 async function getNotify() {
   const [e, r] = await api.unreadCount()

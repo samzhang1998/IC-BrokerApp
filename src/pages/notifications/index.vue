@@ -56,6 +56,7 @@ async function getList() {
   }
   const [e, r] = await api.getNotificationsList(params)
   if (!e && r) {
+    handleReadAll()
     const data = r?.data?.content || []
     if (pageNum.value > 0) {
       if (data <= 0) {
