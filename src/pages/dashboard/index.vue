@@ -16,25 +16,25 @@ const dashboardList = ref([
   {
     id: 1,
     title: 'Submit to IC',
-    value: '36',
+    value: '0',
     icon: dashboard1
   },
   {
     id: 2,
     title: 'Conditional Approval',
-    value: '14',
+    value: '0',
     icon: dashboard2
   },
   {
     id: 3,
     title: 'Formal Approval',
-    value: '24',
+    value: '0',
     icon: dashboard3
   },
   {
     id: 4,
     title: 'Settled',
-    value: '24',
+    value: '0',
     icon: dashboard4
   }
 ])
@@ -63,6 +63,7 @@ const applicationList = ref<Application.IApplication[]>([])
 // }
 
 const fetchApplicationList = async () => {
+  if (!userId.value) return
   const params = {
     limit: 10,
     offset: pageNum.value,

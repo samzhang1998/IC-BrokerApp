@@ -105,6 +105,7 @@ onReachBottom(() => {
           </view>
         </view>
       </view>
+      <no-data></no-data>
     </view>
     <TabBar></TabBar>
   </view>

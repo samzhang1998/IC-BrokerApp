@@ -16,7 +16,9 @@ const popupType = ref<string>('')
 const popupTitle = ref<string>('')
 
 onMounted(() => {
-  getQualificationTypes()
+  if (userId.value) {
+    getQualificationTypes()
+  }
 })
 
 const statusComputed = computed(() => {
