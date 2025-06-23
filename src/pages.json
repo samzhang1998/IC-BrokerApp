@@ -56,6 +56,18 @@
       }
     },
     {
+      "path": "pages/application/companyForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/trustForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/application/detail",
       "style": {
         "navigationStyle": "custom"

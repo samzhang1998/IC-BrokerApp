@@ -29,7 +29,7 @@
         <wd-input type="text" v-model="formData.maidenName" placeholder="Enter mother's maiden name" />
       </FormItem>
       <FormItem label="Has Previous Name" labelBold>
-        <wd-switch v-model="formData.hasPreName" size="small" />
+        <wd-switch v-model="formData.hasPreName" size="medium" />
       </FormItem>
       <FormItem label="Previous Name Title" v-if="formData.hasPreName">
         <wd-input type="text" v-model="formData.preNameTitle" placeholder="Enter previous name title" />

@@ -8,7 +8,25 @@
         :title="`${borrower.firstName ?? 'New Applicant'} (${borrower.applicantType})`"
         v-model:data="borrowerSummaryItems"
         @item-click="handleItemClick"
-        @header-click="handleHeaderClick(borrower)"
+        @header-click="handlePersonalHeaderClick(borrower)"
+      >
+      </AppCard>
+      <AppCard
+        v-for="borrower in companyApplicants"
+        :key="borrower.id"
+        :title="`${borrower.companyName ?? 'New Applicant'} (${borrower.type})`"
+        v-model:data="companyApplicantSummaryItems"
+        @item-click="handleItemClick"
+        @header-click="handleCompanyHeaderClick(borrower)"
+      >
+      </AppCard>
+      <AppCard
+        v-for="borrower in trustApplicants"
+        :key="borrower.id"
+        :title="`${borrower.trustName ?? 'New Applicant'}`"
+        v-model:data="trustApplicantSummaryItems"
+        @item-click="handleItemClick"
+        @header-click="handleTrustHeaderClick(borrower)"
       >
       </AppCard>
     </view>
@@ -16,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { borrowerSummaryItems } from './constants'
+import { borrowerSummaryItems, companyApplicantSummaryItems, trustApplicantSummaryItems } from './constants'
 import { api } from '@/api'
 import { useApplicationStore } from '@/store/modules/application'
 
@@ -77,13 +95,26 @@ const handleCreateBorrower = async (applicantType: string) => {
   }
 }
 
-const handleHeaderClick = (borrower: Application.IBorrowerDetail) => {
+const handlePersonalHeaderClick = (borrower: Application.IBorrowerDetail) => {
   currentBorrower.value = borrower
   uni.navigateTo({
     url: `/pages/application/borrowerForm`
   })
 }
 
+const handleCompanyHeaderClick = (borrower: Application.ICompanyApplicant) => {
+  applicationStore.currentCompanyApplicant = borrower
+  uni.navigateTo({
+    url: `/pages/application/companyForm`
+  })
+}
+
+const handleTrustHeaderClick = (borrower: Application.ITrustApplicant) => {
+  applicationStore.currentTrustApplicant = borrower
+  uni.navigateTo({
+    url: `/pages/application/borrowerForm`
+  })
+}
 const handleItemClick = (name: string, item: Application.IItem) => {
   console.log(name, item)
 }
