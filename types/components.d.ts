@@ -24,8 +24,18 @@ declare module 'vue' {
     TabBar: typeof import('./../src/components/base/TabBar.vue')['default']
     Toast: typeof import('./../src/components/base/Toast.vue')['default']
     Upload: typeof import('./../src/components/base/Upload.vue')['default']
+    WdBadge: typeof import('wot-design-uni/components/wd-badge/wd-badge.vue')['default']
     WdButton: typeof import('wot-design-uni/components/wd-button/wd-button.vue')['default']
+    WdCalendar: typeof import('wot-design-uni/components/wd-calendar/wd-calendar.vue')['default']
+    WdCollapse: typeof import('wot-design-uni/components/wd-collapse/wd-collapse.vue')['default']
+    WdCollapseItem: typeof import('wot-design-uni/components/wd-collapse-item/wd-collapse-item.vue')['default']
     WdIcon: typeof import('wot-design-uni/components/wd-icon/wd-icon.vue')['default']
     WdNavbar: typeof import('wot-design-uni/components/wd-navbar/wd-navbar.vue')['default']
+    WdPicker: typeof import('wot-design-uni/components/wd-picker/wd-picker.vue')['default']
+    WdPopup: typeof import('wot-design-uni/components/wd-popup/wd-popup.vue')['default']
+    WdSwitch: typeof import('wot-design-uni/components/wd-switch/wd-switch.vue')['default']
+    WdTab: typeof import('wot-design-uni/components/wd-tab/wd-tab.vue')['default']
+    WdTabs: typeof import('wot-design-uni/components/wd-tabs/wd-tabs.vue')['default']
+    WdTag: typeof import('wot-design-uni/components/wd-tag/wd-tag.vue')['default']
   }
 }

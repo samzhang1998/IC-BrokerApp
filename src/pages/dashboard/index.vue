@@ -4,7 +4,9 @@ import dashboard2 from '@/static/icon/dashboard-2.png'
 import dashboard3 from '@/static/icon/dashboard-3.png'
 import dashboard4 from '@/static/icon/dashboard-4.png'
 import { ApplicationItem } from '@/components'
+import { useUser } from '@/hooks/useUser'
 
+const { userId } = useUser()
 const navBar = ref({
   isNotification: true,
   backgroundColor: '#fff'
@@ -37,6 +39,8 @@ const dashboardList = ref([
   }
 ])
 
+const pageNum = ref(0)
+
 async function getStatistics() {
   const [e, r] = await api.getStatistics({})
   if (!e && r) {
@@ -50,17 +54,47 @@ async function getStatistics() {
 
 const applicationList = ref<Application.IApplication[]>([])
 
+// const fetchApplicationList = async () => {
+//   const [e, res] = await api.getApplicationListByActive({})
+//   if (!e && res) {
+//     console.log(res)
+//     applicationList.value = res.content
+//   }
+// }
+
 const fetchApplicationList = async () => {
-  const [e, res] = await api.getApplicationListByActive({})
+  const params = {
+    limit: 10,
+    offset: pageNum.value,
+    status: 'ACTIVE',
+    brokerId: userId.value
+  }
+  const [e, res] = await api.getApplicationList(params)
   if (!e && res) {
-    console.log(res)
-    applicationList.value = res.content
+    if (pageNum.value === 0) {
+      applicationList.value = res?.content || []
+    } else {
+      if (res?.content.length <= 0) {
+        pageNum.value = pageNum.value - 1
+        uni.showToast({
+          icon: 'none',
+          title: `There's no more`
+        })
+      } else {
+        applicationList.value = applicationList.value.concat(res?.content || [])
+      }
+    }
   }
 }
 
 onShow(() => {
   fetchApplicationList()
   getStatistics()
+})
+
+onReachBottom(() => {
+  pageNum.value = pageNum.value + 1
+  fetchApplicationList()
 })
 </script>
 
