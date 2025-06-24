@@ -105,7 +105,7 @@ onReachBottom(() => {
           </view>
         </view>
       </view>
-      <no-data></no-data>
+      <no-data v-if="productList.length === 0"></no-data>
     </view>
     <TabBar></TabBar>
   </view>
