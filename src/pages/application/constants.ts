@@ -165,6 +165,30 @@ export const borrowerSummaryItems = ref<Application.IItem[]>([
   }
 ])
 
+//proof of identity 21种
+// {name: "Australian Drivers Licence", category: "Photographic"},
+// {name: "Australian Defence Force ldentity Card", category: "Photographic"},
+// {name: "Australian Passport", category: "Photographic"},
+// {name: "lmmiCard", category: "Photographic"},
+// {name: "International Drivers Licence", category: "Photographic"},
+// {name: "International Passport", category: "Photographic"},
+// {name: "National ldentity Card", category: "Photographic"},
+// {name: "Proof of Age Card", category: "Photographic"},
+// {name: "State or Federal Government Employee Photo ldentity Card", category: "Photographic"},
+// {name: "Australian Birth Certificate", category: "Non Photographic"},
+// {name: "Australian Citizenship Certificate", category: "Non Photographic"},
+// {name: "Centrelink or Social Security Card", category: "Non Photographic"},
+// {name: "Department of Veterans Affairs Card", category: "Non Photographic"},
+// {name: "Descent Certificate", category: "Non Photographic"},
+// {name: "Foreign Birth Certificate", category: "Non Photographic"},
+// {name: "Health Care Card", category: "Non Photographic"},
+// {name: "Medicare Card", category: "Non Photographic"},
+// {name: "Pension Card", category: "Non Photographic"},
+// {name: "Government Benefits Notice", category: "Secondary"},
+// {name: "Marriage Certificate", category: "Secondary"},
+// {name: "Verification of ldentity Document", category: "Secondary"},
+// {name: "Other", category: "Secondary"}
+
 export const companyApplicantSummaryItems = ref<Application.IItem[]>([
   {
     title: 'Contact Details',
