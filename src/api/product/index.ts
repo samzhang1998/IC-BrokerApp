@@ -21,7 +21,15 @@ export function getStatistics<T = any>(query: AnyObj): ApiResponse<T> {
   })
 }
 
+export function getAllProducts(params: AnyObj) {
+  return http.get({
+    method: 'api/v1/products',
+    obj: params
+  })
+}
+
 export const productApi = {
   getProductList,
-  getStatistics
+  getStatistics,
+  getAllProducts
 }

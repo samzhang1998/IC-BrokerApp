@@ -68,6 +68,13 @@ const handleItemClick = (name: string, item: Application.IItem) => {
         url: `/pages/application/otherIncome?type=${name}&id=${applicationInfo.value?.applicationId}`
       })
       break
+    case 'newPurchase':
+    case 'newLoans':
+    case 'contributionFunds':
+      uni.navigateTo({
+        url: `/pages/application/requirements/overview?type=${name}&id=${applicationInfo.value?.applicationId}`
+      })
+      break
     default:
       break
   }

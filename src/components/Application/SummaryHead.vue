@@ -45,6 +45,16 @@ function close() {
 function select({ item }: { item: { name: string; value?: string | number } }) {
   emit('action', item)
 }
+
+watch(
+  () => props.actions,
+  (newVal) => {
+    actions.value = newVal
+  },
+  {
+    deep: true
+  }
+)
 </script>
 
 <style scoped></style>

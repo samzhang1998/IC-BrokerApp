@@ -216,4 +216,32 @@ declare namespace Application {
     dataJson: string
     incomeJson: string
   }
+
+  interface IPurchase {
+    primaryUsage: string
+    type: string
+    estimateMethod: string
+    estimateBasis: string
+    estimatedValue: string
+    usedAsSecurity: boolean
+    contractOfSale: string
+    legalRepresentative: string
+    ownershipProportions: string
+    dataJson: {
+      purpose: string
+      status: string
+      primarySecurity: string
+      principle: string
+      construction: string
+      address: string
+      valuation: string
+      contactType: string
+      details: string
+      transaction: string
+      toBeSold: string
+    }
+    percentJson: { owner: [{ id: string; percentage: number }] }
+    createdAt: string
+    updatedAt: string
+  }
 }
