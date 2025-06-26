@@ -114,6 +114,25 @@ export function createTrustApplicant<T = any>(applicationId: string | number, qu
   })
 }
 
+export function getNewPurchase<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/new-properties`,
+    obj: query || {}
+  })
+}
+export function getProperties<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/properties`,
+    obj: query || {}
+  })
+}
+export function getNewLoan<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/loans`,
+    obj: query || {}
+  })
+}
+
 export const applicationApi = {
   getApplicationList,
   getApplicationListByActive,
@@ -126,5 +145,8 @@ export const applicationApi = {
   getCompanyApplicants,
   getTrustApplicants,
   createCompanyApplicant,
-  createTrustApplicant
+  createTrustApplicant,
+  getNewPurchase,
+  getProperties,
+  getNewLoan
 }

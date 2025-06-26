@@ -112,6 +112,10 @@ onReachBottom(() => {
 </template>
 
 <style lang="scss" scoped>
+.home {
+  width: 100vw;
+  overflow: hidden;
+}
 .content {
   .list {
     margin-top: 40rpx;
