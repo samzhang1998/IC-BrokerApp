@@ -37,6 +37,7 @@ declare module 'vue' {
     WdInput: typeof import('wot-design-uni/components/wd-input/wd-input.vue')['default']
     WdInputNumber: typeof import('wot-design-uni/components/wd-input-number/wd-input-number.vue')['default']
     WdNavbar: typeof import('wot-design-uni/components/wd-navbar/wd-navbar.vue')['default']
+    WdOverlay: typeof import('wot-design-uni/components/wd-overlay/wd-overlay.vue')['default']
     WdPicker: typeof import('wot-design-uni/components/wd-picker/wd-picker.vue')['default']
     WdSwitch: typeof import('wot-design-uni/components/wd-switch/wd-switch.vue')['default']
     WdTable: typeof import('wot-design-uni/components/wd-table/wd-table.vue')['default']
