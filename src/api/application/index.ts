@@ -120,15 +120,38 @@ export function getNewPurchase<T = any>(applicationId: string | number, query?: 
     obj: query || {}
   })
 }
+
 export function getProperties<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
   return http.get({
     method: `api/v1/application/${applicationId}/properties`,
     obj: query || {}
   })
 }
+
 export function getNewLoan<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
   return http.get({
     method: `api/v1/application/${applicationId}/loans`,
+    obj: query || {}
+  })
+}
+
+export function getFee<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/fees/application/${applicationId}`,
+    obj: query || {}
+  })
+}
+
+export function getHistory<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/history`,
+    obj: query || {}
+  })
+}
+
+export function getDocuments<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/documents`,
     obj: query || {}
   })
 }
@@ -148,5 +171,8 @@ export const applicationApi = {
   createTrustApplicant,
   getNewPurchase,
   getProperties,
-  getNewLoan
+  getNewLoan,
+  getFee,
+  getHistory,
+  getDocuments
 }

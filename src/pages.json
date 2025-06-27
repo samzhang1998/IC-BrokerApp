@@ -86,6 +86,18 @@
       }
     },
     {
+      "path": "pages/application/mir",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/issued",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/application/existingProperties",
       "style": {
         "navigationStyle": "custom"

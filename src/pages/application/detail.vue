@@ -1,33 +1,6 @@
 <template>
   <BasePage :title="applicationInfo?.applicationName || ''" hasBack>
-    <view class="border border-#E8EBEE border-solid rounded-lg px-3 py-3 bg-#FCFCFC">
-      <view class="flex-y-center justify-between">
-        <text class="text-28rpx font-bold">{{ applicationInfo?.applicationName }}</text>
-        <view class="flex-y-center gap-10rpx">
-          <wd-icon name="error-circle" size="22px" color="#EB0000"></wd-icon>
-          <wd-icon name="file-paste" size="22px" color="#1CBB8C"></wd-icon>
-        </view>
-      </view>
-      <view class="flex-col mt-3 gap-2">
-        <view class="flex items-center gap-1 text-#FF754C">
-          <text class="text-24rpx">Case ID:</text>
-          <text class="text-24rpx">{{ applicationInfo?.referenceNumber }}</text>
-        </view>
-        <view class="flex items-center gap-1 text-#7A858E">
-          <text class="text-24rpx">Date Create:</text>
-          <text class="text-24rpx">{{ applicationInfo?.createTime }}</text>
-        </view>
-      </view>
-      <view
-        class="border border-#E8EBEE border-solid rounded-lg bg-white text-24rpx mt-2 px-3 py-2 flex-y-center justify-between"
-      >
-        <view class="flex-col gap-1">
-          <view>Conditional Approval</view>
-          <view class="text-#7A858E text-24rpx"> 12/02/2025 11:32:21</view>
-        </view>
-        <wd-icon name="browse" size="22px" color="#7A858E"></wd-icon>
-      </view>
-    </view>
+    <InfoHead :applicationInfo="applicationInfo" :history="history" />
     <wd-button type="primary" block class="bg-#FF754C! rounded flex-y-center" size="large" :round="false">
       <view class="flex-y-center gap-20rpx">
         <wd-icon name="browse" size="22px"></wd-icon>
@@ -117,8 +90,15 @@
         </wd-table>
       </wd-collapse-item>
       <wd-collapse-item custom-body-style="padding:0" title="Securities" name="securities">
+        <view class="item flex-col justify-center">
+          <view class="title">Existed Properties </view>
+        </view>
         <wd-table :data="purchases" :border="false" :height="400">
-          <wd-table-col prop="dataJson.address" label="Address" min-width="150" />
+          <wd-table-col prop="dataJson" label="Address" min-width="150">
+            <template #value="{ row }">
+              <view> {{ row?.dataJson?.address }} </view>
+            </template>
+          </wd-table-col>
           <wd-table-col prop="primaryUsage" label="Primary Usage" width="150" />
           <wd-table-col prop="estimateBasis" label="Estimate Basis" width="150" />
           <wd-table-col prop="estimateMethod" label="Estimate Method" width="150" />
@@ -126,8 +106,15 @@
           <wd-table-col prop="valuationstatus" label="Valuation Status" width="150" />
           <wd-table-col prop="createdAt" label="Created At" width="150" />
         </wd-table>
+        <view class="item flex-col justify-center">
+          <view class="title">New Properties </view>
+        </view>
         <wd-table :data="properties" :border="false" :height="400">
-          <wd-table-col prop="dataJson.address" label="Address" min-width="150" />
+          <wd-table-col prop="dataJson" label="Address" min-width="150">
+            <template #value="{ row }">
+              <view> {{ row?.dataJson?.address }} </view>
+            </template>
+          </wd-table-col>
           <wd-table-col prop="primaryUsage" label="Primary Usage" width="150" />
           <wd-table-col prop="estimateBasis" label="Estimate Basis" width="150" />
           <wd-table-col prop="estimateMethod" label="Estimate Method" width="150" />
@@ -137,19 +124,23 @@
         </wd-table>
       </wd-collapse-item>
       <wd-collapse-item custom-body-style="padding:0" title="Solutions" name="solutions">
-        <wd-table :data="properties" :border="false" :height="400">
+        <wd-table :data="loan" :border="false" :height="400">
           <wd-table-col prop="productName" label="Loan Product" width="150" />
           <wd-table-col prop="type" label="Type" width="150" />
-          <wd-table-col prop="dataJson.term" label="Term" width="150" />
+          <wd-table-col prop="dataJson" label="Term" width="150">
+            <template #value="{ row }">
+              <view> {{ row?.dataJson?.term }} </view>
+            </template>
+          </wd-table-col>
           <wd-table-col prop="settlementDate" label="Settlement Date" width="150" />
           <wd-table-col prop="amountRequested" label="Loan Amount" width="150" />
         </wd-table>
       </wd-collapse-item>
-      <wd-collapse-item title="Fee Summary" name="feeSummary">
-        <wd-table :data="loan" :border="false" :height="400">
-          <wd-table-col prop="name" label="Fee Name" width="150" />
-          <wd-table-col prop="paid" label="How Fee Paid" width="150" />
-          <wd-table-col prop="amount" label="Amount Due" width="150" />
+      <wd-collapse-item custom-body-style="padding:0" title="Fee Summary" name="feeSummary">
+        <wd-table :data="fee" :border="false" :height="400">
+          <wd-table-col prop="name" label="Fee Name" width="130" />
+          <wd-table-col prop="paid" label="How Fee Paid" width="130" />
+          <wd-table-col prop="amount" label="Amount Due" width="130" />
         </wd-table>
       </wd-collapse-item>
     </wd-collapse>
@@ -159,17 +150,36 @@
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
 import { api } from '@/api'
+import InfoHead from '@/components/Application/InfoHead.vue'
 
 const applicationId = ref('')
 const applicationStore = useApplicationStore()
 
-const activeList = ref<string[]>(['securities'])
+const activeList = ref<string[]>([''])
 
 const applicationInfo: AnyObj = computed(() => applicationStore.applicationInfo)
 
 const purchases = ref<AnyObj[]>([])
 const properties = ref<AnyObj[]>([])
 const loan = ref<AnyObj[]>([])
+const fee = ref<AnyObj[]>([])
+const history = ref<AnyObj[]>([
+  { status: 'Submit to IC', timeStamp: '' },
+  { status: 'Pre-assessment', timeStamp: '' },
+  { status: 'Full-assessment', timeStamp: '' },
+  { status: 'AIP', timeStamp: '' },
+  { status: 'Submit to Funder', timeStamp: '' },
+  { status: 'Conditional Approval', timeStamp: '' },
+  { status: 'Formal Approval', timeStamp: '' },
+  { status: 'Instruct to Solicitor', timeStamp: '' },
+  { status: 'Loan doc Issued', timeStamp: '' },
+  { status: 'Loan doc Returned', timeStamp: '' },
+  { status: 'Settlement Date Booked', timeStamp: '' },
+  { status: 'Settled', timeStamp: '' },
+  { status: 'Decline', timeStamp: '' },
+  { status: 'Withdrawal', timeStamp: '' }
+])
+
 const getApplicationDetail = async (id: string | undefined) => {
   if (!id) return
   const [e, r] = await api.getApplicationDetail(id)
@@ -185,16 +195,18 @@ onLoad((options) => {
   if (options?.id) {
     applicationId.value = options.id
     getApplicationDetail(options.id)
+    getHistory()
   }
 })
 
 const handleChange = (e: AnyObj) => {
-  console.log(e)
   if (e.value === 'securities') {
     getPurchases()
     getAllProperties()
   } else if (e.value === 'solutions') {
     getNewLoan()
+  } else if (e.value === 'feeSummary') {
+    getFee()
   }
 }
 
@@ -202,7 +214,9 @@ async function getPurchases() {
   if (!applicationId.value) return
   const [e, r] = await api.getNewPurchase(applicationId.value)
   if (!e && r) {
-    purchases.value = r.filter((item: AnyObj) => item.usedAsSecurity === true)
+    console.log(r)
+    const data = r || []
+    purchases.value = data.filter((item: AnyObj) => item.usedAsSecurity === true)
   }
 }
 
@@ -210,7 +224,9 @@ async function getAllProperties() {
   if (!applicationId.value) return
   const [e, r] = await api.getProperties(applicationId.value)
   if (!e && r) {
-    properties.value = r.filter((item: AnyObj) => item.usedAsSecurity === true)
+    console.log('getAllProperties', r)
+    const data = r || []
+    properties.value = data.filter((item: AnyObj) => item.usedAsSecurity === true)
   }
 }
 
@@ -218,7 +234,119 @@ const getNewLoan = async () => {
   if (!applicationId.value) return
   const [e, r] = await api.getNewLoan(applicationId.value)
   if (!e && r) {
-    loan.value = r.filters(Boolean)
+    const data = r || []
+    console.log('🚀 ~ getNewLoan ~ data:', data)
+    loan.value = data.filter(Boolean)
+  }
+}
+
+const getFee = async () => {
+  if (!applicationId.value) return
+  const [e, r] = await api.getFee(applicationId.value)
+  if (!e && r) {
+    console.log('🚀 ~ getFee ~ r:', r)
+    let allFees: AnyObj[] = []
+    const data = r || []
+    // fee.value = data.filter(Boolean)
+    // Parse feeJson (existing fees) - handle both object and array formats
+    if (data.feeJson) {
+      try {
+        const feeJson = typeof data.feeJson === 'string' ? JSON.parse(data.feeJson) : data.feeJson
+
+        if (typeof feeJson === 'object' && !Array.isArray(feeJson)) {
+          // API object format: { "Application Fee": { "Amount": 100, "Selected": true, "Payment Method": "Pay Now" } }
+          const activeFees = Object.entries(feeJson)
+            .filter(([feeName, feeData]) => (feeData as any)['Selected'])
+            .map(([feeName, feeData]) => ({
+              feeName: feeName,
+              amount: (feeData as any)['Amount'] || 0,
+              paymentMethod: (feeData as any)['Payment Method'] || 'Pay Now',
+              checked: (feeData as any)['Selected']
+            }))
+          allFees.push(...activeFees)
+        } else if (Array.isArray(feeJson)) {
+          // Legacy array format
+          const activeFees = feeJson.filter((fee) => fee.checked)
+          allFees.push(...activeFees)
+        }
+      } catch (e) {
+        console.warn('Failed to parse feeJson:', e)
+      }
+    }
+
+    // Parse newFeeJson (additional fees) - handle both object and array formats
+    if (data.newFeeJson) {
+      try {
+        const newFeeJson = typeof data.newFeeJson === 'string' ? JSON.parse(data.newFeeJson) : data.newFeeJson
+
+        if (typeof newFeeJson === 'object' && !Array.isArray(newFeeJson)) {
+          // API object format
+          const activeNewFees = Object.entries(newFeeJson)
+            .filter(([feeName, feeData]: any) => feeData['Selected'])
+            .map(([feeName, feeData]) => ({
+              feeName: feeName,
+              amount: (feeData as any)['Amount'] || 0,
+              paymentMethod: (feeData as any)['Payment Method'] || 'Pay Now',
+              checked: (feeData as any)['Selected']
+            }))
+          allFees.push(...activeNewFees)
+          console.log('Active fees from newFeeJson (object format):', activeNewFees)
+        } else if (Array.isArray(newFeeJson)) {
+          // Legacy array format
+          const activeNewFees = newFeeJson.filter((fee) => fee.checked)
+          allFees.push(...activeNewFees)
+          console.log('Active fees from newFeeJson (array format):', activeNewFees)
+        }
+      } catch (e) {
+        console.warn('Failed to parse newFeeJson:', e)
+      }
+    }
+
+    // Parse tempFeeJson (temporary fees) - usually array format
+    if (data.tempFeeJson) {
+      try {
+        const tempFeeJson = typeof data.tempFeeJson === 'string' ? JSON.parse(data.tempFeeJson) : data.tempFeeJson
+        if (Array.isArray(tempFeeJson)) {
+          const activeTempFees = tempFeeJson.filter((fee) => fee.checked)
+          allFees.push(...activeTempFees)
+          console.log('Active fees from tempFeeJson:', activeTempFees)
+        }
+      } catch (e) {
+        console.warn('Failed to parse tempFeeJson:', e)
+      }
+    }
+    console.log('🚀 ~ getFee ~ allFees:', allFees)
+    if (allFees.length > 0) {
+      allFees = allFees.map((fee) => ({
+        name: fee.feeName || 'Unknown Fee',
+        amount: fee.amount ? `$${parseFloat(fee.amount).toFixed(2)}` : '$0.00',
+        paid: fee.paymentMethod || 'Not specified'
+      }))
+      console.log('Updated fee summary data:', allFees)
+    } else {
+      console.log('No active fees found')
+      allFees = []
+    }
+    fee.value = allFees
+  }
+}
+
+const getHistory = async () => {
+  if (!applicationId.value) return
+  const [e, r] = await api.getHistory(applicationId.value)
+  if (!e && r) {
+    console.log('🚀 ~ getHistory ~ r:', r)
+    history.value = history.value.map((item: AnyObj) => {
+      const found = r.find((b: AnyObj) => b.status === item.status)
+      if (found) {
+        return {
+          ...item,
+          ...found
+        }
+      } else {
+        return item
+      }
+    })
   }
 }
 
@@ -242,18 +370,18 @@ function isStrictJSON(str: string) {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .item {
   font-size: 28rpx;
   height: 120rpx;
+}
 
-  .title {
-    color: #384144;
-  }
+.title {
+  color: #384144;
+}
 
-  .value {
-    color: #7a858e;
-  }
+.value {
+  color: #7a858e;
 }
 
 .item + .item {
