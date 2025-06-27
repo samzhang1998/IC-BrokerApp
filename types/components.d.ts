@@ -17,6 +17,7 @@ declare module 'vue' {
     CheckBadge: typeof import('./../src/components/Application/CheckBadge.vue')['default']
     CollapseItem: typeof import('./../src/components/Application/CollapseItem.vue')['default']
     FormItem: typeof import('./../src/components/base/FormItem.vue')['default']
+    InfoHead: typeof import('./../src/components/Application/InfoHead.vue')['default']
     NavBar: typeof import('./../src/components/base/NavBar.vue')['default']
     NoData: typeof import('./../src/components/base/NoData.vue')['default']
     ScrollTop: typeof import('./../src/components/base/ScrollTop.vue')['default']
