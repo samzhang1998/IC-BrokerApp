@@ -244,4 +244,55 @@ declare namespace Application {
     createdAt: string
     updatedAt: string
   }
+
+  interface IContactDetails {
+    applicationId: number
+    applicationStatus: string
+    primaryApplicant: boolean
+    nameTitle: string
+    firstName: string
+    middleName: string
+    lastName: string
+    knownAs: string
+    maidenName: string
+    hasPreName: boolean
+    preNameTitle: string
+    preFirstName: string
+    preMiddleName: string
+    preLastName: string
+    gender: string
+    dob: string
+    residencyStatus: string
+    principalForeignResidence: string
+    citizenship: string
+    maritalStatus: string
+    spouse: number
+    kinType: string
+    kinId: number
+    kinRelation: string
+    livingExpensesId: number
+    solicitorId: number
+    accountantId: number
+    homePhone: string
+    workPhone: string
+    mobile: string
+    email: { address: string; type: string; email_address: string; email_type: string }[]
+    address: {
+      current_address: {
+        residential_address: string
+        start_date: string
+        housing_status: string
+        mailing_address: string
+      }
+      previous_addresses: [
+        { residential_address: string; start_date: string; end_date: string; housing_status: string }
+      ]
+      post_settlement_address: { residential_address: string; housing_status: string; mailing_address: string }
+    }
+    privacyActConsentSigned: boolean
+    signedDate: string
+    createdAt: string
+    updatedAt: string
+    type: string
+  }
 }

@@ -38,31 +38,43 @@
       }
     },
     {
-      "path": "pages/application/borrowerSummary",
+      "path": "pages/application/applicants/summary",
       "style": {
         "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/application/householdForm",
+      "path": "pages/application/applicants/personal/householdForm",
       "style": {
         "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/application/borrowerForm",
+      "path": "pages/application/applicants/personal/personalForm",
       "style": {
         "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/application/companyForm",
+      "path": "pages/application/applicants/personal/contactDetailsForm",
       "style": {
         "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/application/trustForm",
+      "path": "pages/application/applicants/personal/otherDetailForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/applicants/companyForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/applicants/trustForm",
       "style": {
         "navigationStyle": "custom"
       }

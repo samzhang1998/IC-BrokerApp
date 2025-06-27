@@ -86,16 +86,6 @@ export const newRequirementsItems = ref<Application.IItem[]>([
         checked: false
       }
     ]
-  },
-  {
-    title: 'Cuarantee',
-    children: [
-      {
-        title: 'Lending Guarantee',
-        name: 'lendingGuarantee',
-        checked: false
-      }
-    ]
   }
 ])
 
@@ -214,3 +204,20 @@ export const trustApplicantSummaryItems = ref<Application.IItem[]>([
     checked: false
   }
 ])
+
+export const StageMap: Record<string, { status: string; color: string }> = {
+  'Submit to IC': { status: 'Submit to IC', color: '#FF754C' },
+  'Pre-assessment': { status: 'Pre-assessment', color: '#FF754C' },
+  'Full-assessment': { status: 'Full-assessment', color: '#FF754C' },
+  AIP: { status: 'AIP', color: '#FF754C' },
+  'Submit to Funder': { status: 'Submit to Funder', color: '#FF754C' },
+  'Conditional Approval': { status: 'Conditional Approval', color: '#1CBB8C' },
+  'Formal Approval': { status: 'Formal Approval', color: '#1CBB8C' },
+  'Instruct to Solicitor': { status: 'Instruct to Solicitor', color: '#2196F3' },
+  'Loan doc Issued': { status: 'Loan doc Issued', color: '#2196F3' },
+  'Loan doc Returned': { status: 'Loan doc Returned', color: '#2196F3' },
+  'Settlement Date Booked': { status: 'Settlement Date Booked', color: '#2196F3' },
+  Settled: { status: 'Settled', color: '#2196F3' },
+  Decline: { status: 'Decline', color: '#EB0000' },
+  Withdrawal: { status: 'Withdrawal', color: '#EB0000' }
+}

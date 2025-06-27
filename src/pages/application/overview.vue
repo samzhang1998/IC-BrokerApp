@@ -16,7 +16,6 @@
     <view>
       <AppCard title="Current Situation" v-model:data="currentSituationItems" @item-click="handleItemClick"> </AppCard>
       <AppCard title="New Requirements" v-model:data="newRequirementsItems" @item-click="handleItemClick"> </AppCard>
-      <AppCard title="Summary" v-model:data="applicationSummaryItems" @item-click="handleItemClick"> </AppCard>
     </view>
     <view class="flex-col gap-1 mt-3 w-full">
       <wd-button type="primary" block class="bg-#FF754C!" size="large">Submit</wd-button>
@@ -40,7 +39,7 @@ const handleItemClick = (name: string, item: Application.IItem) => {
     case 'companyApplicants':
     case 'trustApplicants':
       uni.navigateTo({
-        url: `/pages/application/borrowerSummary?type=${name}&id=${applicationInfo.value?.applicationId}`
+        url: `/pages/application/applicants/summary?type=${name}&id=${applicationInfo.value?.applicationId}`
       })
       break
     case 'existingProperties':

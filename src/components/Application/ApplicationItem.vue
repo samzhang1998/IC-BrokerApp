@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { formatDate } from '@/utils'
+import { StageMap } from '@/pages/application/constants'
 interface IProps {
   application: Application.IApplication
 }
@@ -55,7 +56,10 @@ defineOptions({
           </view>
           <view class="text-#7A858E text-24rpx">{{ firstLoan?.productName }}</view>
         </view>
-        <view class="text-#FF754C bg-#FF754C17 text-20rpx rounded-30rpx h-48rpx flex-center px-20rpx shrink-0">
+        <view
+          class="text-white bg-#FF754C17 text-20rpx rounded-30rpx h-48rpx flex-center px-20rpx shrink-0"
+          :style="{ backgroundColor: StageMap[application?.stage]?.color }"
+        >
           {{ application?.stage }}
         </view>
       </view>
