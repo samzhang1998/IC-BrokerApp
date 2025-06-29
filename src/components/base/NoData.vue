@@ -14,7 +14,7 @@ const title = ref('No Data')
 
 <style lang="scss" scoped>
 .no-data {
-  width: 100vw;
+  max-width: 100vw;
   height: 1000rpx;
   display: flex;
   justify-content: center;

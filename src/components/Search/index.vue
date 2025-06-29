@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-const value = ref('')
+const inputValue = ref('')
 
-const iconClick = () => {
-  console.log('iconClick')
+const emits = defineEmits(['search'])
+
+const inputChange = () => {
+  emits('search', inputValue.value)
 }
 </script>
 
@@ -12,14 +14,18 @@ const iconClick = () => {
       <uni-easyinput
         class="input"
         prefixIcon="search"
-        v-model="value"
+        v-model="inputValue"
         :inputBorder="false"
         placeholder="Search..."
-        @change="iconClick"
+        @change="inputChange"
+        @clear="inputChange"
       >
       </uni-easyinput>
     </view>
-    <view class="icon"><uni-icons type="settings" color="#7A858E" size="18"></uni-icons></view>
+    <view class="icon">
+      <!-- <uni-icons type="settings" color="#7A858E" size="18"></uni-icons> -->
+      <slot name="right"></slot>
+    </view>
   </view>
 </template>
 

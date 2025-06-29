@@ -9,12 +9,14 @@ import { useApplicationStore } from '@/store/modules/application'
 
 import { ApplicationItem, Search } from '@/components'
 import { useUserStore } from '@/store/modules/user'
+import dayjs from 'dayjs'
 
 const { token, roles } = useUser()
 const { langStatus } = useLocale()
 const applicationStore = useApplicationStore()
 const userStore = useUserStore()
 const { userInfo } = toRefs(userStore)
+const show = ref(false)
 
 onMounted(() => {
   fetchApplicationList()
@@ -29,15 +31,35 @@ const navBar = ref({
 
 const tabActive = ref(0)
 const applicationList = ref<Application.IApplication[]>([])
-const searchParams = ref({
+const searchParams = ref<AnyObj>({
   limit: 10,
   offset: 0,
   status: 'DRAFT',
   brokerId: userInfo.value?.id
 })
+const dateValue = ref<number[]>([])
+const documents = ref([
+  { value: 'Full Doc', label: 'Full Doc' },
+  { value: 'Loc Doc', label: 'Loc Doc' },
+  { value: 'Expat Doc', label: 'Expat Doc' },
+  { value: 'Lease Doc', label: 'Lease Doc' }
+])
+const documentValue = ref<string>('')
+const inputValue = ref<string>('')
 
 const fetchApplicationList = async () => {
-  const [e, res] = await api.getApplicationList(searchParams.value)
+  let params = JSON.parse(JSON.stringify(searchParams.value))
+  if (documentValue.value) {
+    params.documentType = documentValue.value
+  }
+  if (dateValue.value.length > 0) {
+    params.startTime = dayjs(dateValue.value[0]).format('YYYY-MM-DD')
+    params.endTime = dayjs(dateValue.value[1]).format('YYYY-MM-DD')
+  }
+  if (inputValue.value) {
+    params.name = inputValue.value
+  }
+  const [e, res] = await api.getApplicationList(params)
   if (!e && res) {
     console.log(res)
     applicationList.value = res.content
@@ -60,6 +82,33 @@ onShow(() => {
   console.log('onShow')
   applicationStore.reset()
 })
+
+const handleSearch = (value: string) => {
+  console.log('🚀 ~ handleSearch ~ value:', value)
+  inputValue.value = value
+  searchParams.value.offset = 0
+  fetchApplicationList()
+}
+
+const handleFilter = () => {
+  console.log('🚀 ~ handleFilter ~ value:')
+  show.value = true
+}
+
+const handleToFilter = () => {
+  searchParams.value.offset = 0
+  show.value = false
+  fetchApplicationList()
+}
+
+const handleToReset = () => {
+  documentValue.value = ''
+  dateValue.value = []
+  inputValue.value = ''
+  searchParams.value.offset = 0
+  show.value = false
+  fetchApplicationList()
+}
 </script>
 
 <template>
@@ -72,7 +121,13 @@ onShow(() => {
     </NavBar>
 
     <view class="content">
-      <Search></Search>
+      <Search @search="handleSearch">
+        <template #right>
+          <view class="icon">
+            <uni-icons type="settings" color="#7A858E" size="18" @click="handleFilter"></uni-icons>
+          </view>
+        </template>
+      </Search>
       <view class="tab-wrapper">
         <view class="flex-y-center">
           <view :class="[tabActive === 0 ? 'item act' : 'item', 'flex-y-center shrink-0']" @click="handleActive(0)">
@@ -96,6 +151,23 @@ onShow(() => {
         </view>
       </view>
     </view>
+
+    <wd-action-sheet v-model="show" title="Filter">
+      <view class="p-20">
+        <view class="mb-4">
+          <view class="mb-2">Document Type</view>
+          <wd-picker :columns="documents" v-model="documentValue" value-key="value" label-key="label" />
+        </view>
+        <view class="mb-4">
+          <view class="mb-2">Date Range</view>
+          <wd-calendar type="daterange" v-model="dateValue" />
+        </view>
+        <view class="flex justify-center items-center gap-10">
+          <wd-button type="info" @click="handleToReset">Reset</wd-button>
+          <wd-button custom-class="bg-#FF754C!" @click="handleToFilter">Filter</wd-button>
+        </view>
+      </view>
+    </wd-action-sheet>
 
     <TabBar></TabBar>
   </view>
@@ -152,5 +224,9 @@ onShow(() => {
       font-size: 24rpx;
     }
   }
+}
+
+.p-20 {
+  padding: 40rpx !important;
 }
 </style>

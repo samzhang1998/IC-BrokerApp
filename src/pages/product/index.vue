@@ -65,7 +65,7 @@ onReachBottom(() => {
       <template #right> </template>
     </NavBar>
     <view class="content">
-      <Search></Search>
+      <!-- <Search></Search> -->
       <view class="list">
         <view class="item" v-for="item in productList" :key="item.name">
           <view class="top">

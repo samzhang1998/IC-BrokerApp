@@ -87,10 +87,10 @@ export default {
         // console.log('演示服务器返回的字符串JSON转Object对象')
         const responseText = JSON.parse(item.responseText)
         console.log(responseText, '上传成功的数据')
-        if (responseText?.filePath) {
+        if (responseText?.filePath || responseText?.docPath) {
           this.imageValue.push({
             name: item.name,
-            url: responseText.filePath
+            url: responseText?.filePath || responseText?.docPath
           })
           this.btnLoading = false
           uni.hideLoading()

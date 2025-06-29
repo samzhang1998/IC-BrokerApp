@@ -1,9 +1,16 @@
 <template>
   <BasePage title="Issued Document" hasBack>
-    <InfoHead :applicationInfo="applicationInfo" :history="history" />
+    <InfoHead :applicationInfo="applicationInfo" :history="history" :showMir="true" :showIssued="false" />
+    <view class="title flex items-center">Issued Document</view>
     <wd-table :data="documents" :border="false" :height="400" :showHeader="false">
-      <wd-table-col prop="filename" label="File Name" width="50%" />
-      <wd-table-col prop="filepath" label="Operations" width="50%" />
+      <wd-table-col prop="filename" label="File Name" width="80%" />
+      <wd-table-col prop="filepath" label="Operations" width="20%">
+        <template #value="{ row }">
+          <view class="flex justify-end w-full">
+            <wd-icon name="file-paste" size="22px" color="#FF754C" @click="handleDownload(row?.filepath)"></wd-icon>
+          </view>
+        </template>
+      </wd-table-col>
     </wd-table>
   </BasePage>
 </template>
@@ -12,6 +19,9 @@
 import { useApplicationStore } from '@/store/modules/application'
 import { api } from '@/api'
 import InfoHead from '@/components/Application/InfoHead.vue'
+import { useDownLoad } from '@/hooks/useDownLoad'
+
+const { downloadFile } = useDownLoad()
 
 const applicationId = ref('')
 const applicationStore = useApplicationStore()
@@ -76,41 +86,28 @@ const getHistory = async () => {
 
 const getDocuments = async () => {
   if (!applicationId.value) return
-  const [e, r] = await api.getDocuments(applicationId.value)
+  let [e, r] = await api.getDocuments(applicationId.value)
   if (!e && r) {
     console.log('🚀 ~ getDocuments ~ r:', r)
     documents.value = r.filter(Boolean) || []
   }
 }
+
+function handleDownload(url: string) {
+  if (!url) return
+  downloadFile(`api/v1/file/download?filePath=${url}`)
+}
 </script>
 
 <style lang="scss" scoped>
-.item {
-  font-size: 28rpx;
-  height: 120rpx;
-}
-
 .title {
-  color: #384144;
-}
-
-.value {
-  color: #7a858e;
-}
-
-.border {
-  font-size: 24rpx;
-}
-
-.item + .item,
-.border + .border {
-  border-top: 1px solid #e8ebee;
-}
-
-.wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+  height: 80rpx;
+  background: #384144;
+  border-top-left-radius: 16rpx;
+  border-top-right-radius: 16rpx;
+  font-size: 28rpx;
+  color: #fafafa;
+  padding-left: 20rpx;
+  margin-top: 32rpx;
 }
 </style>

@@ -167,6 +167,24 @@ export function postEmployment<T = any>(
   })
 }
 
+export function getMirDocuments<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/applications/${applicationId}/mir/documents`,
+    obj: query || {}
+  })
+}
+
+export function putMirDocuments<T = any>(
+  applicationId: string | number,
+  documentId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.putJson({
+    method: `api/applications/${applicationId}/mir/documents/${documentId}/notes`,
+    obj: query || {}
+  })
+}
+
 export const applicationApi = {
   getApplicationList,
   getApplicationListByActive,
@@ -186,5 +204,7 @@ export const applicationApi = {
   getFee,
   getHistory,
   getDocuments,
-  postEmployment
+  postEmployment,
+  getMirDocuments,
+  putMirDocuments
 }
