@@ -25,3 +25,13 @@
     }
   }
 }
+
+.wd-textarea {
+  padding: 0 !important;
+
+  .wd-textarea__value {
+    border-radius: 16rpx;
+    border: 1px solid #e8ebee;
+    padding: 10rpx 20rpx !important;
+  }
+}

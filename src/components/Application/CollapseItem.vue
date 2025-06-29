@@ -1,7 +1,7 @@
 <template>
-  <wd-collapse-item custom-body-style="padding:0" :name="name" @click="handleClick">
+  <wd-collapse-item custom-body-style="padding:0" :name="name">
     <template #title>
-      <view class="flex-y-center gap-3 justify-between">
+      <view class="flex-y-center gap-3 justify-between" @click="handleClick">
         <view class="flex-y-center gap-3 pl-10rpx">
           <CheckBadge :checked="checked" />
           <text class="text-24rpx font-500">{{ title }}</text>

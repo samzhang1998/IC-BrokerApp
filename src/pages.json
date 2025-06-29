@@ -74,6 +74,24 @@
       }
     },
     {
+      "path": "pages/application/applicants/personal/paygEmploymentForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/applicants/personal/selfEmploymentForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/applicants/personal/notEmploymentForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/application/applicants/companyForm",
       "style": {
         "navigationStyle": "custom"

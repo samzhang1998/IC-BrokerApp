@@ -9,6 +9,8 @@ export const useApplicationStore = defineStore(
     const currentCompanyApplicant = ref<Application.ICompanyApplicant>()
     const currentTrustApplicant = ref<Application.ITrustApplicant>()
     const borrowerDetails = ref<Application.IBorrowerDetail[]>([])
+    // 当前就业状态
+    const currentEmploymentItem = ref<Application.IBorrowerDetail['employmentStatuses'][0]>()
 
     const setApplicationInfo = (info: Application.IApplication) => {
       applicationInfo.value = {
@@ -23,6 +25,7 @@ export const useApplicationStore = defineStore(
       currentCompanyApplicant.value = {} as Application.ICompanyApplicant
       currentTrustApplicant.value = {} as Application.ITrustApplicant
       borrowerDetails.value = []
+      currentEmploymentItem.value = {} as Application.IBorrowerDetail['employmentStatuses'][0]
     }
 
     const fetchBorrowerDetails = async () => {
@@ -44,6 +47,7 @@ export const useApplicationStore = defineStore(
       currentCompanyApplicant,
       currentTrustApplicant,
       borrowerDetails,
+      currentEmploymentItem,
       reset,
       fetchBorrowerDetails,
       getCurrentBorrowerById

@@ -185,6 +185,41 @@ export function putMirDocuments<T = any>(
   })
 }
 
+export function putPaygEmployment<T = any>(
+  applicationId: string | number,
+  borrowerId: string | number,
+  employmentId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.putJson({
+    method: `api/v1/application/${applicationId}/borrowers/${borrowerId}/employment/${employmentId}/payg`,
+    obj: query || {}
+  })
+}
+export function putSelfEmployment<T = any>(
+  applicationId: string | number,
+  borrowerId: string | number,
+  employmentId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.putJson({
+    method: `api/v1/application/${applicationId}/borrowers/${borrowerId}/employment/${employmentId}/self`,
+    obj: query || {}
+  })
+}
+
+export function putNotEmployment<T = any>(
+  applicationId: string | number,
+  borrowerId: string | number,
+  employmentId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.putJson({
+    method: `api/v1/application/${applicationId}/borrowers/${borrowerId}/unemployment/${employmentId}`,
+    obj: query || {}
+  })
+}
+
 export const applicationApi = {
   getApplicationList,
   getApplicationListByActive,
@@ -206,5 +241,8 @@ export const applicationApi = {
   getDocuments,
   postEmployment,
   getMirDocuments,
-  putMirDocuments
+  putMirDocuments,
+  putPaygEmployment,
+  putSelfEmployment,
+  putNotEmployment
 }

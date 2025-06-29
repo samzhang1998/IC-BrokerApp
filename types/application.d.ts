@@ -4,6 +4,7 @@ declare namespace Application {
     checked?: boolean
     name?: string
     isCollapse?: boolean
+    [key: string]: any
     children?: IItem[]
   }
 
@@ -129,6 +130,8 @@ declare namespace Application {
           businessActivity: string
           onProbation: boolean
           maintainedCompanyCar: boolean
+          startDate: string
+          endDate: string
           incomeJson: string
         }
         selfDetails: {

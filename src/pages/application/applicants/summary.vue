@@ -120,6 +120,24 @@ const handleItemClick = (name: string, item: Application.IItem) => {
         url: `/pages/application/applicants/personal/otherDetailForm`
       })
       break
+    case 'EMPLOYED':
+      applicationStore.currentEmploymentItem = item as unknown as Application.IBorrowerDetail['employmentStatuses'][0]
+      uni.navigateTo({
+        url: `/pages/application/applicants/personal/paygEmploymentForm?borrowerItemId=${item.id}`
+      })
+      break
+    case 'SELF_EMPLOYED':
+      applicationStore.currentEmploymentItem = item as unknown as Application.IBorrowerDetail['employmentStatuses'][0]
+      uni.navigateTo({
+        url: `/pages/application/applicants/personal/selfEmploymentForm?borrowerItemId=${item.id}`
+      })
+      break
+    case 'UNEMPLOYED':
+      applicationStore.currentEmploymentItem = item as unknown as Application.IBorrowerDetail['employmentStatuses'][0]
+      uni.navigateTo({
+        url: `/pages/application/applicants/personal/notEmploymentForm?borrowerItemId=${item.id}`
+      })
+      break
     default:
       break
   }
@@ -147,7 +165,7 @@ const getBorrowerSummaryItems = (borrower: Application.IBorrowerDetail) => {
       item.children = borrower.employmentStatuses.map((status) => ({
         ...status,
         title: `${status.statusCode} - ${status.typeStatus}`,
-        name: status.id.toString()
+        name: status.statusCode
       }))
     }
     return item
