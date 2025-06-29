@@ -21,9 +21,9 @@
       class="border border-#E8EBEE border-solid rounded-lg bg-white text-24rpx mt-2 px-3 py-2 flex-y-center justify-between"
     >
       <view class="flex-col gap-1">
-        <view>{{ history.length > 0 ? history[history?.length - 1].status : '' }}</view>
+        <view>{{ applicationInfo?.stage || '' }}</view>
         <view class="text-#7A858E text-24rpx">
-          {{ history.length > 0 ? dayjs(history[history?.length - 1].timeStamp).format('MM/DD/YYYY HH:mm:ss') : '' }}
+          {{ applicationInfo?.modifyTime || '' }}
         </view>
       </view>
       <wd-icon name="browse" size="22px" color="#7A858E" @click="showHistory = true"></wd-icon>
@@ -40,7 +40,7 @@
           <view class="w-[30rpx] h-[30rpx] rounded-full" :style="{ backgroundColor: timeLine(item) }"></view>
           <view>
             <view class="title">{{ item?.status || '' }}</view>
-            <view class="value">{{ dayjs(item?.timeStamp || '').format('MM/DD/YYYY HH:mm:ss') }}</view>
+            <view class="value">{{ item?.timeStamp ? dayjs(item.timeStamp).format('MM/DD/YYYY HH:mm:ss') : '-' }}</view>
           </view>
         </view>
       </view>

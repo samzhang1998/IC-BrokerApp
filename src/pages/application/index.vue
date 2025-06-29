@@ -164,7 +164,7 @@ const handleToReset = () => {
         </view>
         <view class="flex justify-center items-center gap-10">
           <wd-button type="info" @click="handleToReset">Reset</wd-button>
-          <wd-button custom-class="bg-#FF754C!" @click="handleToFilter">Submit</wd-button>
+          <wd-button custom-class="bg-#FF754C!" @click="handleToFilter">Filter</wd-button>
         </view>
       </view>
     </wd-action-sheet>
