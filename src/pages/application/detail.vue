@@ -1,7 +1,14 @@
 <template>
   <BasePage :title="applicationInfo?.applicationName || ''" hasBack>
-    <InfoHead :applicationInfo="applicationInfo" :history="history" />
-    <wd-button type="primary" block class="bg-#FF754C! rounded flex-y-center" size="large" :round="false">
+    <InfoHead :applicationInfo="applicationInfo" :history="history" :showMir="true" :showIssued="true" />
+    <wd-button
+      type="primary"
+      block
+      class="bg-#FF754C! rounded flex-y-center"
+      size="large"
+      :round="false"
+      @click="handleToOverview"
+    >
       <view class="flex-y-center gap-20rpx">
         <wd-icon name="browse" size="22px"></wd-icon>
         <text>View Application</text>
@@ -367,6 +374,12 @@ function isStrictJSON(str: string) {
   } catch (e) {
     return false
   }
+}
+
+const handleToOverview = () => {
+  uni.navigateTo({
+    url: `/pages/application/overview?id=${applicationId.value}`
+  })
 }
 </script>
 

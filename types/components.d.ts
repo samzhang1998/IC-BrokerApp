@@ -27,7 +27,9 @@ declare module 'vue' {
     Toast: typeof import('./../src/components/base/Toast.vue')['default']
     Upload: typeof import('./../src/components/base/Upload.vue')['default']
     WdActionSheet: typeof import('wot-design-uni/components/wd-action-sheet/wd-action-sheet.vue')['default']
+    WdBadge: typeof import('wot-design-uni/components/wd-badge/wd-badge.vue')['default']
     WdButton: typeof import('wot-design-uni/components/wd-button/wd-button.vue')['default']
+    WdCalendar: typeof import('wot-design-uni/components/wd-calendar/wd-calendar.vue')['default']
     WdCell: typeof import('wot-design-uni/components/wd-cell/wd-cell.vue')['default']
     WdCellGroup: typeof import('wot-design-uni/components/wd-cell-group/wd-cell-group.vue')['default']
     WdCollapse: typeof import('wot-design-uni/components/wd-collapse/wd-collapse.vue')['default']
@@ -40,8 +42,12 @@ declare module 'vue' {
     WdNavbar: typeof import('wot-design-uni/components/wd-navbar/wd-navbar.vue')['default']
     WdOverlay: typeof import('wot-design-uni/components/wd-overlay/wd-overlay.vue')['default']
     WdPicker: typeof import('wot-design-uni/components/wd-picker/wd-picker.vue')['default']
+    WdPopup: typeof import('wot-design-uni/components/wd-popup/wd-popup.vue')['default']
     WdSwitch: typeof import('wot-design-uni/components/wd-switch/wd-switch.vue')['default']
+    WdTab: typeof import('wot-design-uni/components/wd-tab/wd-tab.vue')['default']
     WdTable: typeof import('wot-design-uni/components/wd-table/wd-table.vue')['default']
     WdTableCol: typeof import('wot-design-uni/components/wd-table-col/wd-table-col.vue')['default']
+    WdTabs: typeof import('wot-design-uni/components/wd-tabs/wd-tabs.vue')['default']
+    WdTag: typeof import('wot-design-uni/components/wd-tag/wd-tag.vue')['default']
   }
 }

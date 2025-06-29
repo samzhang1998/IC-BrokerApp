@@ -3,8 +3,8 @@
     <view class="flex-y-center justify-between">
       <text class="text-28rpx font-bold">{{ applicationInfo?.applicationName }}</text>
       <view class="flex-y-center gap-10rpx">
-        <wd-icon name="error-circle" size="22px" color="#EB0000" @click="handleToMir"></wd-icon>
-        <wd-icon name="file-paste" size="22px" color="#1CBB8C" @click="handleToIssued"></wd-icon>
+        <wd-icon name="error-circle" size="22px" color="#EB0000" @click="handleToMir" v-if="showMir"></wd-icon>
+        <wd-icon name="file-paste" size="22px" color="#1CBB8C" @click="handleToIssued" v-if="showIssued"></wd-icon>
       </view>
     </view>
     <view class="flex-col mt-3 gap-2">
@@ -33,7 +33,7 @@
     <view class="wrapper">
       <view class="history-list">
         <view
-          class="bg-white flex items-center w-[600rpx] h-[100rpx] px-2 border gap-3"
+          class="bg-white flex items-center w-[600rpx] h-[80rpx] px-2 border gap-3"
           v-for="item in history"
           :key="item.id"
         >
@@ -54,6 +54,8 @@ import dayjs from 'dayjs'
 interface IProps {
   applicationInfo: AnyObj
   history: AnyObj[]
+  showMir: boolean
+  showIssued: boolean
 }
 
 const props = defineProps<IProps>()

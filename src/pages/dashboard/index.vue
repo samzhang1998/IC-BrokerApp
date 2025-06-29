@@ -17,27 +17,50 @@ const dashboardList = ref([
     id: 1,
     title: 'Submit to IC',
     value: '0',
-    icon: dashboard1
+    icon: dashboard1,
+    stage: 'Submit to IC'
   },
   {
     id: 2,
     title: 'Conditional Approval',
     value: '0',
-    icon: dashboard2
+    icon: dashboard2,
+    stage: 'Conditional Approval'
   },
   {
     id: 3,
     title: 'Formal Approval',
     value: '0',
-    icon: dashboard3
+    icon: dashboard3,
+    stage: 'Formal Approval'
   },
   {
     id: 4,
     title: 'Settled',
     value: '0',
-    icon: dashboard4
+    icon: dashboard4,
+    stage: 'Settled'
   }
 ])
+
+const columns = ref<AnyObj[]>([
+  { status: 'Submit to IC' },
+  { status: 'Pre-assessment' },
+  { status: 'Full-assessment' },
+  { status: 'AIP' },
+  { status: 'Submit to Funder' },
+  { status: 'Conditional Approval' },
+  { status: 'Formal Approval' },
+  { status: 'Instruct to Solicitor' },
+  { status: 'Loan doc Issued' },
+  { status: 'Loan doc Returned' },
+  { status: 'Settlement Date Booked' },
+  { status: 'Settled' },
+  { status: 'Decline' },
+  { status: 'Withdrawal' }
+])
+
+const currentStage = ref('Submit to IC')
 
 const pageNum = ref(0)
 
@@ -68,7 +91,8 @@ const fetchApplicationList = async () => {
     limit: 10,
     offset: pageNum.value,
     status: 'ACTIVE',
-    brokerId: userId.value
+    brokerId: userId.value,
+    stage: currentStage.value
   }
   const [e, res] = await api.getApplicationList(params)
   if (!e && res) {
@@ -86,6 +110,18 @@ const fetchApplicationList = async () => {
       }
     }
   }
+}
+
+const handleToStage = (stage: string) => {
+  currentStage.value = stage
+  pageNum.value = 0
+  applicationList.value = []
+  fetchApplicationList()
+}
+
+const handleConfirm = (e: any) => {
+  console.log('🚀 ~ handleConfirm ~ e:', e)
+  handleToStage(e.value)
 }
 
 onShow(() => {
@@ -111,7 +147,7 @@ onReachBottom(() => {
     <view class="content">
       <view>Insight Overview</view>
       <view class="list">
-        <view class="item" v-for="(item, index) in dashboardList" :key="index">
+        <view class="item" v-for="(item, index) in dashboardList" :key="index" @click="handleToStage(item.stage)">
           <view class="icon">
             <image class="icon" :src="item.icon" mode="aspectFit"></image>
           </view>
@@ -121,17 +157,27 @@ onReachBottom(() => {
       </view>
       <view class="submit">
         <view class="header">
-          <view class="title">Submit to IC</view>
-          <view class="filter">
-            <view class="text">Filter</view>
-            <uni-icons type="bottom" color="#7A858E" size="16"></uni-icons>
-          </view>
+          <view class="title">{{ currentStage }}</view>
+          <wd-picker
+            :columns="columns"
+            v-model="currentStage"
+            value-key="status"
+            label-key="status"
+            use-default-slot
+            @confirm="handleConfirm"
+          >
+            <view class="filter">
+              <view class="text">Filter</view>
+              <uni-icons type="bottom" color="#7A858E" size="16"></uni-icons>
+            </view>
+          </wd-picker>
         </view>
-        <view class="p-4 flex-col gap-20rpx">
+        <view class="p-4 flex-col gap-20rpx" v-if="applicationList.length > 0">
           <view v-for="item in applicationList" :key="item.applicationId">
             <ApplicationItem :application="item"></ApplicationItem>
           </view>
         </view>
+        <no-data v-else></no-data>
       </view>
     </view>
 
