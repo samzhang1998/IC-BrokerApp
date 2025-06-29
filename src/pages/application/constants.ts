@@ -121,19 +121,9 @@ export const borrowerSummaryItems = ref<Application.IItem[]>([
   {
     title: 'Employment',
     name: 'employment',
+    isCollapse: true,
     checked: false,
-    children: [
-      {
-        title: 'PAYG-Primary Employment',
-        name: 'paygPrimaryEmployment',
-        checked: false
-      },
-      {
-        title: 'Self Employment - Primary Employment',
-        name: 'selfEmploymentPrimaryEmployment',
-        checked: false
-      }
-    ]
+    children: []
   },
 
   {

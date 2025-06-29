@@ -1,5 +1,5 @@
 <template>
-  <wd-collapse-item custom-body-style="padding:0" :name="name">
+  <wd-collapse-item custom-body-style="padding:0" :name="name" @click="handleClick">
     <template #title>
       <view class="flex-y-center gap-3 justify-between">
         <view class="flex-y-center gap-3 pl-10rpx">
@@ -21,10 +21,15 @@ interface IProps {
   checked?: boolean
 }
 const props = withDefaults(defineProps<IProps>(), {})
+const emit = defineEmits(['click'])
 
 const isExpanded = computed(() => {
   return props.expandedList?.includes(props.name)
 })
+
+const handleClick = () => {
+  emit('click', props.name)
+}
 </script>
 
 <style scoped></style>

@@ -13,11 +13,12 @@
     <wd-collapse v-model="collapsedList">
       <template v-for="item in data" :key="item.title">
         <CollapseItem
-          v-if="item.children && item.children.length > 0"
+          v-if="item.isCollapse || (item.children && item.children.length > 0)"
           :title="item.title"
           :name="item.title"
           :expandedList="collapsedList"
           :checked="isCollapseChecked(item)"
+          @click="handleCollapseClick(item.name ?? '')"
         >
           <wd-cell-group border>
             <template v-for="child in item.children" :key="child.title">
@@ -69,7 +70,7 @@ interface IProps {
   data?: Application.IItem[]
   isHeaderEdit?: boolean
 }
-const emit = defineEmits(['item-click', 'header-click'])
+const emit = defineEmits(['item-click', 'header-click', 'collapse-click'])
 
 const props = withDefaults(defineProps<IProps>(), {
   data: () => []
@@ -97,6 +98,10 @@ const isCollapseChecked = (collapseItem: Application.IItem): boolean => {
     return collapseItem.children.every((item) => isCollapseChecked(item))
   }
   return collapseItem.checked ?? false
+}
+
+const handleCollapseClick = (name: string) => {
+  emit('collapse-click', name)
 }
 
 const handleItemClick = (name: string, item: Application.IItem) => {

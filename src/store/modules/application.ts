@@ -1,3 +1,4 @@
+import { applicationApi } from '@/api/application'
 import { defineStore } from 'pinia'
 
 export const useApplicationStore = defineStore(
@@ -7,6 +8,7 @@ export const useApplicationStore = defineStore(
     const currentBorrower = ref<Application.IBorrowerDetail>()
     const currentCompanyApplicant = ref<Application.ICompanyApplicant>()
     const currentTrustApplicant = ref<Application.ITrustApplicant>()
+    const borrowerDetails = ref<Application.IBorrowerDetail[]>([])
 
     const setApplicationInfo = (info: Application.IApplication) => {
       applicationInfo.value = {
@@ -20,6 +22,19 @@ export const useApplicationStore = defineStore(
       currentBorrower.value = {} as Application.IBorrowerDetail
       currentCompanyApplicant.value = {} as Application.ICompanyApplicant
       currentTrustApplicant.value = {} as Application.ITrustApplicant
+      borrowerDetails.value = []
+    }
+
+    const fetchBorrowerDetails = async () => {
+      if (!applicationInfo.value?.applicationId) return
+      const [e, r] = await applicationApi.getBorrowerDetails(applicationInfo.value?.applicationId)
+      if (!e && r) {
+        borrowerDetails.value = r as unknown as Application.IBorrowerDetail[]
+      }
+    }
+
+    const getCurrentBorrowerById = (id: string | number) => {
+      currentBorrower.value = borrowerDetails.value.find((item) => item.id === id) as Application.IBorrowerDetail
     }
 
     return {
@@ -28,7 +43,10 @@ export const useApplicationStore = defineStore(
       currentBorrower,
       currentCompanyApplicant,
       currentTrustApplicant,
-      reset
+      borrowerDetails,
+      reset,
+      fetchBorrowerDetails,
+      getCurrentBorrowerById
     }
   },
   {

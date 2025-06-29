@@ -68,6 +68,12 @@
       }
     },
     {
+      "path": "pages/application/applicants/personal/employmentSummary",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/application/applicants/companyForm",
       "style": {
         "navigationStyle": "custom"

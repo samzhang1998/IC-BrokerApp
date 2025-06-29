@@ -156,6 +156,17 @@ export function getDocuments<T = any>(applicationId: string | number, query?: An
   })
 }
 
+export function postEmployment<T = any>(
+  applicationId: string | number,
+  borrowerId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/application/${applicationId}/borrowers/${borrowerId}/employment`,
+    obj: query || {}
+  })
+}
+
 export const applicationApi = {
   getApplicationList,
   getApplicationListByActive,
@@ -174,5 +185,6 @@ export const applicationApi = {
   getNewLoan,
   getFee,
   getHistory,
-  getDocuments
+  getDocuments,
+  postEmployment
 }

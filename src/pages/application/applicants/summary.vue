@@ -6,9 +6,10 @@
         v-for="borrower in borrowerDetails"
         :key="borrower.id"
         :title="`${borrower.firstName ?? 'New Applicant'} (${borrower.applicantType})`"
-        v-model:data="borrowerSummaryItems"
+        :data="getBorrowerSummaryItems(borrower)"
         @item-click="handleItemClick"
         @header-click="handlePersonalHeaderClick(borrower)"
+        @collapse-click="(item) => handleCollapseClick(item, borrower)"
       >
       </AppCard>
       <AppCard
@@ -39,20 +40,11 @@ import { api } from '@/api'
 import { useApplicationStore } from '@/store/modules/application'
 
 const applicationStore = useApplicationStore()
-const { currentBorrower, applicationInfo } = toRefs(applicationStore)
-const borrowerDetails = ref<Application.IBorrowerDetail[]>([])
+const { currentBorrower, applicationInfo, borrowerDetails } = toRefs(applicationStore)
 const borrowerType = ref<'personalApplicants' | 'companyApplicants' | 'trustApplicants'>('personalApplicants')
 const applicationId = ref<number | string>()
 const companyApplicants = ref<Application.ICompanyApplicant[]>([])
 const trustApplicants = ref<Application.ITrustApplicant[]>([])
-
-const fetchBorrowerDetails = async () => {
-  if (!applicationId.value) return
-  const [e, r] = await api.getBorrowerDetails(applicationId.value)
-  if (!e && r) {
-    borrowerDetails.value = r as unknown as Application.IBorrowerDetail[]
-  }
-}
 
 const fetchCompanyApplicants = async () => {
   if (!applicationId.value) return
@@ -77,7 +69,7 @@ const handleCreateBorrower = async (applicantType: string) => {
       type: applicantType
     })
     if (!e && r) {
-      fetchBorrowerDetails()
+      applicationStore.fetchBorrowerDetails()
     }
   } else if (borrowerType.value === 'companyApplicants') {
     const [e, r] = await api.createCompanyApplicant(applicationInfo.value?.applicationId, {
@@ -133,12 +125,42 @@ const handleItemClick = (name: string, item: Application.IItem) => {
   }
 }
 
+const handleCollapseClick = (name: string, borrower: Application.IBorrowerDetail) => {
+  console.log(name, borrower)
+  applicationStore.currentBorrower = borrower
+  switch (name) {
+    case 'employment':
+      uni.navigateTo({
+        url: `/pages/application/applicants/personal/employmentSummary?borrowerId=${borrower.id}`
+      })
+      break
+    default:
+      break
+  }
+}
+
+const getBorrowerSummaryItems = (borrower: Application.IBorrowerDetail) => {
+  // 创建新的数组，避免修改原始数据
+  const rawItems = JSON.parse(JSON.stringify(borrowerSummaryItems.value))
+  const items = rawItems.map((item: Application.IItem) => {
+    if (item.name === 'employment') {
+      item.children = borrower.employmentStatuses.map((status) => ({
+        ...status,
+        title: `${status.statusCode} - ${status.typeStatus}`,
+        name: status.id.toString()
+      }))
+    }
+    return item
+  })
+  return items
+}
+
 onLoad((options) => {
   borrowerType.value = options?.type // 接待人类型
   applicationId.value = options?.id || applicationInfo.value?.applicationId
   if (applicationId.value) {
     if (borrowerType.value === 'personalApplicants') {
-      fetchBorrowerDetails()
+      applicationStore.fetchBorrowerDetails()
     } else if (borrowerType.value === 'companyApplicants') {
       fetchCompanyApplicants()
     } else if (borrowerType.value === 'trustApplicants') {

@@ -6,7 +6,12 @@
           <check-badge></check-badge>
           <text class="text-28rpx font-bold">{{ title }}</text>
         </view>
-        <view class="bg-#ff754c! rounded-full flex-center text-white w-40rpx h-40rpx" @click="showActions">
+        <wd-picker :columns="actions" v-model="selectedValue" use-default-slot v-if="isPicker" @confirm="handleConfirm">
+          <view class="bg-#ff754c! rounded-full flex-center text-white w-40rpx h-40rpx" @click="showActions">
+            <wd-icon name="add1" size="22px"></wd-icon>
+          </view>
+        </wd-picker>
+        <view v-else class="bg-#ff754c! rounded-full flex-center text-white w-40rpx h-40rpx" @click="showActions">
           <wd-icon name="add1" size="22px"></wd-icon>
         </view>
       </view>
@@ -14,7 +19,14 @@
         {{ description }}
       </view>
     </view>
-    <wd-action-sheet v-model="show" :actions="actions" @close="close" @select="select" cancel-text="Cancel" />
+    <wd-action-sheet
+      v-if="!isPicker && actions && actions.length > 0"
+      v-model="show"
+      :actions="actions"
+      @close="close"
+      @select="select"
+      cancel-text="Cancel"
+    />
   </view>
 </template>
 
@@ -22,20 +34,20 @@
 interface IProps {
   title: string
   description: string
-  actions?: {
-    name: string
-    value?: string | number
-    subname?: string
-  }[]
+  actions?: any[]
+  isPicker?: boolean
 }
 
 const props = defineProps<IProps>()
 const emit = defineEmits(['action'])
 const show = ref<boolean>(false)
 const actions = ref(props.actions)
+const selectedValue = ref([])
 
 function showActions() {
-  show.value = true
+  if (actions.value && actions.value.length > 0) {
+    show.value = true
+  }
 }
 
 function close() {
@@ -44,6 +56,10 @@ function close() {
 
 function select({ item }: { item: { name: string; value?: string | number } }) {
   emit('action', item)
+}
+
+function handleConfirm(e: any) {
+  emit('action', e.value)
 }
 
 watch(

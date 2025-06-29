@@ -3,6 +3,7 @@ declare namespace Application {
     title: string
     checked?: boolean
     name?: string
+    isCollapse?: boolean
     children?: IItem[]
   }
 
