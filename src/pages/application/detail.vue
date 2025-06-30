@@ -201,7 +201,12 @@ const getApplicationDetail = async (id: string | undefined) => {
 onLoad((options) => {
   if (options?.id) {
     applicationId.value = options.id
-    getApplicationDetail(options.id)
+  }
+})
+
+onShow(() => {
+  if (applicationId.value) {
+    getApplicationDetail(applicationId.value)
     getHistory()
   }
 })
