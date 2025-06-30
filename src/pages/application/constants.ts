@@ -146,28 +146,30 @@ export const borrowerSummaryItems = ref<Application.IItem[]>([
 ])
 
 //proof of identity 21种
-// {name: "Australian Drivers Licence", category: "Photographic"},
-// {name: "Australian Defence Force ldentity Card", category: "Photographic"},
-// {name: "Australian Passport", category: "Photographic"},
-// {name: "lmmiCard", category: "Photographic"},
-// {name: "International Drivers Licence", category: "Photographic"},
-// {name: "International Passport", category: "Photographic"},
-// {name: "National ldentity Card", category: "Photographic"},
-// {name: "Proof of Age Card", category: "Photographic"},
-// {name: "State or Federal Government Employee Photo ldentity Card", category: "Photographic"},
-// {name: "Australian Birth Certificate", category: "Non Photographic"},
-// {name: "Australian Citizenship Certificate", category: "Non Photographic"},
-// {name: "Centrelink or Social Security Card", category: "Non Photographic"},
-// {name: "Department of Veterans Affairs Card", category: "Non Photographic"},
-// {name: "Descent Certificate", category: "Non Photographic"},
-// {name: "Foreign Birth Certificate", category: "Non Photographic"},
-// {name: "Health Care Card", category: "Non Photographic"},
-// {name: "Medicare Card", category: "Non Photographic"},
-// {name: "Pension Card", category: "Non Photographic"},
-// {name: "Government Benefits Notice", category: "Secondary"},
-// {name: "Marriage Certificate", category: "Secondary"},
-// {name: "Verification of ldentity Document", category: "Secondary"},
-// {name: "Other", category: "Secondary"}
+export const proofOfIdentityItems = [
+  { name: 'Australian Drivers Licence', subname: 'Photographic' },
+  { name: 'Australian Defence Force ldentity Card', subname: 'Photographic' },
+  { name: 'Australian Passport', subname: 'Photographic' },
+  { name: 'lmmiCard', subname: 'Photographic' },
+  { name: 'International Drivers Licence', subname: 'Photographic' },
+  { name: 'International Passport', subname: 'Photographic' },
+  { name: 'National ldentity Card', subname: 'Photographic' },
+  { name: 'Proof of Age Card', subname: 'Photographic' },
+  { name: 'State or Federal Government Employee Photo ldentity Card', subname: 'Photographic' },
+  { name: 'Australian Birth Certificate', subname: 'Non Photographic' },
+  { name: 'Australian Citizenship Certificate', subname: 'Non Photographic' },
+  { name: 'Centrelink or Social Security Card', subname: 'Non Photographic' },
+  { name: 'Department of Veterans Affairs Card', subname: 'Non Photographic' },
+  { name: 'Descent Certificate', subname: 'Non Photographic' },
+  { name: 'Foreign Birth Certificate', subname: 'Non Photographic' },
+  { name: 'Health Care Card', subname: 'Non Photographic' },
+  { name: 'Medicare Card', subname: 'Non Photographic' },
+  { name: 'Pension Card', subname: 'Non Photographic' },
+  { name: 'Government Benefits Notice', subname: 'Secondary' },
+  { name: 'Marriage Certificate', subname: 'Secondary' },
+  { name: 'Verification of ldentity Document', subname: 'Secondary' },
+  { name: 'Other', subname: 'Secondary' }
+]
 
 export const companyApplicantSummaryItems = ref<Application.IItem[]>([
   {

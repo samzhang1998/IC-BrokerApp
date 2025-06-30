@@ -1,6 +1,6 @@
 <template>
   <BasePage :title="applicationInfo?.applicationName || 'Create Application'" hasBack>
-    <wd-form :model="formData" ref="formRef" @submit="handleSubmit" class="flex-col gap-4">
+    <wd-form :model="formData" ref="formRef" class="flex-col gap-4">
       <FormItem label="Established">
         <wd-switch v-model="formData.established" size="medium" />
       </FormItem>
@@ -11,7 +11,7 @@
         <wd-picker :columns="trustPurposeColumns" v-model="formData.trustPurpose" />
       </FormItem>
       <FormItem label="Trust Name" labelBold>
-        <wd-input type="text" v-model="formData.trustName" placeholder="Enter trust name" disabled />
+        <wd-input type="text" v-model="formData.trustName" placeholder="Enter trust name" />
       </FormItem>
       <FormItem label="ABN">
         <wd-input type="text" v-model="dataJson.abn" placeholder="Enter ABN" />
@@ -35,13 +35,14 @@
       </FormItem>
     </wd-form>
     <view class="flex-col gap-1 mt-3 w-full">
-      <wd-button type="primary" block class="bg-#FF754C!" size="large">Save</wd-button>
+      <wd-button type="primary" block class="bg-#FF754C!" size="large" @click="handleSubmit">Save</wd-button>
     </view>
   </BasePage>
 </template>
 
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
+import { applicationApi } from '@/api/application'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo } = toRefs(applicationStore)
@@ -61,6 +62,24 @@ const countryColumns = ref(['Australia'])
 const handleSubmit = async () => {
   const { valid } = await formRef.value.validate()
   if (!valid) return
+  if (!applicationInfo.value?.applicationId || !applicationStore.currentTrustApplicant?.id) {
+    return
+  }
+
+  const [e, r] = await applicationApi.updateTrustApplicant(
+    applicationInfo.value?.applicationId,
+    applicationStore.currentTrustApplicant?.id,
+    {
+      ...formData,
+      dataJson: JSON.stringify(dataJson.value)
+    }
+  )
+  if (!e && r) {
+    uni.showToast({
+      title: 'Save Success',
+      icon: 'success'
+    })
+  }
 }
 </script>
 

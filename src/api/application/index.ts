@@ -100,6 +100,17 @@ export function createCompanyApplicant<T = any>(applicationId: string | number, 
   })
 }
 
+export function updateCompanyApplicant<T = any>(
+  applicationId: string | number,
+  companyApplicantId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.putJson({
+    method: `api/v1/application/${applicationId}/companyapplicants/${companyApplicantId}`,
+    obj: query || {}
+  })
+}
+
 export function getTrustApplicants<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
   return http.get({
     method: `api/v1/application/${applicationId}/trustapplicants`,
@@ -110,6 +121,17 @@ export function getTrustApplicants<T = any>(applicationId: string | number, quer
 export function createTrustApplicant<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
   return http.post({
     method: `api/v1/application/${applicationId}/trustapplicants`,
+    obj: query || {}
+  })
+}
+
+export function updateTrustApplicant<T = any>(
+  applicationId: string | number,
+  trustApplicantId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.putJson({
+    method: `api/v1/application/${applicationId}/trustapplicants/${trustApplicantId}`,
     obj: query || {}
   })
 }
@@ -220,6 +242,51 @@ export function putNotEmployment<T = any>(
   })
 }
 
+export function deleteEmployment<T = any>(
+  applicationId: string | number,
+  borrowerId: string | number,
+  employmentId: string | number
+): ApiResponse<T> {
+  return http.delete({
+    method: `api/v1/application/${applicationId}/borrowers/${borrowerId}/employment/${employmentId}`,
+    obj: {}
+  })
+}
+
+export function postIdentity<T = any>(
+  applicationId: string | number,
+  borrowerId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/application/${applicationId}/borrowers/${borrowerId}/identity`,
+    obj: query || {}
+  })
+}
+
+export function deleteIdentity<T = any>(
+  applicationId: string | number,
+  borrowerId: string | number,
+  identityId: string | number
+): ApiResponse<T> {
+  return http.delete({
+    method: `api/v1/application/${applicationId}/borrowers/${borrowerId}/identity/${identityId}`,
+    obj: {}
+  })
+}
+
+export function putIdentity<T = any>(
+  applicationId: string | number,
+  borrowerId: string | number,
+  identityId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.putJson({
+    method: `api/v1/application/${applicationId}/borrowers/${borrowerId}/identity/${identityId}`,
+    obj: query || {}
+  })
+}
+
 export const applicationApi = {
   getApplicationList,
   getApplicationListByActive,
@@ -244,5 +311,11 @@ export const applicationApi = {
   putMirDocuments,
   putPaygEmployment,
   putSelfEmployment,
-  putNotEmployment
+  putNotEmployment,
+  postIdentity,
+  deleteIdentity,
+  putIdentity,
+  deleteEmployment,
+  updateCompanyApplicant,
+  updateTrustApplicant
 }

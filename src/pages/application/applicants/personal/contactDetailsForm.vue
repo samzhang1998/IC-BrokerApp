@@ -1,6 +1,6 @@
 <template>
   <BasePage title="Contact Details" hasBack>
-    <wd-form :model="formData" ref="formRef" @submit="handleSubmit" class="flex-col gap-4">
+    <wd-form :model="formData" ref="formRef" class="flex-col gap-4">
       <FormItem label="Mobile">
         <wd-input type="text" v-model="formData.mobile" placeholder="Enter mobile" />
       </FormItem>
@@ -118,13 +118,14 @@
       </FormItem>
     </wd-form>
     <view class="flex-col gap-1 mt-3 w-full">
-      <wd-button type="primary" block class="bg-#FF754C!" size="large">Save</wd-button>
+      <wd-button type="primary" block class="bg-#FF754C!" size="large" @click="handleSubmit">Save</wd-button>
     </view>
   </BasePage>
 </template>
 
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
+import { applicationApi } from '@/api/application'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo } = toRefs(applicationStore)
@@ -146,12 +147,6 @@ const formData = reactive<Application.IContactDetails>({
     }
   }
 } as Application.IContactDetails)
-const dataJson = ref({
-  abn: '',
-  countryEstablished: 'Australia',
-  settlor: [],
-  deed: []
-})
 
 const emailTypeColumns = ref(['Work', 'Home'])
 const housingStatusColumns = ref([
@@ -167,6 +162,26 @@ const housingStatusColumns = ref([
 const handleSubmit = async () => {
   const { valid } = await formRef.value.validate()
   if (!valid) return
+  if (!applicationInfo.value?.applicationId || !applicationStore.currentBorrower?.id) {
+    return
+  }
+
+  const [e, r] = await applicationApi.updateBorrower(
+    applicationInfo.value?.applicationId,
+    applicationStore.currentBorrower?.id,
+    {
+      ...formData,
+      type: formData.applicantType
+    }
+  )
+  if (!e && r) {
+    uni.showToast({
+      title: 'Save Success',
+      icon: 'success'
+    })
+    await applicationStore.fetchBorrowerDetails()
+    applicationStore.getCurrentBorrowerById(applicationStore.currentBorrower?.id)
+  }
 }
 
 const handleCreateEmail = () => {
@@ -194,6 +209,10 @@ const handleCreatePreviewsAddress = () => {
 const handleDeletePreviewsAddress = (index: number) => {
   formData.address.previous_addresses.splice(index, 1)
 }
+
+onLoad(() => {
+  Object.assign(formData, applicationStore.currentBorrower)
+})
 </script>
 
 <style scoped></style>

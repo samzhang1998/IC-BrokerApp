@@ -7,6 +7,20 @@
       :actions="employmentColumns"
       isPicker
     />
+    <view class="flex-col gap-2 mt-4">
+      <view
+        class="flex-y-center border-solid border-1 rounded-lg border-color-gray-200 p-4 bg-#FCFCFC"
+        v-for="item in employmentStatusList"
+        :key="item.id"
+        @click="handleEditEmployment(item)"
+      >
+        <view class="flex-1">
+          <view class="identity-item-title">{{ item.typeStatus }}</view>
+          <view class="text-24rpx text-gray-500">{{ item.statusCode }}</view>
+        </view>
+        <wd-icon name="delete-thin" size="22px" @click="handleDeleteEmployment(item)"></wd-icon>
+      </view>
+    </view>
   </BasePage>
 </template>
 
@@ -45,6 +59,62 @@ const handlePostEmployment = async (item: any) => {
 const handleAction = (item: any) => {
   handlePostEmployment(item)
 }
+
+const handleDeleteEmployment = (item: any) => {
+  console.log(item)
+  uni.showModal({
+    title: 'Warning',
+    content: 'Do you want to delete this employment?',
+    success: async (res) => {
+      if (res.confirm) {
+        if (!applicationInfo.value?.applicationId || !currentBorrower.value?.id) {
+          return
+        }
+        const [e, r] = await applicationApi.deleteEmployment(
+          applicationInfo.value?.applicationId,
+          currentBorrower.value?.id,
+          item.id
+        )
+        if (!e && r) {
+          await applicationStore.fetchBorrowerDetails()
+          applicationStore.getCurrentBorrowerById(currentBorrower.value?.id)
+        }
+      } else {
+        console.log('点击了取消按钮')
+      }
+    }
+  })
+}
+
+const handleEditEmployment = (item: any) => {
+  console.log(item)
+  switch (item.statusCode) {
+    case 'EMPLOYED':
+      applicationStore.currentEmploymentItem = item as unknown as Application.IBorrowerDetail['employmentStatuses'][0]
+      uni.navigateTo({
+        url: `/pages/application/applicants/personal/paygEmploymentForm?borrowerItemId=${item.id}`
+      })
+      break
+    case 'SELF_EMPLOYED':
+      applicationStore.currentEmploymentItem = item as unknown as Application.IBorrowerDetail['employmentStatuses'][0]
+      uni.navigateTo({
+        url: `/pages/application/applicants/personal/selfEmploymentForm?borrowerItemId=${item.id}`
+      })
+      break
+    case 'UNEMPLOYED':
+      applicationStore.currentEmploymentItem = item as unknown as Application.IBorrowerDetail['employmentStatuses'][0]
+      uni.navigateTo({
+        url: `/pages/application/applicants/personal/notEmploymentForm?borrowerItemId=${item.id}`
+      })
+      break
+    default:
+      break
+  }
+}
+
+const employmentStatusList = computed(() => {
+  return currentBorrower.value?.employmentStatuses || []
+})
 
 onLoad((options) => {
   applicationStore.getCurrentBorrowerById(options?.borrowerId)

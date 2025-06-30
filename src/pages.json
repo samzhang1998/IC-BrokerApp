@@ -92,13 +92,49 @@
       }
     },
     {
-      "path": "pages/application/applicants/companyForm",
+      "path": "pages/application/applicants/personal/identitySummary",
       "style": {
         "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/application/applicants/trustForm",
+      "path": "pages/application/applicants/personal/identityForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/applicants/company/companyForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/applicants/company/yearToDateIncomeForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/applicants/company/contactDetailsForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/applicants/trust/yearToDateIncomeForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/applicants/trust/contactDetailsForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/applicants/trust/trustForm",
       "style": {
         "navigationStyle": "custom"
       }

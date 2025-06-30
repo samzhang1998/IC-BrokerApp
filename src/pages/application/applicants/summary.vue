@@ -7,7 +7,7 @@
         :key="borrower.id"
         :title="`${borrower.firstName ?? 'New Applicant'} (${borrower.applicantType})`"
         :data="getBorrowerSummaryItems(borrower)"
-        @item-click="handleItemClick"
+        @item-click="(name, item) => handlePersonalItemClick(name, item, borrower)"
         @header-click="handlePersonalHeaderClick(borrower)"
         @collapse-click="(item) => handleCollapseClick(item, borrower)"
       >
@@ -17,7 +17,7 @@
         :key="borrower.id"
         :title="`${borrower.companyName ?? 'New Applicant'} (${borrower.type})`"
         v-model:data="companyApplicantSummaryItems"
-        @item-click="handleItemClick"
+        @item-click="(name, item) => handleCompanyItemClick(name, item, borrower)"
         @header-click="handleCompanyHeaderClick(borrower)"
       >
       </AppCard>
@@ -26,7 +26,7 @@
         :key="borrower.id"
         :title="`${borrower.trustName ?? 'New Applicant'}`"
         v-model:data="trustApplicantSummaryItems"
-        @item-click="handleItemClick"
+        @item-click="(name, item) => handleTrustItemClick(name, item, borrower)"
         @header-click="handleTrustHeaderClick(borrower)"
       >
       </AppCard>
@@ -97,25 +97,27 @@ const handlePersonalHeaderClick = (borrower: Application.IBorrowerDetail) => {
 const handleCompanyHeaderClick = (borrower: Application.ICompanyApplicant) => {
   applicationStore.currentCompanyApplicant = borrower
   uni.navigateTo({
-    url: `/pages/application/applicants/companyForm`
+    url: `/pages/application/applicants/company/companyForm`
   })
 }
 
 const handleTrustHeaderClick = (borrower: Application.ITrustApplicant) => {
   applicationStore.currentTrustApplicant = borrower
   uni.navigateTo({
-    url: `/pages/application/applicants/trustForm`
+    url: `/pages/application/applicants/trust/trustForm`
   })
 }
-const handleItemClick = (name: string, item: Application.IItem) => {
-  console.log(name, item)
+const handlePersonalItemClick = (name: string, item: Application.IItem, borrower: Application.IBorrowerDetail) => {
+  console.log(name, item, borrower)
   switch (name) {
     case 'contactDetails':
+      applicationStore.currentBorrower = borrower
       uni.navigateTo({
         url: `/pages/application/applicants/personal/contactDetailsForm`
       })
       break
     case 'otherDetails':
+      applicationStore.currentBorrower = borrower
       uni.navigateTo({
         url: `/pages/application/applicants/personal/otherDetailForm`
       })
@@ -138,6 +140,50 @@ const handleItemClick = (name: string, item: Application.IItem) => {
         url: `/pages/application/applicants/personal/notEmploymentForm?borrowerItemId=${item.id}`
       })
       break
+    case 'identity':
+      applicationStore.currentIdentityItem = item as unknown as Application.IBorrowerDetail['identities'][0]
+      uni.navigateTo({
+        url: `/pages/application/applicants/personal/identityForm?identityId=${item.id}`
+      })
+      break
+    default:
+      break
+  }
+}
+
+const handleCompanyItemClick = (name: string, item: Application.IItem, borrower: Application.ICompanyApplicant) => {
+  console.log(name, item, borrower)
+  applicationStore.currentCompanyApplicant = borrower
+  switch (name) {
+    case 'contactDetails':
+      uni.navigateTo({
+        url: `/pages/application/applicants/company/contactDetailsForm`
+      })
+      break
+    case 'yearToDateIncome':
+      uni.navigateTo({
+        url: `/pages/application/applicants/company/yearToDateIncomeForm`
+      })
+      break
+    default:
+      break
+  }
+}
+
+const handleTrustItemClick = (name: string, item: Application.IItem, borrower: Application.ITrustApplicant) => {
+  console.log(name, item, borrower)
+  applicationStore.currentTrustApplicant = borrower
+  switch (name) {
+    case 'contactDetails':
+      uni.navigateTo({
+        url: `/pages/application/applicants/trust/contactDetailsForm`
+      })
+      break
+    case 'yearToDateIncome':
+      uni.navigateTo({
+        url: `/pages/application/applicants/trust/yearToDateIncomeForm`
+      })
+      break
     default:
       break
   }
@@ -150,6 +196,11 @@ const handleCollapseClick = (name: string, borrower: Application.IBorrowerDetail
     case 'employment':
       uni.navigateTo({
         url: `/pages/application/applicants/personal/employmentSummary?borrowerId=${borrower.id}`
+      })
+      break
+    case 'proofOfIdentity':
+      uni.navigateTo({
+        url: `/pages/application/applicants/personal/identitySummary?borrowerId=${borrower.id}`
       })
       break
     default:
@@ -168,6 +219,13 @@ const getBorrowerSummaryItems = (borrower: Application.IBorrowerDetail) => {
         name: status.statusCode
       }))
     }
+    if (item.name === 'proofOfIdentity') {
+      item.children = borrower.identities.map((identity) => ({
+        ...identity,
+        title: identity.documentType,
+        name: 'identity'
+      }))
+    }
     return item
   })
   return items
@@ -176,6 +234,18 @@ const getBorrowerSummaryItems = (borrower: Application.IBorrowerDetail) => {
 onLoad((options) => {
   borrowerType.value = options?.type // 接待人类型
   applicationId.value = options?.id || applicationInfo.value?.applicationId
+  if (applicationId.value) {
+    if (borrowerType.value === 'personalApplicants') {
+      applicationStore.fetchBorrowerDetails()
+    } else if (borrowerType.value === 'companyApplicants') {
+      fetchCompanyApplicants()
+    } else if (borrowerType.value === 'trustApplicants') {
+      fetchTrustApplicants()
+    }
+  }
+})
+
+onShow(() => {
   if (applicationId.value) {
     if (borrowerType.value === 'personalApplicants') {
       applicationStore.fetchBorrowerDetails()

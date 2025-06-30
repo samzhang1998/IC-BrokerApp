@@ -1,6 +1,6 @@
 <template>
   <BasePage title="Other Details" hasBack>
-    <wd-form :model="formData" ref="formRef" @submit="handleSubmit" class="flex-col gap-4">
+    <wd-form :model="formData" ref="formRef" class="flex-col gap-4">
       <FormItem label="Privacy Act Consent Signed">
         <wd-switch v-model="formData.privacyActConsentSigned" />
       </FormItem>
@@ -9,13 +9,14 @@
       </FormItem>
     </wd-form>
     <view class="flex-col gap-1 mt-3 w-full">
-      <wd-button type="primary" block class="bg-#FF754C!" size="large">Save</wd-button>
+      <wd-button type="primary" block class="bg-#FF754C!" size="large" @click="handleSubmit">Save</wd-button>
     </view>
   </BasePage>
 </template>
 
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
+import { applicationApi } from '@/api/application'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo } = toRefs(applicationStore)
@@ -25,7 +26,30 @@ const formData = reactive<Application.IContactDetails>({} as Application.IContac
 const handleSubmit = async () => {
   const { valid } = await formRef.value.validate()
   if (!valid) return
+  if (!applicationInfo.value?.applicationId || !applicationStore.currentBorrower?.id) {
+    return
+  }
+  const [e, r] = await applicationApi.updateBorrower(
+    applicationInfo.value?.applicationId,
+    applicationStore.currentBorrower?.id,
+    {
+      ...formData,
+      type: formData.applicantType
+    }
+  )
+  if (!e && r) {
+    uni.showToast({
+      title: 'Save Success',
+      icon: 'success'
+    })
+    await applicationStore.fetchBorrowerDetails()
+    applicationStore.getCurrentBorrowerById(applicationStore.currentBorrower?.id)
+  }
 }
+
+onLoad(() => {
+  Object.assign(formData, applicationStore.currentBorrower)
+})
 </script>
 
 <style scoped></style>

@@ -63,29 +63,6 @@ declare namespace Application {
     workPhone: string
     mobile: string
     email: string
-    maidenName: string
-    hasPreName: boolean
-    preNameTitle: string
-    preFirstName: string
-    preMiddleName: string
-    preLastName: string
-    gender: string
-    dob: string
-    residencyStatus: string
-    principalForeignResidence: string
-    citizenship: string
-    maritalStatus: string
-    spouse: number
-    kinType: string
-    kinId: number
-    kinRelation: string
-    livingExpensesId: number
-    solicitorId: number
-    accountantId: number
-    homePhone: string
-    workPhone: string
-    mobile: string
-    email: string
     privacyActConsentSigned: boolean
     signedDate: string
     createdAt: string
@@ -219,6 +196,8 @@ declare namespace Application {
     officePhone: string
     dataJson: string
     incomeJson: string
+    tradingAddress: string
+    registeredAddress: string
   }
 
   interface IPurchase {
@@ -298,5 +277,6 @@ declare namespace Application {
     createdAt: string
     updatedAt: string
     type: string
+    applicantType: string
   }
 }

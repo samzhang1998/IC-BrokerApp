@@ -5,12 +5,18 @@ export const useApplicationStore = defineStore(
   'application',
   () => {
     const applicationInfo = ref<Application.IApplication>()
+    // 当前个人借款人
     const currentBorrower = ref<Application.IBorrowerDetail>()
+    // 当前公司借款人
     const currentCompanyApplicant = ref<Application.ICompanyApplicant>()
+    // 当前信托借款人
     const currentTrustApplicant = ref<Application.ITrustApplicant>()
+    // 借款人详情列表
     const borrowerDetails = ref<Application.IBorrowerDetail[]>([])
-    // 当前就业状态
+    // 当前选中的就业状态
     const currentEmploymentItem = ref<Application.IBorrowerDetail['employmentStatuses'][0]>()
+    // 当前选中的证明
+    const currentIdentityItem = ref<Application.IBorrowerDetail['identities'][0]>()
 
     const setApplicationInfo = (info: Application.IApplication) => {
       applicationInfo.value = {
@@ -26,6 +32,7 @@ export const useApplicationStore = defineStore(
       currentTrustApplicant.value = {} as Application.ITrustApplicant
       borrowerDetails.value = []
       currentEmploymentItem.value = {} as Application.IBorrowerDetail['employmentStatuses'][0]
+      currentIdentityItem.value = {} as Application.IBorrowerDetail['identities'][0]
     }
 
     const fetchBorrowerDetails = async () => {
@@ -37,7 +44,9 @@ export const useApplicationStore = defineStore(
     }
 
     const getCurrentBorrowerById = (id: string | number) => {
-      currentBorrower.value = borrowerDetails.value.find((item) => item.id === id) as Application.IBorrowerDetail
+      currentBorrower.value = borrowerDetails.value.find(
+        (item) => String(item.id) === String(id)
+      ) as Application.IBorrowerDetail
     }
 
     return {
@@ -48,6 +57,7 @@ export const useApplicationStore = defineStore(
       currentTrustApplicant,
       borrowerDetails,
       currentEmploymentItem,
+      currentIdentityItem,
       reset,
       fetchBorrowerDetails,
       getCurrentBorrowerById

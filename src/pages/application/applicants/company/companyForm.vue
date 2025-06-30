@@ -1,6 +1,6 @@
 <template>
   <BasePage :title="applicationInfo?.applicationName || 'Create Application'" hasBack>
-    <wd-form ref="form" :model="formData" class="flex-col gap-4">
+    <wd-form ref="formRef" :model="formData" class="flex-col gap-4">
       <FormItem label="Applicant Type" labelBold>
         <wd-input type="text" v-model="formData.type" placeholder="Enter applicant type" disabled />
       </FormItem>
@@ -50,17 +50,18 @@
       </FormItem>
     </wd-form>
     <view class="flex-col gap-1 mt-3 w-full">
-      <wd-button type="primary" block class="bg-#FF754C!" size="large">Save</wd-button>
+      <wd-button type="primary" block class="bg-#FF754C!" size="large" @click="handleSubmit">Save</wd-button>
     </view>
   </BasePage>
 </template>
 
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
+import { applicationApi } from '@/api/application'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo, currentCompanyApplicant } = toRefs(applicationStore)
-const form = ref<any>()
+const formRef = ref<any>()
 const formData = reactive<Application.ICompanyApplicant>({} as Application.ICompanyApplicant)
 const dataJson = ref({
   license: '',
@@ -86,12 +87,13 @@ watch(
   (newVal) => {
     if (newVal) {
       const cleanNewVal = { ...newVal } as any
-      for (const key in cleanNewVal) {
-        if (cleanNewVal[key] === null) {
-          cleanNewVal[key] = ''
-        }
-      }
+      // for (const key in cleanNewVal) {
+      //   if (cleanNewVal[key] === null) {
+      //     cleanNewVal[key] = ''
+      //   }
+      // }
       Object.assign(formData, cleanNewVal)
+      dataJson.value = JSON.parse(cleanNewVal.dataJson || '{}')
     }
   },
   {
@@ -99,6 +101,36 @@ watch(
     immediate: true
   }
 )
+
+const handleSubmit = async () => {
+  const { valid } = await formRef.value.validate()
+  if (!valid) return
+  if (!applicationInfo.value?.applicationId || !applicationStore.currentCompanyApplicant?.id) {
+    return
+  }
+
+  const [e, r] = await applicationApi.updateCompanyApplicant(
+    applicationInfo.value?.applicationId,
+    applicationStore.currentCompanyApplicant?.id,
+    {
+      ...formData,
+      dataJson: JSON.stringify(dataJson.value)
+    }
+  )
+  if (!e && r) {
+    uni.showToast({
+      title: 'Save Success',
+      icon: 'success'
+    })
+    const [e, r] = await applicationApi.getCompanyApplicants(applicationInfo.value?.applicationId)
+    if (!e && r) {
+      applicationStore.currentCompanyApplicant = r.find((item: Application.ICompanyApplicant) => {
+        return String(item.id) === String(applicationStore.currentCompanyApplicant?.id)
+      })
+      Object.assign(formData, applicationStore.currentCompanyApplicant)
+    }
+  }
+}
 </script>
 
 <style scoped></style>
