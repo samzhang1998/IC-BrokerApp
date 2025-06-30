@@ -279,4 +279,11 @@ declare namespace Application {
     type: string
     applicantType: string
   }
+
+  interface IContributionFunds {
+    amount: number
+    description: string
+    fundsFromLoan: boolean
+    type: string
+  }
 }
