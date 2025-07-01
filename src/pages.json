@@ -200,6 +200,18 @@
       }
     },
     {
+      "path": "pages/application/requirements/newLoans",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/requirements/contributionFunds",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/product/index",
       "style": {
         "navigationStyle": "custom"

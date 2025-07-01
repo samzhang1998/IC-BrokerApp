@@ -6,12 +6,12 @@
       :actions="optionColumns"
       @action="handleAction"
     />
+    <AppCard v-for="item in contributionFundsList" :key="item.id" :title="item.type" />
   </BasePage>
 </template>
 
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
-import { productApi } from '@/api/product'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo } = toRefs(applicationStore)
@@ -33,6 +33,8 @@ const typeMap: Record<string, { title: string; description: string }> = {
       'Add amounts and sources of funds that are going to be used to complete the transaction. These funds are used to make up the difference between the amount required for the transaction and the borrowed amount. Contribution Funds may have been already added as assets in "Other Assets" section. For them to be nominated as Contribution Funds, they should be added here as well. These are also known as Funds To Complete.'
   }
 }
+
+const contributionFundsList = ref<any[]>([])
 
 const newPurchaseColumns = ref([
   {
@@ -86,11 +88,19 @@ const handleAction = (item: any) => {
     uni.navigateTo({
       url: `/pages/application/requirements/purchaseForm?type=${item.name}`
     })
+  } else if (requirementsType.value === 'newLoans') {
+    uni.navigateTo({
+      url: `/pages/application/requirements/newLoans?type=${item.name}`
+    })
+  } else if (requirementsType.value === 'contributionFunds') {
+    uni.navigateTo({
+      url: `/pages/application/requirements/contributionFunds?type=${item.name}`
+    })
   }
 }
 
 const fetchProducts = async () => {
-  const [e, r] = await productApi.getAllProducts({
+  const [e, r] = await api.getAllProducts({
     applicationId: applicationInfo.value?.applicationId
   })
   console.log(r)
@@ -102,11 +112,21 @@ const fetchProducts = async () => {
   }
 }
 
+const fetchContributionFunds = async () => {
+  const [e, r] = await api.getContributionFunds(applicationInfo.value?.applicationId || '', {})
+  if (!e && r) {
+    console.log(r)
+    contributionFundsList.value = r.filter(Boolean)
+  }
+}
+
 onLoad((options) => {
   console.log(options)
   requirementsType.value = options?.type
   if (options?.type === 'newLoans') {
     fetchProducts()
+  } else if (options?.type === 'contributionFunds') {
+    fetchContributionFunds()
   }
 })
 </script>

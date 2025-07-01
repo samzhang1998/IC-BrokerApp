@@ -322,6 +322,24 @@ export function deleteExistingProperty<T = any>(
   })
 }
 
+export function getContributionFunds<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/contribution-funds`,
+    obj: query || {}
+  })
+}
+
+export function putContributionFunds<T = any>(
+  applicationId: string | number,
+  contributionFundsId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.putJson({
+    method: `api/v1/application/${applicationId}/contribution-funds/${contributionFundsId}`,
+    obj: query || {}
+  })
+}
+
 export const applicationApi = {
   getApplicationList,
   getApplicationListByActive,
@@ -353,6 +371,8 @@ export const applicationApi = {
   deleteEmployment,
   updateCompanyApplicant,
   updateTrustApplicant,
+  getContributionFunds,
+  putContributionFunds,
   getExistingProperties,
   createExistingProperty,
   updateExistingProperty,

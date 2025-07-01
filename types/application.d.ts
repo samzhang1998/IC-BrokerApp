@@ -301,4 +301,11 @@ declare namespace Application {
     }
     percentJson: { owner: [{ id: string; percentage: number }] }
   }
+
+  interface IContributionFunds {
+    amount: number
+    description: string
+    fundsFromLoan: boolean
+    type: string
+  }
 }

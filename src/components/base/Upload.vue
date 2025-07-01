@@ -102,6 +102,29 @@ export default {
         }
       } else {
         uni.hideLoading()
+        uni.showModal({
+          title: '提示',
+          content: `${item.name}已上传结束，上传状态=${item.type}`,
+          success: function (res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+              uni.setClipboardData({
+                data: `${JSON.stringify(item)}`,
+                success: function () {
+                  console.log('success')
+                }
+              })
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+              uni.setClipboardData({
+                data: `${JSON.stringify(item)}`,
+                success: function () {
+                  console.log('success')
+                }
+              })
+            }
+          }
+        })
         this.showToastDesc(item.errorMessage || 'error')
       }
     },
@@ -117,6 +140,30 @@ export default {
           const url = JSON.parse(fileData)[0].path
           const name = JSON.parse(fileData)[0].name
           console.log(url, name, '获取文件url')
+
+          // uni.showModal({
+          //   title: '上传',
+          //   content: `地址=${url}，名称=${name}`,
+          //   success: function (res) {
+          //     if (res.confirm) {
+          //       console.log('用户点击确定')
+          //       uni.setClipboardData({
+          //         data: `${JSON.stringify(url)}${JSON.stringify(name)}`,
+          //         success: function () {
+          //           console.log('success')
+          //         }
+          //       })
+          //     } else if (res.cancel) {
+          //       console.log('用户点击取消')
+          //       uni.setClipboardData({
+          //         data: `${JSON.stringify(url)}${JSON.stringify(name)}`,
+          //         success: function () {
+          //           console.log('success')
+          //         }
+          //       })
+          //     }
+          //   }
+          // })
           //触发上传
           this.$refs['lsjUpload'].upload()
           uni.showLoading({
