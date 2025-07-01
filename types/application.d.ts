@@ -279,4 +279,26 @@ declare namespace Application {
     type: string
     applicantType: string
   }
+
+  interface IExistingProperty {
+    id: number
+    primaryUsage: string
+    type: string
+    estimateMethod: string
+    estimateBasis: string
+    estimatedValue: string
+    usedAsSecurity: boolean
+    contractOfSale: string
+    legalRepresentative: string
+    ownershipProportions: string
+    dataJson: {
+      address: string
+      insurance: [{ name: string }]
+      purpose: string
+      status: string
+      toBeSold: boolean
+      transaction: string
+    }
+    percentJson: { owner: [{ id: string; percentage: number }] }
+  }
 }

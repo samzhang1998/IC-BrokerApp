@@ -44,27 +44,27 @@ const handleItemClick = (name: string, item: Application.IItem) => {
       break
     case 'existingProperties':
       uni.navigateTo({
-        url: `/pages/application/existingProperties?type=${name}&id=${applicationInfo.value?.applicationId}`
+        url: `/pages/application/assets/existingProperties/index?type=${name}&id=${applicationInfo.value?.applicationId}`
       })
       break
     case 'otherAssets':
       uni.navigateTo({
-        url: `/pages/application/otherAssets?type=${name}&id=${applicationInfo.value?.applicationId}`
+        url: `/pages/application/assets/otherAssets/index?type=${name}&id=${applicationInfo.value?.applicationId}`
       })
       break
     case 'mortgageLiabilities':
       uni.navigateTo({
-        url: `/pages/application/mortgageLiabilities?type=${name}&id=${applicationInfo.value?.applicationId}`
+        url: `/pages/application/assets/mortgageLiabilities/index?type=${name}&id=${applicationInfo.value?.applicationId}`
       })
       break
     case 'otherLiabilities':
       uni.navigateTo({
-        url: `/pages/application/otherLiabilities?type=${name}&id=${applicationInfo.value?.applicationId}`
+        url: `/pages/application/assets/otherLiabilities/index?type=${name}&id=${applicationInfo.value?.applicationId}`
       })
       break
     case 'otherIncome':
       uni.navigateTo({
-        url: `/pages/application/otherIncome?type=${name}&id=${applicationInfo.value?.applicationId}`
+        url: `/pages/application/assets/otherIncome/index?type=${name}&id=${applicationInfo.value?.applicationId}`
       })
       break
     case 'newPurchase':

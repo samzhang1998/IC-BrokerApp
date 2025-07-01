@@ -158,31 +158,31 @@
       }
     },
     {
-      "path": "pages/application/existingProperties",
+      "path": "pages/application/assets/existingProperties/index",
       "style": {
         "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/application/otherIncome",
+      "path": "pages/application/assets/otherIncome/index",
       "style": {
         "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/application/otherLiabilities",
+      "path": "pages/application/assets/otherLiabilities/index",
       "style": {
         "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/application/mortgageLiabilities",
+      "path": "pages/application/assets/mortgageLiabilities/index",
       "style": {
         "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/application/otherAssets",
+      "path": "pages/application/assets/otherAssets/index",
       "style": {
         "navigationStyle": "custom"
       }

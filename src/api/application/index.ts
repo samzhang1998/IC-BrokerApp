@@ -287,6 +287,41 @@ export function putIdentity<T = any>(
   })
 }
 
+export function getExistingProperties<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/properties`,
+    obj: query || {}
+  })
+}
+
+export function createExistingProperty<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/application/${applicationId}/properties`,
+    obj: query || {}
+  })
+}
+
+export function updateExistingProperty<T = any>(
+  applicationId: string | number,
+  propertyId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.putJson({
+    method: `api/v1/application/${applicationId}/properties/${propertyId}`,
+    obj: query || {}
+  })
+}
+
+export function deleteExistingProperty<T = any>(
+  applicationId: string | number,
+  propertyId: string | number
+): ApiResponse<T> {
+  return http.delete({
+    method: `api/v1/application/${applicationId}/properties/${propertyId}`,
+    obj: {}
+  })
+}
+
 export const applicationApi = {
   getApplicationList,
   getApplicationListByActive,
@@ -317,5 +352,9 @@ export const applicationApi = {
   putIdentity,
   deleteEmployment,
   updateCompanyApplicant,
-  updateTrustApplicant
+  updateTrustApplicant,
+  getExistingProperties,
+  createExistingProperty,
+  updateExistingProperty,
+  deleteExistingProperty
 }
