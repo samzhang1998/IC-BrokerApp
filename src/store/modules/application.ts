@@ -18,6 +18,13 @@ export const useApplicationStore = defineStore(
     // 当前选中的证明
     const currentIdentityItem = ref<Application.IBorrowerDetail['identities'][0]>()
 
+    // 当前贡献资金
+    const currentContributionFund = ref<Application.IContributionFunds>()
+    // 当前新购房产
+    const currentNewPurchase = ref<Application.IPurchase>()
+    // 当前新贷款
+    const currentNewLoan = ref<Application.INewLoan>()
+
     const setApplicationInfo = (info: Application.IApplication) => {
       applicationInfo.value = {
         ...applicationInfo.value,
@@ -60,7 +67,10 @@ export const useApplicationStore = defineStore(
       currentIdentityItem,
       reset,
       fetchBorrowerDetails,
-      getCurrentBorrowerById
+      getCurrentBorrowerById,
+      currentContributionFund,
+      currentNewPurchase,
+      currentNewLoan
     }
   },
   {
