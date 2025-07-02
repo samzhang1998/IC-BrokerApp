@@ -201,6 +201,7 @@ declare namespace Application {
   }
 
   interface IPurchase {
+    id: number
     primaryUsage: string
     type: string
     estimateMethod: string
@@ -213,15 +214,15 @@ declare namespace Application {
     dataJson: {
       purpose: string
       status: string
-      primarySecurity: string
-      principle: string
-      construction: string
+      primarySecurity: boolean
+      principle: boolean
+      construction: boolean
       address: string
       valuation: string
       contactType: string
       details: string
       transaction: string
-      toBeSold: string
+      toBeSold: boolean
     }
     percentJson: { owner: [{ id: string; percentage: number }] }
     createdAt: string
@@ -303,6 +304,7 @@ declare namespace Application {
   }
 
   interface IContributionFunds {
+    id: number
     amount: number
     description: string
     fundsFromLoan: boolean
@@ -324,5 +326,25 @@ declare namespace Application {
       year: string
     }
     percentJson: { owner: [{ id: string; percentage: number }] }
+  }
+
+  interface INewLoan {
+    id: number
+    applicationId: number
+    productId: number
+    productName: string
+    type: string
+    settlementDate: string
+    amountRequested: number
+    dataJson: {
+      nccp: string
+      term: string
+      offset: boolean
+      redraw: boolean
+      purpose: string
+      security: { negative: boolean; priority: string; property: number }[]
+      splitLoan: boolean
+      lendingPurpose: { abs: string; amount: string }[]
+    }
   }
 }

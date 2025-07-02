@@ -102,29 +102,29 @@ export default {
         }
       } else {
         uni.hideLoading()
-        uni.showModal({
-          title: '提示',
-          content: `${item.name}已上传结束，上传状态=${item.type}`,
-          success: function (res) {
-            if (res.confirm) {
-              console.log('用户点击确定')
-              uni.setClipboardData({
-                data: `${JSON.stringify(item)}`,
-                success: function () {
-                  console.log('success')
-                }
-              })
-            } else if (res.cancel) {
-              console.log('用户点击取消')
-              uni.setClipboardData({
-                data: `${JSON.stringify(item)}`,
-                success: function () {
-                  console.log('success')
-                }
-              })
-            }
-          }
-        })
+        // uni.showModal({
+        //   title: '提示',
+        //   content: `${item.name}已上传结束，上传状态=${item.type}`,
+        //   success: function (res) {
+        //     if (res.confirm) {
+        //       console.log('用户点击确定')
+        //       uni.setClipboardData({
+        //         data: `${JSON.stringify(item)}`,
+        //         success: function () {
+        //           console.log('success')
+        //         }
+        //       })
+        //     } else if (res.cancel) {
+        //       console.log('用户点击取消')
+        //       uni.setClipboardData({
+        //         data: `${JSON.stringify(item)}`,
+        //         success: function () {
+        //           console.log('success')
+        //         }
+        //       })
+        //     }
+        //   }
+        // })
         this.showToastDesc(item.errorMessage || 'error')
       }
     },

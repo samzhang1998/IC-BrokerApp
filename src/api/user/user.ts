@@ -97,6 +97,16 @@ export function updatePushId<T = any>(query: AnyObj): ApiResponse<T> {
     obj: query
   })
 }
+/**
+ * @description 获取推送id
+ * @param query 入参
+ */
+export function getPushId<T = any>(brokerId: string | number, query: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/device-tokens/broker/${brokerId}`,
+    obj: query
+  })
+}
 
 export const userApi = {
   userLogin,
@@ -107,5 +117,6 @@ export const userApi = {
   editQualification,
   getQualification,
   updatePassword,
-  updatePushId
+  updatePushId,
+  getPushId
 }

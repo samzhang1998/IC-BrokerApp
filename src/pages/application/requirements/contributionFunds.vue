@@ -22,9 +22,10 @@
 
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
+import { cloneDeep } from 'lodash'
 
 const applicationStore = useApplicationStore()
-const { applicationInfo } = toRefs(applicationStore)
+const { applicationInfo, currentContributionFund } = toRefs(applicationStore)
 const typeColumns = ref([
   'Cash',
   'Existing Equity',
@@ -42,11 +43,28 @@ const typeColumns = ref([
   'Other'
 ])
 
+onLoad((options) => {
+  if (options?.id) {
+    formData.value.id = options.id
+  }
+  if (currentContributionFund.value) {
+    Object.assign(formData.value, currentContributionFund.value)
+  }
+})
+
 const form = ref()
 const formData = ref<Application.IContributionFunds>({} as Application.IContributionFunds)
 
-const handleSubmit = () => {
-  console.log(formData.value)
+const handleSubmit = async () => {
+  let data = cloneDeep(formData.value)
+  const [e, r] = await api.putContributionFunds(applicationInfo.value?.applicationId || '', data.id, data)
+  if (!e && r) {
+    uni.showToast({
+      title: 'Success',
+      icon: 'success'
+    })
+    uni.navigateBack()
+  }
 }
 </script>
 

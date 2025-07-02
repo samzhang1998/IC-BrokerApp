@@ -136,13 +136,6 @@ export function updateTrustApplicant<T = any>(
   })
 }
 
-export function getNewPurchase<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
-  return http.get({
-    method: `api/v1/application/${applicationId}/new-properties`,
-    obj: query || {}
-  })
-}
-
 export function getProperties<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
   return http.get({
     method: `api/v1/application/${applicationId}/properties`,
@@ -322,8 +315,15 @@ export function deleteExistingProperty<T = any>(
   })
 }
 
+//#region ContributionFunds
 export function getContributionFunds<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
   return http.get({
+    method: `api/v1/application/${applicationId}/contribution-funds`,
+    obj: query || {}
+  })
+}
+export function postContributionFunds<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.post({
     method: `api/v1/application/${applicationId}/contribution-funds`,
     obj: query || {}
   })
@@ -336,6 +336,58 @@ export function putContributionFunds<T = any>(
 ): ApiResponse<T> {
   return http.putJson({
     method: `api/v1/application/${applicationId}/contribution-funds/${contributionFundsId}`,
+    obj: query || {}
+  })
+}
+//#endregion
+
+//#region NewPurchase
+export function getNewPurchase<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/new-properties`,
+    obj: query || {}
+  })
+}
+
+export function postNewPurchase<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/application/${applicationId}/new-property`,
+    obj: query || {}
+  })
+}
+
+export function putNewPurchase<T = any>(
+  applicationId: string | number,
+  newPurchaseId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.putJson({
+    method: `api/v1/application/${applicationId}/new-property/${newPurchaseId}`,
+    obj: query || {}
+  })
+}
+//#endregion
+
+export function getAllApplicants<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/applicants`,
+    obj: query || {}
+  })
+}
+
+export function postNewLoan<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/application/${applicationId}/loan`, //api/v1/application/43/loan
+    obj: query || {}
+  })
+}
+export function putNewLoan<T = any>(
+  applicationId: string | number,
+  loanId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.putJson({
+    method: `api/v1/application/${applicationId}/loan/${loanId}`,
     obj: query || {}
   })
 }
@@ -404,6 +456,7 @@ export const applicationApi = {
   updateCompanyApplicant,
   updateTrustApplicant,
   getContributionFunds,
+  postContributionFunds,
   putContributionFunds,
   getExistingProperties,
   createExistingProperty,
@@ -412,5 +465,10 @@ export const applicationApi = {
   getOtherAssets,
   createOtherAsset,
   updateOtherAsset,
-  deleteOtherAsset
+  deleteOtherAsset,
+  postNewPurchase,
+  putNewPurchase,
+  getAllApplicants,
+  postNewLoan,
+  putNewLoan
 }

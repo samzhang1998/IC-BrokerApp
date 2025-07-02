@@ -43,7 +43,7 @@ const privacy = ref(true)
 
 const loginFormData = ref({
   email: '', //watson@starx.com.au
-  password: '', //zxcv1234
+  password: '', //asdf1234
   role: 'BROKER'
 })
 
