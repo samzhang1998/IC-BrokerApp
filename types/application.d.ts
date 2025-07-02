@@ -308,4 +308,21 @@ declare namespace Application {
     fundsFromLoan: boolean
     type: string
   }
+
+  interface IOtherAsset {
+    id: number
+    applicationId: number
+    assetType: string
+    detailsType: string
+    estimatedValue: string
+    dataJson: {
+      businessName: string
+      mainActivity: string
+      model: string
+      registration: string
+      toBeSold: boolean
+      year: string
+    }
+    percentJson: { owner: [{ id: string; percentage: number }] }
+  }
 }

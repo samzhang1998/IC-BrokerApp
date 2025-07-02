@@ -340,6 +340,38 @@ export function putContributionFunds<T = any>(
   })
 }
 
+export function getOtherAssets<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/assets`,
+    obj: query || {}
+  })
+}
+
+export function createOtherAsset<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/application/${applicationId}/assets`,
+    obj: query || {}
+  })
+}
+
+export function updateOtherAsset<T = any>(
+  applicationId: string | number,
+  assetId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.putJson({
+    method: `api/v1/application/${applicationId}/assets/${assetId}`,
+    obj: query || {}
+  })
+}
+
+export function deleteOtherAsset<T = any>(applicationId: string | number, assetId: string | number): ApiResponse<T> {
+  return http.delete({
+    method: `api/v1/application/${applicationId}/assets/${assetId}`,
+    obj: {}
+  })
+}
+
 export const applicationApi = {
   getApplicationList,
   getApplicationListByActive,
@@ -376,5 +408,9 @@ export const applicationApi = {
   getExistingProperties,
   createExistingProperty,
   updateExistingProperty,
-  deleteExistingProperty
+  deleteExistingProperty,
+  getOtherAssets,
+  createOtherAsset,
+  updateOtherAsset,
+  deleteOtherAsset
 }

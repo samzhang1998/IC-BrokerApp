@@ -17,6 +17,10 @@ export const useApplicationStore = defineStore(
     const currentEmploymentItem = ref<Application.IBorrowerDetail['employmentStatuses'][0]>()
     // 当前选中的证明
     const currentIdentityItem = ref<Application.IBorrowerDetail['identities'][0]>()
+    // 当前选中的现有产业
+    const currentExistingProperty = ref<Application.IExistingProperty>()
+    // 当前选中的其他资产
+    const currentOtherAsset = ref<Application.IOtherAsset>()
 
     const setApplicationInfo = (info: Application.IApplication) => {
       applicationInfo.value = {
@@ -33,6 +37,8 @@ export const useApplicationStore = defineStore(
       borrowerDetails.value = []
       currentEmploymentItem.value = {} as Application.IBorrowerDetail['employmentStatuses'][0]
       currentIdentityItem.value = {} as Application.IBorrowerDetail['identities'][0]
+      currentExistingProperty.value = {} as Application.IExistingProperty
+      currentOtherAsset.value = {} as Application.IOtherAsset
     }
 
     const fetchBorrowerDetails = async () => {
@@ -60,7 +66,9 @@ export const useApplicationStore = defineStore(
       currentIdentityItem,
       reset,
       fetchBorrowerDetails,
-      getCurrentBorrowerById
+      getCurrentBorrowerById,
+      currentExistingProperty,
+      currentOtherAsset
     }
   },
   {

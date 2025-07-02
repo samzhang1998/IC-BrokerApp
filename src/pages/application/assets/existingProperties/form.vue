@@ -1,93 +1,75 @@
 <template>
   <BasePage :title="applicationInfo?.applicationName || 'Create Application'" hasBack>
     <view class="head-wrap flex-y-center justify-between h-88rpx mb-32rpx">
-      <view class="text-28rpx font-bold">
-        {{ currentBorrower?.firstName }} ({{ currentBorrower?.applicantType }})
-      </view>
+      <view class="text-28rpx font-bold"> {{ currentExistingProperty?.primaryUsage }} - New Property </view>
       <wd-button type="primary" size="small" class="bg-#FF754C!" @click="handleSubmit">Save</wd-button>
     </view>
     <wd-form ref="form" :model="formData" class="flex-col gap-4">
-      <FormItem label="Applicant Type" labelBold>
-        <wd-input type="text" v-model="formData.applicantType" placeholder="Enter applicant type" disabled />
+      <FormItem label="Primary Usage">
+        <wd-picker :columns="usagesColumns" v-model="formData.primaryUsage" placeholder="Select primary usage" />
       </FormItem>
-      <FormItem label="Name Title">
-        <wd-picker :columns="nameTitleColumns" v-model="formData.nameTitle" placeholder="Select name title" />
+      <FormItem label="Transaction">
+        <wd-picker :columns="transactionsColumns" v-model="dataJson.transaction" placeholder="Select transaction" />
       </FormItem>
-      <FormItem label="First Name">
-        <wd-input type="text" v-model="formData.firstName" placeholder="Enter first name" />
+      <FormItem label="Residential Type">
+        <wd-picker :columns="residentialTypeColumns" v-model="formData.type" placeholder="Select residential type" />
       </FormItem>
-      <FormItem label="Middle Name">
-        <wd-input type="text" v-model="formData.middleName" placeholder="Enter middle name" />
+      <FormItem label="To Be Sold">
+        <wd-switch v-model="dataJson.toBeSold" />
       </FormItem>
-      <FormItem label="Surname">
-        <wd-input type="text" v-model="formData.lastName" placeholder="Enter surname" />
+      <FormItem label="Primary Purpose">
+        <wd-picker :columns="purposesColumns" v-model="dataJson.purpose" placeholder="Select purpose" />
       </FormItem>
-      <FormItem label="Known As">
-        <wd-input type="text" v-model="formData.knownAs" placeholder="Enter known as" />
+      <FormItem label="Estimate Methodology">
+        <wd-picker :columns="methodsColumns" v-model="formData.estimateMethod" placeholder="Select estimate method" />
       </FormItem>
-      <FormItem label="Mother's Maiden Name ">
-        <wd-input type="text" v-model="formData.maidenName" placeholder="Enter mother's maiden name" />
+      <FormItem label="Status">
+        <wd-picker :columns="statusesColumns" v-model="dataJson.status" placeholder="Select status" />
       </FormItem>
-      <FormItem label="Has Previous Name" labelBold>
-        <wd-switch v-model="formData.hasPreName" size="medium" />
-      </FormItem>
-      <FormItem label="Previous Name Title" v-if="formData.hasPreName">
-        <wd-input type="text" v-model="formData.preNameTitle" placeholder="Enter previous name title" />
-      </FormItem>
-      <FormItem label="Previous First Name" v-if="formData.hasPreName">
-        <wd-input type="text" v-model="formData.preFirstName" placeholder="Enter previous first name" />
-      </FormItem>
-      <FormItem label="Previous Middle Name" v-if="formData.hasPreName">
-        <wd-input type="text" v-model="formData.preMiddleName" placeholder="Enter previous middle name" />
-      </FormItem>
-      <FormItem label="Previous Surname" v-if="formData.hasPreName">
-        <wd-input type="text" v-model="formData.preLastName" placeholder="Enter previous surname" />
-      </FormItem>
-      <FormItem label="Gender">
-        <wd-picker :columns="genderColumns" v-model="formData.gender" placeholder="Select gender" />
-      </FormItem>
-      <FormItem label="Date of Birth">
-        <wd-datetime-picker v-model="formData.dob" type="date" placeholder="Select date of birth" />
-      </FormItem>
-      <FormItem label="Residency Status" labelBold>
+      <FormItem label="Estimate Basis">
         <wd-picker
-          :columns="residencyStatusColumns"
-          v-model="formData.residencyStatus"
-          placeholder="Select residency status"
+          :columns="estimateBasisColumns"
+          v-model="formData.estimateBasis"
+          placeholder="Select estimate basis"
         />
       </FormItem>
-      <FormItem label="Citizenship">
-        <wd-input type="text" v-model="formData.citizenship" placeholder="Enter citizenship" />
+      <FormItem label="To be Used as Security">
+        <wd-switch v-model="formData.usedAsSecurity" />
       </FormItem>
-      <FormItem label="Marital Status" labelBold>
+      <FormItem label="Estimate Value">
+        <wd-input type="number" v-model="formData.estimatedValue" placeholder="Enter estimate value" />
+      </FormItem>
+      <FormItem label="Address">
+        <wd-input v-model="formData.dataJson.address" placeholder="Enter address" />
+      </FormItem>
+      <FormItem label="Ownership Proportions">
         <wd-picker
-          :columns="maritalStatusColumns"
-          v-model="formData.maritalStatus"
-          placeholder="Select marital status"
+          :columns="ownershipsColumns"
+          v-model="formData.ownershipProportions"
+          placeholder="Select ownership proportions"
         />
       </FormItem>
-      <FormItem label="Next of Kin">
-        <wd-input type="text" v-model="formData.kinId" placeholder="Enter Next of Kin ID" />
-      </FormItem>
-      <FormItem label="Kin Relationship">
-        <wd-picker :columns="kinRelationColumns" v-model="formData.kinRelation" placeholder="Select kin relation" />
-      </FormItem>
-      <FormItem label="Household and Living Expenses" labelBold>
-        <view class="flex-y-center gap-20rpx">
-          <wd-input
-            type="text"
-            v-model="formData.livingExpensesId"
-            placeholder="Enter living expenses"
-            class="flex-1"
-          />
-          <view class="bg-#FF754C! rounded-full p-0 flex-center text-white p-1" @click="handleCreateHousehold">
-            <wd-icon name="add" size="18px"></wd-icon>
-          </view>
+      <view class="flex-col gap-4">
+        <view class="flex-y-center justify-between gap-4">
+          <text class="font-bold">Insurance</text>
+          <AddButton @click="handleCreateInsurance" />
         </view>
-      </FormItem>
-      <FormItem label="Solicitor">
-        <wd-input type="text" v-model="formData.solicitorId" placeholder="Enter solicitor" />
-      </FormItem>
+        <view v-for="(item, index) in dataJson.insurance" :key="index" class="flex-y-center justify-between gap-4">
+          <wd-input v-model="item.name" placeholder="Enter insurance" class="flex-1" />
+          <wd-icon name="delete" size="22px" @click="handleDeleteInsurance(index)"></wd-icon>
+        </view>
+      </view>
+      <view class="flex-col gap-4">
+        <view class="flex-y-center justify-between gap-4">
+          <text class="font-bold">Owner</text>
+          <AddButton @click="handleCreateOwner" />
+        </view>
+        <view v-for="(item, index) in percentJson.owner" :key="index" class="flex-y-center justify-between gap-4">
+          <wd-input v-model="item.id" placeholder="Enter owner" class="flex-1" />
+          <wd-input-number v-model="item.percentage" placeholder="Enter percentage" />
+          <wd-icon name="delete" size="22px" @click="handleDeleteOwner(index)"></wd-icon>
+        </view>
+      </view>
     </wd-form>
   </BasePage>
 </template>
@@ -96,45 +78,62 @@
 import { useApplicationStore } from '@/store/modules/application'
 
 const applicationStore = useApplicationStore()
-const { currentBorrower, applicationInfo } = toRefs(applicationStore)
+const { currentExistingProperty, applicationInfo } = toRefs(applicationStore)
 
-const formData = reactive<Application.IBorrowerDetail>({} as Application.IBorrowerDetail)
-const nameTitleColumns = ref(['Mr', 'Miss', 'Mrs'])
-const residencyStatusColumns = ref(['Permanently in Australia', 'Temporarily in Australia', 'Non Resident'])
-const genderColumns = ref(['Male', 'Female'])
-const maritalStatusColumns = ref(['De Facto', 'Divorced', 'Married', 'Separated', 'Single', 'Widowed'])
-const kinRelationColumns = ref(['Child', 'Friend', 'Grandparent', 'Parent', 'Sibling', 'Other Relative'])
+const formData = reactive<Application.IExistingProperty>({} as Application.IExistingProperty)
 
-watch(
-  currentBorrower,
-  (newVal) => {
-    if (newVal) {
-      const cleanNewVal = { ...newVal } as any
-      for (const key in cleanNewVal) {
-        if (cleanNewVal[key] === null && key !== 'address') {
-          cleanNewVal[key] = ''
-        }
-      }
-      Object.assign(formData, cleanNewVal)
-    }
-  },
-  {
-    deep: true,
-    immediate: true
-  }
-)
+const usagesColumns = ref(['Residential', 'Rural', 'Commercial', 'Industrial'])
+const residentialTypeColumns = ref([
+  'Apartment Unit Flat',
+  'Fully Detached House',
+  'Semi Detached House',
+  'Serviced Apartment',
+  'Townhouse',
+  'Unit Student Accommodation',
+  'Vacant Land'
+])
+const purposesColumns = ref(['Business', 'Investment', 'Owner Occupied'])
+const statusesColumns = ref(['Established', 'New Building', 'Off the Plan', 'Vacant Land'])
+const transactionsColumns = ref(['Owns', 'Sold'])
+const methodsColumns = ref(['Completed Construction Value', 'Current Market Value'])
+const estimateBasisColumns = ref([
+  'Applicant Estimate',
+  'Bank Assessment',
+  'Certified Valuation',
+  'Electronic Valuation',
+  'Rates Notice',
+  'RP Data'
+])
+const ownershipsColumns = ref(['Equal', 'Specified'])
 
 const form = ref()
+const dataJson = ref<Application.IExistingProperty['dataJson']>({
+  address: '',
+  insurance: [{ name: '' }],
+  purpose: '',
+  status: '',
+  toBeSold: false,
+  transaction: ''
+})
+
+const percentJson = ref<Application.IExistingProperty['percentJson']>({
+  owner: [{ id: '', percentage: 0 }]
+})
 
 const handleSubmit = async () => {
   const { valid } = await form.value.validate()
   if (!valid) return
-  const [e, r] = await api.updateBorrower(applicationInfo.value?.applicationId || '', currentBorrower.value?.id || '', {
-    ...formData,
-    applicationId: applicationInfo.value?.applicationId,
-    type: currentBorrower.value?.applicantType
-  })
+  const [e, r] = await api.updateExistingProperty(
+    applicationInfo.value?.applicationId || '',
+    currentExistingProperty.value?.id || '',
+    {
+      ...formData,
+      dataJson: JSON.stringify(dataJson.value),
+      percentJson: JSON.stringify(percentJson.value)
+    }
+  )
   if (!e && r) {
+    currentExistingProperty.value = r as unknown as Application.IExistingProperty
     uni.showToast({
       title: 'Update Success',
       icon: 'success'
@@ -142,11 +141,42 @@ const handleSubmit = async () => {
   }
 }
 
-const handleCreateHousehold = () => {
-  uni.navigateTo({
-    url: `/pages/application/householdForm?applicationId=${applicationInfo.value?.applicationId}`
-  })
+const handleCreateInsurance = () => {
+  dataJson.value.insurance.push({ name: '' })
 }
+
+const handleDeleteInsurance = (index: number) => {
+  dataJson.value.insurance.splice(index, 1)
+}
+
+const handleCreateOwner = () => {
+  percentJson.value.owner.push({ id: '', percentage: 0 })
+}
+
+const handleDeleteOwner = (index: number) => {
+  percentJson.value.owner.splice(index, 1)
+}
+
+watch(
+  currentExistingProperty,
+  (newVal) => {
+    if (newVal) {
+      Object.assign(formData, newVal)
+      if (newVal.dataJson) {
+        dataJson.value = JSON.parse(newVal.dataJson as unknown as string) as Application.IExistingProperty['dataJson']
+      }
+      if (newVal.percentJson) {
+        percentJson.value = JSON.parse(
+          newVal.percentJson as unknown as string
+        ) as Application.IExistingProperty['percentJson']
+      }
+    }
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+)
 </script>
 
 <style scoped lang="scss">

@@ -76,6 +76,10 @@ const handleAction = async (item: any) => {
 
 const handleEditExistingProperty = (item: any) => {
   console.log(item)
+  applicationStore.currentExistingProperty = item
+  uni.navigateTo({
+    url: `/pages/application/assets/existingProperties/form?id=${item.id}`
+  })
 }
 
 const handleDeleteExistingProperty = (item: any) => {

@@ -164,6 +164,12 @@
       }
     },
     {
+      "path": "pages/application/assets/existingProperties/form",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/application/assets/otherIncome/index",
       "style": {
         "navigationStyle": "custom"
@@ -183,6 +189,12 @@
     },
     {
       "path": "pages/application/assets/otherAssets/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/assets/otherAssets/form",
       "style": {
         "navigationStyle": "custom"
       }
