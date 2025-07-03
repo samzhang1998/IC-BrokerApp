@@ -24,7 +24,7 @@
       </wd-form>
       <view class="flex-col gap-1 mt-3 w-full">
         <wd-button type="primary" block class="bg-#FF754C!" size="large" @click="handleCreate">Create</wd-button>
-        <wd-button type="text" class="text-#7A858E! underline">Save as draft</wd-button>
+        <!-- <wd-button type="text" class="text-#7A858E! underline">Save as draft</wd-button> -->
       </view>
     </view>
   </BasePage>

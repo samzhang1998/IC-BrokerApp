@@ -19,7 +19,7 @@
     </view>
     <view class="flex-col gap-1 mt-3 w-full">
       <wd-button type="primary" block class="bg-#FF754C!" size="large" @click="handleSubmit">Submit</wd-button>
-      <wd-button type="text" class="text-#7A858E! underline" @click="handleSaveAsDraft">Save as draft</wd-button>
+      <!-- <wd-button type="text" class="text-#7A858E! underline" @click="handleSaveAsDraft">Save as draft</wd-button> -->
     </view>
   </BasePage>
 </template>
