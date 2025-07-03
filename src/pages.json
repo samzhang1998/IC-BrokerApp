@@ -176,6 +176,12 @@
       }
     },
     {
+      "path": "pages/application/assets/otherIncome/form",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/application/assets/otherLiabilities/index",
       "style": {
         "navigationStyle": "custom"

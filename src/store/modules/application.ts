@@ -28,6 +28,8 @@ export const useApplicationStore = defineStore(
     const currentNewPurchase = ref<Application.IPurchase>()
     // 当前新贷款
     const currentNewLoan = ref<Application.INewLoan>()
+    // 当前其他收入
+    const currentOtherIncome = ref<Application.IOtherIncome>()
 
     // 当前抵押贷款
     const currentMortgageLiability = ref<Application.IMortgageLiability>()
@@ -82,7 +84,8 @@ export const useApplicationStore = defineStore(
       currentContributionFund,
       currentNewPurchase,
       currentNewLoan,
-      currentMortgageLiability
+      currentMortgageLiability,
+      currentOtherIncome
     }
   },
   {
