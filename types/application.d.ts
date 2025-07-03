@@ -393,4 +393,23 @@ declare namespace Application {
     type: string
     percentJson: { owner: [{ id: string; percentage: number }] }
   }
+
+  interface IOtherLiabilities {
+    id: number
+    detailType: string
+    financialInstitution: string
+    outstandingBalance: string
+    originalAmount: string
+    dataJson: {
+      credit: string
+      interest: number
+      clearing: string
+      repayment: string
+      repaymentFrequency: string
+      repaymentType: string
+      tax: string
+      arrears: string
+    }
+    percentJson: { owner: [{ id: string; percentage: number }] }
+  }
 }
