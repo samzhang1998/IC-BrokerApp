@@ -28,6 +28,8 @@ export const useApplicationStore = defineStore(
     const currentNewPurchase = ref<Application.IPurchase>()
     // 当前新贷款
     const currentNewLoan = ref<Application.INewLoan>()
+    // 当前其他收入
+    const currentOtherIncome = ref<Application.IOtherIncome>()
 
     const setApplicationInfo = (info: Application.IApplication) => {
       applicationInfo.value = {
@@ -78,7 +80,8 @@ export const useApplicationStore = defineStore(
       currentOtherAsset,
       currentContributionFund,
       currentNewPurchase,
-      currentNewLoan
+      currentNewLoan,
+      currentOtherIncome
     }
   },
   {

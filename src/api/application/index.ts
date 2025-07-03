@@ -424,6 +424,31 @@ export function deleteOtherAsset<T = any>(applicationId: string | number, assetI
   })
 }
 
+export function getOtherIncome<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/other-income`,
+    obj: query || {}
+  })
+}
+
+export function postOtherIncome<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/application/${applicationId}/other-income`,
+    obj: query || {}
+  })
+}
+
+export function putOtherIncome<T = any>(
+  applicationId: string | number,
+  otherIncomeId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.putJson({
+    method: `api/v1/application/${applicationId}/other-income/${otherIncomeId}`, //api/v1/application/43/other-income/33
+    obj: query || {}
+  })
+}
+
 export const applicationApi = {
   getApplicationList,
   getApplicationListByActive,
@@ -470,5 +495,8 @@ export const applicationApi = {
   putNewPurchase,
   getAllApplicants,
   postNewLoan,
-  putNewLoan
+  putNewLoan,
+  getOtherIncome,
+  postOtherIncome,
+  putOtherIncome
 }

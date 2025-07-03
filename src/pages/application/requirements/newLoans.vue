@@ -138,6 +138,8 @@
 
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
+import dayjs from 'dayjs'
+import { cloneDeep } from 'lodash'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo, currentNewLoan } = toRefs(applicationStore)
@@ -168,6 +170,9 @@ onLoad((options) => {
   if (currentNewLoan.value) {
     Object.assign(formData.value, currentNewLoan.value)
     console.log(currentNewLoan.value)
+    if (formData.value.settlementDate) {
+      formData.value.settlementDate = dayjs(formData.value.settlementDate).valueOf()
+    }
 
     if (!formData.value.dataJson) {
       formData.value.dataJson = {
@@ -221,7 +226,9 @@ const handleDeleteSecurity = (index: number) => {
 }
 
 const handleSubmit = async () => {
-  const [e, r] = await api.putNewLoan(applicationInfo.value?.applicationId || '', formData.value.id, formData.value)
+  let data = cloneDeep(formData.value)
+  data.settlementDate = dayjs(data.settlementDate).format('YYYY-MM-DD')
+  const [e, r] = await api.putNewLoan(applicationInfo.value?.applicationId || '', formData.value.id, data)
   if (!e && r) {
     uni.showToast({
       title: 'Success',

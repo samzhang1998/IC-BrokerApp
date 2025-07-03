@@ -334,7 +334,7 @@ declare namespace Application {
     productId: number
     productName: string
     type: string
-    settlementDate: string
+    settlementDate: number | string
     amountRequested: number
     dataJson: {
       nccp: string
@@ -346,5 +346,18 @@ declare namespace Application {
       splitLoan: boolean
       lendingPurpose: { abs: string; amount: string }[]
     }
+  }
+
+  interface IOtherIncome {
+    id: number
+    type: string
+    startDate: number | string
+    endDate: number | string
+    amount: number
+    previousYearAmount: number
+    frequency: string
+    isTaxable: boolean
+    type: string
+    percentJson: { owner: [{ id: string; percentage: number }] }
   }
 }
