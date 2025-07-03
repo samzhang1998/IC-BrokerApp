@@ -424,6 +424,41 @@ export function deleteOtherAsset<T = any>(applicationId: string | number, assetI
   })
 }
 
+export function getMortgageLiabilities<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/mortgage-liabilities`,
+    obj: query || {}
+  })
+}
+
+export function createMortgageLiabilities<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/application/${applicationId}/mortgage-liabilities`,
+    obj: query || {}
+  })
+}
+
+export function updateMortgageLiabilities<T = any>(
+  applicationId: string | number,
+  assetId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.putJson({
+    method: `api/v1/application/${applicationId}/mortgage-liabilities/${assetId}`,
+    obj: query || {}
+  })
+}
+
+export function deleteMortgageLiabilities<T = any>(
+  applicationId: string | number,
+  assetId: string | number
+): ApiResponse<T> {
+  return http.delete({
+    method: `api/v1/application/${applicationId}/mortgage-liabilities/${assetId}`,
+    obj: {}
+  })
+}
+
 export const applicationApi = {
   getApplicationList,
   getApplicationListByActive,
@@ -470,5 +505,9 @@ export const applicationApi = {
   putNewPurchase,
   getAllApplicants,
   postNewLoan,
-  putNewLoan
+  putNewLoan,
+  getMortgageLiabilities,
+  createMortgageLiabilities,
+  updateMortgageLiabilities,
+  deleteMortgageLiabilities
 }

@@ -29,6 +29,9 @@ export const useApplicationStore = defineStore(
     // 当前新贷款
     const currentNewLoan = ref<Application.INewLoan>()
 
+    // 当前抵押贷款
+    const currentMortgageLiability = ref<Application.IMortgageLiability>()
+
     const setApplicationInfo = (info: Application.IApplication) => {
       applicationInfo.value = {
         ...applicationInfo.value,
@@ -78,7 +81,8 @@ export const useApplicationStore = defineStore(
       currentOtherAsset,
       currentContributionFund,
       currentNewPurchase,
-      currentNewLoan
+      currentNewLoan,
+      currentMortgageLiability
     }
   },
   {

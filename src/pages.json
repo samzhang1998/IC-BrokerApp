@@ -188,6 +188,12 @@
       }
     },
     {
+      "path": "pages/application/assets/mortgageLiabilities/form",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/application/assets/otherAssets/index",
       "style": {
         "navigationStyle": "custom"

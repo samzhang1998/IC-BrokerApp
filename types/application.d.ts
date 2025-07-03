@@ -347,4 +347,38 @@ declare namespace Application {
       lendingPurpose: { abs: string; amount: string }[]
     }
   }
+
+  interface IMortgageLiability {
+    id: number
+    applicationId: number
+    liabilityType: string
+    financialInstitution: string
+    accountNumber: string
+    outstandingBalance: number
+    originalAmount: number
+    dataJson: {
+      purpose: string
+      security: [
+        {
+          property: string
+          priority: string
+          negative: boolean
+        }
+      ]
+      clearing: string
+      repayment: string
+      repaymentFrequency: string
+      repaymentType: string
+      tax: string
+      arrears: string
+    }
+    percentJson: {
+      owner: [
+        {
+          id: string
+          percentage: number
+        }
+      ]
+    }
+  }
 }
