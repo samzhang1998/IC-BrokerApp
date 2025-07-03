@@ -39,7 +39,7 @@ declare module 'vue' {
     WdForm: typeof import('wot-design-uni/components/wd-form/wd-form.vue')['default']
     WdIcon: typeof import('wot-design-uni/components/wd-icon/wd-icon.vue')['default']
     WdInput: typeof import('wot-design-uni/components/wd-input/wd-input.vue')['default']
-    WdInputNumber: (typeof import('wot-design-uni/components/wd-input-number/wd-input-number.vue'))['default']
+    WdInputNumber: typeof import('wot-design-uni/components/wd-input-number/wd-input-number.vue')['default']
     WdNavbar: typeof import('wot-design-uni/components/wd-navbar/wd-navbar.vue')['default']
     WdPicker: typeof import('wot-design-uni/components/wd-picker/wd-picker.vue')['default']
     WdSwitch: typeof import('wot-design-uni/components/wd-switch/wd-switch.vue')['default']
