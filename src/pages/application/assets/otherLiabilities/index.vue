@@ -4,6 +4,13 @@
       title="Other Liabilities"
       description="Add all other non mortgage liabilities owed by the applicants which will affect the applicants borrowing capacity."
       :actions="liabilityColumns"
+      @action="handleAction"
+    />
+    <AppCard
+      v-for="item in otherLiabilitiesList"
+      :key="item.id"
+      :title="item.detailType + ' - ' + (item.financialInstitution || 'New Other Liability')"
+      @click="handleToEdit(item)"
     />
   </BasePage>
 </template>
@@ -12,8 +19,10 @@
 import { useApplicationStore } from '@/store/modules/application'
 
 const applicationStore = useApplicationStore()
-const { applicationInfo } = toRefs(applicationStore)
+const { applicationInfo, currentOtherLiabilities } = toRefs(applicationStore)
 
+const applicationId = ref('')
+const otherLiabilitiesList = ref<Application.IOtherLiabilities[]>([])
 const liabilityColumns = ref([
   {
     name: 'Credit Card',
@@ -99,6 +108,54 @@ const liabilityColumns = ref([
     subname: 'Loan Account'
   }
 ])
+
+onLoad((options) => {
+  console.log(options)
+  if (options?.id) {
+    applicationId.value = options?.id
+  }
+})
+
+onShow(() => {
+  getOtherLiabilities()
+})
+
+async function getOtherLiabilities() {
+  if (!applicationId.value) return
+  const [e, r] = await api.getOtherLiabilities(applicationId.value)
+  if (!e && r) {
+    otherLiabilitiesList.value = r as unknown as Application.IOtherLiabilities[]
+  }
+}
+
+const handleToEdit = (item: Application.IOtherLiabilities) => {
+  currentOtherLiabilities.value = item
+  uni.navigateTo({
+    url: `/pages/application/assets/otherLiabilities/form?id=${item.id}`
+  })
+}
+
+const handleAction = async (item: any) => {
+  const data = {
+    detailType: item.name,
+    type: item.subname
+  }
+  const [e, r] = await api.postOtherLiabilities(applicationInfo.value?.applicationId || '', data)
+  if (!e && r) {
+    console.log(r)
+    if (r?.id) {
+      currentOtherLiabilities.value = r as unknown as Application.IOtherLiabilities
+      uni.navigateTo({
+        url: `/pages/application/assets/otherLiabilities/form?id=${r.id}`
+      })
+    } else {
+      uni.showToast({
+        title: 'Failed to create other liabilities',
+        icon: 'none'
+      })
+    }
+  }
+}
 </script>
 
 <style scoped></style>
