@@ -18,14 +18,14 @@
       <AppCard title="New Requirements" v-model:data="newRequirementsItems" @item-click="handleItemClick"> </AppCard>
     </view>
     <view class="flex-col gap-1 mt-3 w-full">
-      <wd-button type="primary" block class="bg-#FF754C!" size="large">Submit</wd-button>
-      <wd-button type="text" class="text-#7A858E! underline">Save as draft</wd-button>
+      <wd-button type="primary" block class="bg-#FF754C!" size="large" @click="handleSubmit">Submit</wd-button>
+      <wd-button type="text" class="text-#7A858E! underline" @click="handleSaveAsDraft">Save as draft</wd-button>
     </view>
   </BasePage>
 </template>
 
 <script setup lang="ts">
-import { currentSituationItems, newRequirementsItems, applicationSummaryItems } from './constants'
+import { currentSituationItems, newRequirementsItems } from './constants'
 import { useApplicationStore } from '@/store/modules/application'
 import { api } from '@/api'
 
@@ -79,6 +79,21 @@ const handleItemClick = (name: string, item: Application.IItem) => {
   }
 }
 
+const handleSaveAsDraft = async () => {
+  const [error, res] = await api.putApplicationDetail(applicationInfo.value?.applicationId || '')
+  if (!error && res) {
+    uni.showToast({ title: 'Save as draft Success', icon: 'success' })
+  }
+}
+const handleSubmit = async () => {
+  const [error, res] = await api.verifyApplication(applicationInfo.value?.applicationId || '')
+  if (!error && res) {
+    const [e, r] = await api.submitApplication(applicationInfo.value?.applicationId || '')
+    if (!e && r) {
+      uni.showToast({ title: 'Submit Success', icon: 'success' })
+    }
+  }
+}
 const getApplicationDetail = async (id: string | undefined) => {
   if (!id) return
   const [e, r] = await api.getApplicationDetail(id)

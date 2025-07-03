@@ -1,5 +1,19 @@
 import http from '@/server/httpGateway'
 
+export function verifyApplication<T = any>(id: string | number): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${id}/verify-before-submit`,
+    obj: {}
+  })
+}
+
+export function submitApplication<T = any>(id: string | number): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/application/${id}/submission`,
+    obj: {}
+  })
+}
+
 /**
  * @description 获取申请列表
  * @param query 入参
@@ -39,6 +53,13 @@ export function createApplication<T = any>(query: AnyObj): ApiResponse<T> {
  */
 export function getApplicationDetail<T = any>(id: string | number, query?: AnyObj): ApiResponse<T> {
   return http.get({
+    method: `api/v1/application/${id}`,
+    obj: query || {}
+  })
+}
+
+export function putApplicationDetail<T = any>(id: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.put({
     method: `api/v1/application/${id}`,
     obj: query || {}
   })
@@ -485,10 +506,13 @@ export function deleteMortgageLiabilities<T = any>(
 }
 
 export const applicationApi = {
+  verifyApplication,
+  submitApplication,
   getApplicationList,
   getApplicationListByActive,
   createApplication,
   getApplicationDetail,
+  putApplicationDetail,
   getBorrowerDetails,
   createBorrower,
   updateBorrower,

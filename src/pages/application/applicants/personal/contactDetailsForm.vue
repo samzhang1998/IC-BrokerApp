@@ -128,7 +128,7 @@ import { useApplicationStore } from '@/store/modules/application'
 import { applicationApi } from '@/api/application'
 
 const applicationStore = useApplicationStore()
-const { applicationInfo } = toRefs(applicationStore)
+const { applicationInfo, currentBorrower } = toRefs(applicationStore)
 const formRef = ref()
 const formData = reactive<Application.IContactDetails>({
   email: [{ address: '', type: '', email_address: '', email_type: '' }],
@@ -210,9 +210,37 @@ const handleDeletePreviewsAddress = (index: number) => {
   formData.address.previous_addresses.splice(index, 1)
 }
 
-onLoad(() => {
-  Object.assign(formData, applicationStore.currentBorrower)
-})
+watch(
+  currentBorrower,
+  (newVal) => {
+    if (!newVal) return
+    Object.assign(formData, {
+      ...newVal,
+      email: newVal.email === null ? [{ address: '', type: '', email_address: '', email_type: '' }] : newVal.email,
+      address:
+        newVal.address === null
+          ? {
+              current_address: {
+                residential_address: '',
+                start_date: '',
+                housing_status: '',
+                mailing_address: ''
+              },
+              previous_addresses: [{ residential_address: '', start_date: '', end_date: '', housing_status: '' }],
+              post_settlement_address: {
+                residential_address: '',
+                housing_status: '',
+                mailing_address: ''
+              }
+            }
+          : newVal.address
+    })
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+)
 </script>
 
 <style scoped></style>

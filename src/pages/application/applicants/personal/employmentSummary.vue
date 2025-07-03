@@ -51,7 +51,6 @@ const handlePostEmployment = async (item: any) => {
     statusCode
   })
   if (!e && r) {
-    console.log(r)
     applicationStore.fetchBorrowerDetails()
   }
 }
@@ -112,9 +111,21 @@ const handleEditEmployment = (item: any) => {
   }
 }
 
-const employmentStatusList = computed(() => {
-  return currentBorrower.value?.employmentStatuses || []
-})
+const employmentStatusList = ref<Application.IBorrowerDetail['employmentStatuses'][number][]>([])
+
+watch(
+  () => applicationStore.borrowerDetails,
+  (newVal) => {
+    if (!newVal) return
+    applicationStore.getCurrentBorrowerById(currentBorrower.value?.id || '')
+    employmentStatusList.value = currentBorrower.value
+      ?.employmentStatuses as unknown as Application.IBorrowerDetail['employmentStatuses'][number][]
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+)
 
 onLoad((options) => {
   applicationStore.getCurrentBorrowerById(options?.borrowerId)

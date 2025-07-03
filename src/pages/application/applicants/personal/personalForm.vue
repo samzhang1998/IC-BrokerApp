@@ -89,7 +89,26 @@
         </view>
       </FormItem>
       <FormItem label="Solicitor">
-        <wd-input type="text" v-model="formData.solicitorId" placeholder="Enter solicitor" />
+        <view class="flex-y-center justify-between gap-4">
+          <wd-picker
+            :columns="solicitorColumns"
+            v-model="formData.solicitorId"
+            placeholder="Select solicitor"
+            class="flex-1"
+          />
+          <add-button />
+        </view>
+      </FormItem>
+      <FormItem label="Accountant">
+        <view class="flex-y-center justify-between gap-4">
+          <wd-picker
+            :columns="AccountantColumns"
+            v-model="formData.solicitorId"
+            placeholder="Select accountant"
+            class="flex-1"
+          />
+          <add-button />
+        </view>
       </FormItem>
     </wd-form>
   </BasePage>
@@ -107,7 +126,8 @@ const residencyStatusColumns = ref(['Permanently in Australia', 'Temporarily in 
 const genderColumns = ref(['Male', 'Female'])
 const maritalStatusColumns = ref(['De Facto', 'Divorced', 'Married', 'Separated', 'Single', 'Widowed'])
 const kinRelationColumns = ref(['Child', 'Friend', 'Grandparent', 'Parent', 'Sibling', 'Other Relative'])
-
+const solicitorColumns = ref([])
+const AccountantColumns = ref([])
 watch(
   currentBorrower,
   (newVal) => {
