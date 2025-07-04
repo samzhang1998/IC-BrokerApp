@@ -26,7 +26,8 @@
 import { useApplicationStore } from '@/store/modules/application'
 
 const applicationStore = useApplicationStore()
-const { applicationInfo, currentContributionFund, currentNewPurchase, currentNewLoan } = toRefs(applicationStore)
+const { applicationInfo, currentContributionFund, currentNewPurchase, currentNewLoan, isViewApplication } =
+  toRefs(applicationStore)
 const requirementsType = ref('newPurchase')
 const products = ref<any[]>([])
 

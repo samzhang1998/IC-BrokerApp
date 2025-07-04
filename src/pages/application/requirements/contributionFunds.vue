@@ -14,7 +14,7 @@
         <wd-switch v-model="formData.fundsFromLoan" />
       </FormItem>
     </wd-form>
-    <view class="flex-col gap-1 mt-3 w-full">
+    <view class="flex-col gap-1 mt-3 w-full" v-if="!isViewApplication">
       <wd-button type="primary" block class="bg-#FF754C!" size="large" @click="handleSubmit">Save</wd-button>
     </view>
   </BasePage>
@@ -25,7 +25,7 @@ import { useApplicationStore } from '@/store/modules/application'
 import { cloneDeep } from 'lodash'
 
 const applicationStore = useApplicationStore()
-const { applicationInfo, currentContributionFund } = toRefs(applicationStore)
+const { applicationInfo, currentContributionFund, isViewApplication } = toRefs(applicationStore)
 const typeColumns = ref([
   'Cash',
   'Existing Equity',

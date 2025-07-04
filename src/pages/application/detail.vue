@@ -382,6 +382,7 @@ function isStrictJSON(str: string) {
 }
 
 const handleToOverview = () => {
+  applicationStore.isViewApplication = true
   uni.navigateTo({
     url: `/pages/application/overview?id=${applicationId.value}`
   })
