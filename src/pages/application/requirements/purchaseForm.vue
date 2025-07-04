@@ -80,6 +80,7 @@
           <view
             class="bg-#FF754C! rounded-full p-0 flex-center text-white p-1 w-40rpx h-40rpx"
             @click="handleCreateOwner"
+            v-if="!isViewApplication"
           >
             <wd-icon name="add" size="18px"></wd-icon>
           </view>
@@ -95,13 +96,13 @@
                 placeholder="Select applicant"
               />
               <wd-input type="number" v-model="item.percentage" placeholder="Enter percentage" class="flex-1" />
-              <wd-icon name="delete" size="22px" @click="handleDeleteOwner(index)"></wd-icon>
+              <wd-icon name="delete" size="22px" @click="handleDeleteOwner(index)" v-if="!isViewApplication"></wd-icon>
             </view>
           </FormItem>
         </view>
       </view>
     </wd-form>
-    <view class="flex-col gap-1 mt-3 w-full">
+    <view class="flex-col gap-1 mt-3 w-full" v-if="!isViewApplication">
       <wd-button type="primary" block class="bg-#FF754C!" size="large" @click="handleSubmit">Save</wd-button>
     </view>
   </BasePage>
@@ -112,7 +113,7 @@ import { useApplicationStore } from '@/store/modules/application'
 import { cloneDeep } from 'lodash'
 
 const applicationStore = useApplicationStore()
-const { applicationInfo, currentNewPurchase } = toRefs(applicationStore)
+const { applicationInfo, currentNewPurchase, isViewApplication } = toRefs(applicationStore)
 
 const form = ref()
 const formData = ref<Application.IPurchase>({} as Application.IPurchase)

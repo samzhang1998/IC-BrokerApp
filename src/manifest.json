@@ -3,7 +3,7 @@
     "appid" : "__UNI__96C5C77",
     "description" : "ICCRM App",
     "versionName" : "1.0.1",
-    "versionCode" : 111,
+    "versionCode" : 112,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {

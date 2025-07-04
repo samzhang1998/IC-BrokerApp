@@ -62,6 +62,7 @@ const handleCreate = async () => {
   if (!valid) return
   const [e, r] = await api.createApplication(formData)
   if (!e && r) {
+    applicationStore.isViewApplication = false
     applicationStore.applicationInfo = r as unknown as Application.IApplication
     uni.navigateTo({
       url: `/pages/application/overview?id=${r.applicationId}`

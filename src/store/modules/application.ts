@@ -43,6 +43,8 @@ export const useApplicationStore = defineStore(
       }
     }
 
+    const isViewApplication = ref(false)
+
     const reset = () => {
       applicationInfo.value = {} as Application.IApplication
       currentBorrower.value = {} as Application.IBorrowerDetail
@@ -88,7 +90,8 @@ export const useApplicationStore = defineStore(
       currentNewLoan,
       currentMortgageLiability,
       currentOtherIncome,
-      currentOtherLiabilities
+      currentOtherLiabilities,
+      isViewApplication
     }
   },
   {

@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { formatDate } from '@/utils'
 import { StageMap } from '@/pages/application/constants'
+import { useApplicationStore } from '@/store/modules/application'
+
+const applicationStore = useApplicationStore()
+
 interface IProps {
   application: Application.IApplication
 }
@@ -8,6 +12,7 @@ const props = defineProps<IProps>()
 
 const handleClick = () => {
   if (props.application.status === 'DRAFT') {
+    applicationStore.isViewApplication = false
     uni.navigateTo({
       url: `/pages/application/overview?id=${props.application.applicationId}`
     })

@@ -6,14 +6,22 @@
           <check-badge></check-badge>
           <text class="text-28rpx font-bold">{{ title }}</text>
         </view>
-        <wd-picker :columns="actions" v-model="selectedValue" use-default-slot v-if="isPicker" @confirm="handleConfirm">
-          <view class="bg-#ff754c! rounded-full flex-center text-white w-40rpx h-40rpx" @click="showActions">
+        <template v-if="!isViewApplication">
+          <wd-picker
+            :columns="actions"
+            v-model="selectedValue"
+            use-default-slot
+            v-if="isPicker"
+            @confirm="handleConfirm"
+          >
+            <view class="bg-#ff754c! rounded-full flex-center text-white w-40rpx h-40rpx" @click="showActions">
+              <wd-icon name="add1" size="22px"></wd-icon>
+            </view>
+          </wd-picker>
+          <view v-else class="bg-#ff754c! rounded-full flex-center text-white w-40rpx h-40rpx" @click="showActions">
             <wd-icon name="add1" size="22px"></wd-icon>
           </view>
-        </wd-picker>
-        <view v-else class="bg-#ff754c! rounded-full flex-center text-white w-40rpx h-40rpx" @click="showActions">
-          <wd-icon name="add1" size="22px"></wd-icon>
-        </view>
+        </template>
       </view>
       <view class="flex-col mt-3 gap-1 text-24rpx">
         {{ description }}
@@ -31,6 +39,11 @@
 </template>
 
 <script setup lang="ts">
+import { useApplicationStore } from '@/store/modules/application'
+
+const applicationStore = useApplicationStore()
+const { isViewApplication } = toRefs(applicationStore)
+
 interface IProps {
   title: string
   description: string
