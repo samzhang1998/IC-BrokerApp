@@ -29,7 +29,7 @@
         <wd-input type="text" v-model="formData.maidenName" placeholder="Enter mother's maiden name" />
       </FormItem>
       <FormItem label="Has Previous Name" labelBold>
-        <wd-switch v-model="formData.hasPreName" size="medium" />
+        <wd-switch v-model="formData.hasPreName" />
       </FormItem>
       <FormItem label="Previous Name Title" v-if="formData.hasPreName">
         <wd-input type="text" v-model="formData.preNameTitle" placeholder="Enter previous name title" />
@@ -74,10 +74,10 @@
       </FormItem>
       <FormItem label="Household and Living Expenses" labelBold>
         <view class="flex-y-center gap-20rpx">
-          <wd-input
-            type="text"
+          <wd-picker
+            :columns="livingExpenses"
             v-model="formData.livingExpensesId"
-            placeholder="Enter living expenses"
+            placeholder="Select living expenses"
             class="flex-1"
           />
           <view
@@ -96,18 +96,18 @@
             placeholder="Select solicitor"
             class="flex-1"
           />
-          <add-button />
+          <add-button @click="handleCreateSolicitor" />
         </view>
       </FormItem>
       <FormItem label="Accountant">
         <view class="flex-y-center justify-between gap-4">
           <wd-picker
             :columns="AccountantColumns"
-            v-model="formData.solicitorId"
+            v-model="formData.accountantId"
             placeholder="Select accountant"
             class="flex-1"
           />
-          <add-button />
+          <add-button @click="handleCreateAccountant" />
         </view>
       </FormItem>
     </wd-form>
@@ -116,6 +116,7 @@
 
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
+import { api } from '@/api'
 
 const applicationStore = useApplicationStore()
 const { currentBorrower, applicationInfo } = toRefs(applicationStore)
@@ -128,6 +129,8 @@ const maritalStatusColumns = ref(['De Facto', 'Divorced', 'Married', 'Separated'
 const kinRelationColumns = ref(['Child', 'Friend', 'Grandparent', 'Parent', 'Sibling', 'Other Relative'])
 const solicitorColumns = ref([])
 const AccountantColumns = ref([])
+const livingExpenses = ref<{ value: number; label: string }[]>([])
+
 watch(
   currentBorrower,
   (newVal) => {
@@ -157,6 +160,7 @@ const handleSubmit = async () => {
     applicationId: applicationInfo.value?.applicationId,
     type: currentBorrower.value?.applicantType
   })
+  currentBorrower.value = r as unknown as Application.IBorrowerDetail
   if (!e && r) {
     uni.showToast({
       title: 'Update Success',
@@ -170,6 +174,51 @@ const handleCreateHousehold = () => {
     url: `/pages/application/applicants/personal/householdForm?applicationId=${applicationInfo.value?.applicationId}`
   })
 }
+
+const handleCreateSolicitor = () => {
+  uni.navigateTo({
+    url: `/pages/application/applicants/personal/solicitorForm?applicationId=${applicationInfo.value?.applicationId}`
+  })
+}
+
+const handleCreateAccountant = () => {
+  uni.navigateTo({
+    url: `/pages/application/applicants/personal/accountantForm?applicationId=${applicationInfo.value?.applicationId}`
+  })
+}
+
+const getCompanyList = async () => {
+  const [e, r] = await api.getCompanies(applicationInfo.value?.applicationId || '')
+  if (!e && r) {
+    solicitorColumns.value = r
+      .filter((item: any) => item.type === 'Solicitor')
+      .map((item: any) => ({
+        value: item.id,
+        label: item.companyName
+      }))
+    AccountantColumns.value = r
+      .filter((item: any) => item.type === 'Accountant')
+      .map((item: any) => ({
+        value: item.id,
+        label: item.companyName
+      }))
+  }
+}
+
+const getLivingExpenses = async () => {
+  const [e, r] = await api.getLivingExpenses(applicationInfo.value?.applicationId || '')
+  if (!e && r) {
+    livingExpenses.value = (r as unknown as Application.IHousehold[]).map((item) => ({
+      value: item.id,
+      label: item.name
+    }))
+  }
+}
+
+onShow(() => {
+  getCompanyList()
+  getLivingExpenses()
+})
 </script>
 
 <style scoped lang="scss">

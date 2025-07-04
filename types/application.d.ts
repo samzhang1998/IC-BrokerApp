@@ -157,6 +157,7 @@ declare namespace Application {
   }
 
   interface IHousehold {
+    id: number
     applicationId: number
     name: string
     adultsCount: number

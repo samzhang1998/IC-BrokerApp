@@ -56,6 +56,18 @@
       }
     },
     {
+      "path": "pages/application/applicants/personal/solicitorForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/application/applicants/personal/accountantForm",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/application/applicants/personal/contactDetailsForm",
       "style": {
         "navigationStyle": "custom"

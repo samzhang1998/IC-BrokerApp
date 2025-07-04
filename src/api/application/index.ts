@@ -1,4 +1,5 @@
 import http from '@/server/httpGateway'
+import { get } from 'lodash'
 
 export function verifyApplication<T = any>(id: string | number): ApiResponse<T> {
   return http.get({
@@ -103,6 +104,13 @@ export function createHousehold<T = any>(
 ): ApiResponse<T> {
   return http.post({
     method: `api/v1/application/${applicationId}/borrowers/${borrowerId}/livingexpenses`,
+    obj: query || {}
+  })
+}
+
+export function getLivingExpenses<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/livingexpenses`,
     obj: query || {}
   })
 }
@@ -529,6 +537,20 @@ export function putOtherLiabilities<T = any>(
     obj: query || {}
   })
 }
+
+export function getCompanies<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.get({
+    method: `api/v1/application/${applicationId}/companies`,
+    obj: query || {}
+  })
+}
+export function createCompany<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
+  return http.post({
+    method: `api/v1/application/${applicationId}/companies`,
+    obj: query || {}
+  })
+}
+
 export const applicationApi = {
   verifyApplication,
   submitApplication,
@@ -588,5 +610,8 @@ export const applicationApi = {
   putOtherIncome,
   getOtherLiabilities,
   postOtherLiabilities,
-  putOtherLiabilities
+  putOtherLiabilities,
+  getCompanies,
+  createCompany,
+  getLivingExpenses
 }

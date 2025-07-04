@@ -11,12 +11,12 @@
         <wd-input type="number" v-model="formData.dependantsCount" placeholder="Enter number of dependants" />
       </FormItem>
       <view class="text-28rpx font-bold">Living Expenses and Other Commitments</view>
-      <FormItem v-for="item in livingExpensesForm" :key="item" :label="item">
+      <FormItem v-for="item in expensesJson" :key="item.name" :label="item.name">
         <view class="flex-y-center gap-20rpx">
-          <wd-input type="number" v-model="formData.expensesJson" placeholder="$" class="w-2/5" />
+          <wd-input type="number" v-model="item.amount" placeholder="$" class="w-2/5" />
           <wd-picker
             :columns="livingExpensesColumns"
-            v-model="formData.expensesJson"
+            v-model="item.frequency"
             placeholder="Select living expenses"
             class="flex-1"
           />
@@ -29,10 +29,11 @@
 
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
+import { api } from '@/api'
 
 const applicationStore = useApplicationStore()
 
-const applicationInfo = computed(() => applicationStore.applicationInfo)
+const { applicationInfo, currentBorrower } = toRefs(applicationStore)
 
 const formData = ref<Application.IHousehold>({} as Application.IHousehold)
 
@@ -56,8 +57,35 @@ const livingExpensesForm = ref([
   'Other Commitments'
 ])
 
-const handleSubmit = () => {
-  console.log(formData.value)
+const expensesJson = computed<
+  {
+    name: string
+    amount: number
+    frequency: string
+  }[]
+>(() => {
+  return livingExpensesForm.value.map((item) => ({
+    name: item,
+    amount: 0,
+    frequency: ''
+  }))
+})
+
+const handleSubmit = async () => {
+  const [e, r] = await api.createHousehold(
+    applicationInfo.value?.applicationId || '',
+    currentBorrower.value?.id || '',
+    {
+      ...formData.value,
+      expensesJson: JSON.stringify(expensesJson.value)
+    }
+  )
+  if (!e && r) {
+    uni.showToast({
+      title: 'Update Success',
+      icon: 'success'
+    })
+  }
 }
 </script>
 
