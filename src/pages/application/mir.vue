@@ -20,7 +20,14 @@
       <wd-table-col prop="filepath" label="Operations" width="10%">
         <template #value="{ row }">
           <view class="flex justify-center w-full">
-            <wd-icon name="file-paste" size="22px" color="#FF754C" @click="handleDownload(row?.docPath)"></wd-icon>
+            <wd-icon
+              name="file-paste"
+              size="22px"
+              color="#FF754C"
+              @click="handleDownload(row?.docPath)"
+              v-if="row?.docPath"
+            ></wd-icon>
+            <wd-icon name="upload" size="22px" color="#7A858E" @click="handleUpload(row)" v-else></wd-icon>
           </view>
         </template>
       </wd-table-col>
@@ -32,7 +39,14 @@
       <wd-table-col prop="filepath" label="Operations" width="10%">
         <template #value="{ row }">
           <view class="flex justify-center w-full">
-            <wd-icon name="file-paste" size="22px" color="#FF754C" @click="handleDownload(row?.docPath)"></wd-icon>
+            <wd-icon
+              name="file-paste"
+              size="22px"
+              color="#FF754C"
+              @click="handleDownload(row?.docPath)"
+              v-if="row?.docPath"
+            ></wd-icon>
+            <wd-icon name="upload" size="22px" color="#7A858E" @click="handleUpload(row)" v-else></wd-icon>
           </view>
         </template>
       </wd-table-col>

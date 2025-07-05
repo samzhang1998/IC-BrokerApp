@@ -35,7 +35,8 @@ onLoad(() => {
 })
 
 onShow(() => {
-  lang.value = uni.getLocale() === 'en'
+  // lang.value = uni.getLocale() === 'en'
+  lang.value = true
   // getType()
 })
 

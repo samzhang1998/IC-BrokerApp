@@ -39,7 +39,7 @@
         >
           <view class="w-[30rpx] h-[30rpx] rounded-full" :style="{ backgroundColor: timeLine(item) }"></view>
           <view>
-            <view class="title">{{ item?.status || '' }}</view>
+            <view class="info-title">{{ item?.status || '' }}</view>
             <view class="value">{{ item?.timeStamp ? dayjs(item.timeStamp).format('MM/DD/YYYY HH:mm:ss') : '-' }}</view>
           </view>
         </view>
@@ -104,7 +104,7 @@ const handleToIssued = () => {
 </script>
 
 <style lang="scss" scoped>
-.title {
+.info-title {
   color: #384144;
 }
 

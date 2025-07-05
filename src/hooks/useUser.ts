@@ -50,7 +50,11 @@ export function useUser() {
   /**
    * @description 重置token
    */
-  const resetToken = () => {
+  const resetToken = async () => {
+    const [e, r] = await api.deletePushId(userId.value, {})
+    if (!e && r) {
+      console.log(r, 'r')
+    }
     userStoreHook.resetToken()
     uni.reLaunch({
       url: '/pages/login/login'
@@ -61,6 +65,8 @@ export function useUser() {
    * @description 设置推送id
    */
   const setPushId = async (id: string | number) => {
+    console.log('🚀 ~ setPushId ~ id:', id)
+
     //#ifdef APP-PLUS
     const clientInfo = plus.push.getClientInfo()
     console.log('🚀 ~ setPushId ~ clientInfo:', clientInfo)

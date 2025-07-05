@@ -108,6 +108,17 @@ export function getPushId<T = any>(brokerId: string | number, query: AnyObj): Ap
   })
 }
 
+/**
+ * @description 删除推送id
+ * @param query 入参
+ */
+export function deletePushId<T = any>(brokerId: string | number, query: AnyObj): ApiResponse<T> {
+  return http.delete({
+    method: `api/v1/device-tokens/broker/${brokerId}`,
+    obj: query
+  })
+}
+
 export const userApi = {
   userLogin,
   userLogout,
@@ -118,5 +129,6 @@ export const userApi = {
   getQualification,
   updatePassword,
   updatePushId,
-  getPushId
+  getPushId,
+  deletePushId
 }
