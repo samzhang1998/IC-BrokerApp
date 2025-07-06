@@ -99,11 +99,13 @@ const handleSubmit = async () => {
       dataJson: JSON.stringify(dataJson.value)
     }
   )
+  console.log('🚀 ~ handleSubmit ~ e :', e)
   if (!e && r) {
     uni.showToast({
       title: 'Save Success',
       icon: 'success'
     })
+
     const [e, r] = await applicationApi.getCompanyApplicants(applicationInfo.value?.applicationId)
     if (!e && r) {
       applicationStore.currentCompanyApplicant = r.find((item: Application.ICompanyApplicant) => {
@@ -112,6 +114,7 @@ const handleSubmit = async () => {
       Object.assign(formData, applicationStore.currentCompanyApplicant)
       dataJson.value = JSON.parse(applicationStore.currentCompanyApplicant?.dataJson || '{}')
     }
+    uni.navigateBack()
   }
 }
 
@@ -135,7 +138,7 @@ const handleDeleteMailingAddress = (index: number) => {
   dataJson.value.MailingAddress.splice(index, 1)
 }
 
-onLoad(() => {
+onShow(() => {
   Object.assign(formData, applicationStore.currentCompanyApplicant)
   dataJson.value = JSON.parse(applicationStore.currentCompanyApplicant?.dataJson || '{}')
 })

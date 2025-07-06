@@ -56,7 +56,7 @@ defineOptions({
       <view class="flex-y-center justify-between mt-20rpx pr-20rpx border border-#E8EBEE border-solid rounded-16rpx">
         <view class="flex-y-center gap-20rpx pl-10rpx pr-20rpx h-88rpx justify-between">
           <view class="w-12rpx h-68rpx rounded-16rpx" :class="isMIR ? 'bg-#FF754C' : 'bg-#384144'"></view>
-          <view class="text-#384144 text-28rpx">
+          <view class="text-#384144 text-24rpx">
             {{ firstLoan?.amountRequested ? `$${firstLoan?.amountRequested}k` : '' }}
           </view>
           <view class="text-#7A858E text-24rpx">{{ firstLoan?.productName }}</view>

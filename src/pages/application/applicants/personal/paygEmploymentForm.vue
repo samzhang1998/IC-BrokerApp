@@ -150,6 +150,7 @@ const handleSubmit = async () => {
     title: 'Save Success',
     icon: 'success'
   })
+  uni.navigateBack()
 }
 
 onLoad(() => {

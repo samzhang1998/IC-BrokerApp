@@ -18,7 +18,7 @@
           <view class="identity-item-title">{{ item.typeStatus }}</view>
           <view class="text-24rpx text-gray-500">{{ item.statusCode }}</view>
         </view>
-        <wd-icon name="delete-thin" size="22px" @click="handleDeleteEmployment(item)"></wd-icon>
+        <wd-icon name="delete-thin" size="22px" @click.stop.prevent="handleDeleteEmployment(item)"></wd-icon>
       </view>
     </view>
   </BasePage>
@@ -64,6 +64,8 @@ const handleDeleteEmployment = (item: any) => {
   uni.showModal({
     title: 'Warning',
     content: 'Do you want to delete this employment?',
+    confirmText: 'Confirm',
+    cancelText: 'Cancel',
     success: async (res) => {
       if (res.confirm) {
         if (!applicationInfo.value?.applicationId || !currentBorrower.value?.id) {

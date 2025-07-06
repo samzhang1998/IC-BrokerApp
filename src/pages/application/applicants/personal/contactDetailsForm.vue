@@ -218,6 +218,7 @@ const handleSubmit = async () => {
     })
     await applicationStore.fetchBorrowerDetails()
     applicationStore.getCurrentBorrowerById(applicationStore.currentBorrower?.id)
+    uni.navigateBack()
   }
 }
 

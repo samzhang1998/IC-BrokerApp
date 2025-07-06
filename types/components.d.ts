@@ -49,5 +49,6 @@ declare module 'vue' {
     WdTableCol: typeof import('wot-design-uni/components/wd-table-col/wd-table-col.vue')['default']
     WdTabs: typeof import('wot-design-uni/components/wd-tabs/wd-tabs.vue')['default']
     WdTag: typeof import('wot-design-uni/components/wd-tag/wd-tag.vue')['default']
+    WdTextarea: typeof import('wot-design-uni/components/wd-textarea/wd-textarea.vue')['default']
   }
 }

@@ -17,7 +17,7 @@
           <view class="identity-item-title">{{ item.documentType }}</view>
           <view class="text-24rpx text-gray-500">{{ item.documentCategory }}</view>
         </view>
-        <wd-icon name="delete-thin" size="22px" @click="handleDeleteIdentity(item)"></wd-icon>
+        <wd-icon name="delete-thin" size="22px" @click.stop.prevent="handleDeleteIdentity(item)"></wd-icon>
       </view>
     </view>
   </BasePage>
@@ -51,6 +51,8 @@ const handleDeleteIdentity = (item: any) => {
   uni.showModal({
     title: 'Warning',
     content: 'Do you want to delete this identity?',
+    confirmText: 'Confirm',
+    cancelText: 'Cancel',
     success: async (res) => {
       if (res.confirm) {
         if (!applicationInfo.value?.applicationId || !currentBorrower.value?.id) {

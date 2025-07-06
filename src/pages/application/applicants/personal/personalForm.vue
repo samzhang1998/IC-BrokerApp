@@ -239,6 +239,7 @@ const handleSubmit = async () => {
       title: 'Update Success',
       icon: 'success'
     })
+    uni.navigateBack()
   }
 }
 
