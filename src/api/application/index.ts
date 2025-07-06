@@ -1,5 +1,4 @@
 import http from '@/server/httpGateway'
-import { get } from 'lodash'
 
 export function verifyApplication<T = any>(id: string | number): ApiResponse<T> {
   return http.get({
@@ -368,6 +367,17 @@ export function putContributionFunds<T = any>(
     obj: query || {}
   })
 }
+
+export function deleteContributionFunds<T = any>(
+  applicationId: string | number,
+  contributionFundsId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.delete({
+    method: `api/v1/application/${applicationId}/contribution-funds/${contributionFundsId}`,
+    obj: query || {}
+  })
+}
 //#endregion
 
 //#region NewPurchase
@@ -395,6 +405,16 @@ export function putNewPurchase<T = any>(
     obj: query || {}
   })
 }
+
+export function deleteNewPurchase<T = any>(
+  applicationId: string | number,
+  newPurchaseId: string | number
+): ApiResponse<T> {
+  return http.delete({
+    method: `api/v1/application/${applicationId}/new-property/${newPurchaseId}`,
+    obj: {}
+  })
+}
 //#endregion
 
 export function getAllApplicants<T = any>(applicationId: string | number, query?: AnyObj): ApiResponse<T> {
@@ -418,6 +438,13 @@ export function putNewLoan<T = any>(
   return http.putJson({
     method: `api/v1/application/${applicationId}/loan/${loanId}`,
     obj: query || {}
+  })
+}
+
+export function deleteNewLoan<T = any>(applicationId: string | number, loanId: string | number): ApiResponse<T> {
+  return http.delete({
+    method: `api/v1/application/${applicationId}/loan/${loanId}`,
+    obj: {}
   })
 }
 
@@ -503,6 +530,16 @@ export function putOtherIncome<T = any>(
   })
 }
 
+export function deleteOtherIncome<T = any>(
+  applicationId: string | number,
+  otherIncomeId: string | number
+): ApiResponse<T> {
+  return http.delete({
+    method: `api/v1/application/${applicationId}/other-income/${otherIncomeId}`,
+    obj: {}
+  })
+}
+
 export function deleteMortgageLiabilities<T = any>(
   applicationId: string | number,
   assetId: string | number
@@ -533,6 +570,16 @@ export function putOtherLiabilities<T = any>(
   query?: AnyObj
 ): ApiResponse<T> {
   return http.putJson({
+    method: `api/v1/application/${applicationId}/other-liabilities/${otherLiabilitiesId}`,
+    obj: query || {}
+  })
+}
+export function deleteOtherLiabilities<T = any>(
+  applicationId: string | number,
+  otherLiabilitiesId: string | number,
+  query?: AnyObj
+): ApiResponse<T> {
+  return http.delete({
     method: `api/v1/application/${applicationId}/other-liabilities/${otherLiabilitiesId}`,
     obj: query || {}
   })
@@ -613,5 +660,10 @@ export const applicationApi = {
   putOtherLiabilities,
   getCompanies,
   createCompany,
-  getLivingExpenses
+  getLivingExpenses,
+  deleteOtherLiabilities,
+  deleteOtherIncome,
+  deleteNewPurchase,
+  deleteNewLoan,
+  deleteContributionFunds
 }

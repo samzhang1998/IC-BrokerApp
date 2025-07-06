@@ -6,7 +6,26 @@
       :actions="assetColumns"
       @action="handleAction"
     />
-    <AppCard v-for="item in otherIncomeList" :key="item.id" :title="item.type" @click="handleToEdit(item)" />
+    <view class="flex-col gap-2 mt-4">
+      <view
+        class="flex-y-center border-solid border-1 rounded-lg border-color-gray-200 p-4 bg-#FCFCFC gap-1"
+        v-for="item in otherIncomeList"
+        :key="item.id"
+        @click="handleToEdit(item)"
+      >
+        <view class="flex-1 flex-col gap-2">
+          <view class="text-24rpx">
+            {{ item.type }}
+          </view>
+        </view>
+        <wd-icon
+          name="delete-thin"
+          size="22px"
+          @click.stop.prevent="handleDeleteOtherIncome(item)"
+          v-if="!isViewApplication"
+        ></wd-icon>
+      </view>
+    </view>
   </BasePage>
 </template>
 
@@ -14,7 +33,7 @@
 import { useApplicationStore } from '@/store/modules/application'
 
 const applicationStore = useApplicationStore()
-const { applicationInfo, currentOtherIncome } = toRefs(applicationStore)
+const { applicationInfo, currentOtherIncome, isViewApplication } = toRefs(applicationStore)
 const applicationId = ref<string | number>()
 const otherIncomeList = ref<Application.IOtherIncome[]>([])
 const assetColumns = ref([
@@ -94,6 +113,17 @@ const handleAction = async (item: any) => {
         icon: 'none'
       })
     }
+  }
+}
+
+const handleDeleteOtherIncome = async (item: Application.IOtherIncome) => {
+  const [e, r] = await api.deleteOtherIncome(applicationInfo.value?.applicationId || '', item.id)
+  if (!e && r) {
+    uni.showToast({
+      title: 'Delete other income successfully',
+      icon: 'success'
+    })
+    getOtherIncome()
   }
 }
 </script>

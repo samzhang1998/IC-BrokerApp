@@ -6,19 +6,66 @@
       :actions="optionColumns"
       @action="handleAction"
     />
-    <AppCard v-for="item in contributionFundsList" :key="item.id" :title="item.type" @click="handleToEdit(item)" />
-    <AppCard
-      v-for="item in newPurchaseList"
-      :key="item.id"
-      :title="item.primaryUsage + ' - ' + (item.type || 'New Property')"
-      @click="handleToEdit(item)"
-    />
-    <AppCard
-      v-for="item in newLoanList"
-      :key="item.id"
-      :title="item.type + ' - ' + item.productName"
-      @click="handleToEdit(item)"
-    />
+    <view class="flex-col gap-2 mt-4" v-if="requirementsType === 'contributionFunds'">
+      <view
+        class="flex-y-center border-solid border-1 rounded-lg border-color-gray-200 p-4 bg-#FCFCFC gap-1"
+        v-for="item in contributionFundsList"
+        :key="item.id"
+        @click="handleToEdit(item)"
+      >
+        <view class="flex-1 flex-col gap-2">
+          <view class="text-24rpx">
+            {{ item.type }}
+          </view>
+        </view>
+        <wd-icon
+          name="delete-thin"
+          size="22px"
+          @click.stop.prevent="handleDeleteContributionFunds(item)"
+          v-if="!isViewApplication"
+        ></wd-icon>
+      </view>
+    </view>
+    <view class="flex-col gap-2 mt-4" v-if="requirementsType === 'newPurchase'">
+      <view
+        class="flex-y-center border-solid border-1 rounded-lg border-color-gray-200 p-4 bg-#FCFCFC gap-1"
+        v-for="item in newPurchaseList"
+        :key="item.id"
+        @click="handleToEdit(item)"
+      >
+        <view class="flex-1 flex-col gap-2">
+          <view class="text-24rpx">
+            {{ item.primaryUsage + ' - ' + (item.type || 'New Property') }}
+          </view>
+        </view>
+        <wd-icon
+          name="delete-thin"
+          size="22px"
+          @click.stop.prevent="handleDeleteNewPurchase(item)"
+          v-if="!isViewApplication"
+        ></wd-icon>
+      </view>
+    </view>
+    <view class="flex-col gap-2 mt-4" v-if="requirementsType === 'newLoans'">
+      <view
+        class="flex-y-center border-solid border-1 rounded-lg border-color-gray-200 p-4 bg-#FCFCFC gap-1"
+        v-for="item in newLoanList"
+        :key="item.id"
+        @click="handleToEdit(item)"
+      >
+        <view class="flex-1 flex-col gap-2">
+          <view class="text-24rpx">
+            {{ item.type + ' - ' + item.productName }}
+          </view>
+        </view>
+        <wd-icon
+          name="delete-thin"
+          size="22px"
+          @click.stop.prevent="handleDeleteNewLoan(item)"
+          v-if="!isViewApplication"
+        ></wd-icon>
+      </view>
+    </view>
   </BasePage>
 </template>
 
@@ -248,6 +295,39 @@ onShow(() => {
     fetchNewPurchase()
   }
 })
+
+const handleDeleteContributionFunds = async (item: Application.IContributionFunds) => {
+  const [e, r] = await api.deleteContributionFunds(applicationInfo.value?.applicationId || '', item.id)
+  if (!e && r) {
+    uni.showToast({
+      title: 'Delete contribution fund successfully',
+      icon: 'success'
+    })
+    fetchContributionFunds()
+  }
+}
+
+const handleDeleteNewPurchase = async (item: Application.IPurchase) => {
+  const [e, r] = await api.deleteNewPurchase(applicationInfo.value?.applicationId || '', item.id)
+  if (!e && r) {
+    uni.showToast({
+      title: 'Delete new purchase successfully',
+      icon: 'success'
+    })
+    fetchNewPurchase()
+  }
+}
+
+const handleDeleteNewLoan = async (item: Application.INewLoan) => {
+  const [e, r] = await api.deleteNewLoan(applicationInfo.value?.applicationId || '', item.id)
+  if (!e && r) {
+    uni.showToast({
+      title: 'Delete new loan successfully',
+      icon: 'success'
+    })
+    fetchNewLoan()
+  }
+}
 </script>
 
 <style scoped></style>

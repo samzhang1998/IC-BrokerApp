@@ -21,7 +21,12 @@
           <text class="text-20rpx text-gray-500">{{ item.estimatedValue || '-' }}</text>
           <text class="text-20rpx text-gray-500">Secondary Applicant</text>
         </view>
-        <wd-icon name="delete-thin" size="22px" @click.stop.prevent="handleDeleteOtherAsset(item)"></wd-icon>
+        <wd-icon
+          name="delete-thin"
+          size="22px"
+          @click.stop.prevent="handleDeleteOtherAsset(item)"
+          v-if="!isViewApplication"
+        ></wd-icon>
       </view>
     </view>
   </BasePage>
@@ -32,7 +37,7 @@ import { useApplicationStore } from '@/store/modules/application'
 import { applicationApi } from '@/api/application'
 
 const applicationStore = useApplicationStore()
-const { applicationInfo } = toRefs(applicationStore)
+const { applicationInfo, isViewApplication } = toRefs(applicationStore)
 const otherAssets = ref<Application.IOtherAsset[]>([])
 
 const assetColumns = ref([
