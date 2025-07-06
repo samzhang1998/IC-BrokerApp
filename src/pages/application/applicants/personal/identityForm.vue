@@ -2,7 +2,12 @@
   <BasePage :title="currentIdentityItem?.documentType || 'Identity'" hasBack>
     <wd-form :model="formData" ref="formRef" class="flex-col gap-4">
       <FormItem label="Document Type">
-        <wd-picker :columns="documentTypeColumns" v-model="formData.documentType" placeholder="Select document type" />
+        <wd-picker
+          :columns="documentTypeColumns"
+          v-model="formData.documentType"
+          placeholder="Select document type"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Document Category">
         <wd-input
@@ -13,55 +18,90 @@
         />
       </FormItem>
       <FormItem label="Document Number">
-        <wd-input type="text" v-model="formData.documentNumber" placeholder="Enter document number" />
+        <wd-input
+          type="text"
+          v-model="formData.documentNumber"
+          placeholder="Enter document number"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Issue Date">
-        <wd-datetime-picker type="date" v-model="formData.issueDate" placeholder="Select issue date" />
+        <wd-datetime-picker
+          type="date"
+          v-model="formData.issueDate"
+          placeholder="Select issue date"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Name on Document">
-        <wd-input type="text" v-model="dataJson.name" placeholder="Enter name" />
+        <wd-input type="text" v-model="dataJson.name" placeholder="Enter name" :disabled="isViewApplication" />
       </FormItem>
       <FormItem label="Card Number">
-        <wd-input type="text" v-model="dataJson.card" placeholder="Enter card number" />
+        <wd-input type="text" v-model="dataJson.card" placeholder="Enter card number" :disabled="isViewApplication" />
       </FormItem>
       <FormItem label="Issuing Organization">
-        <wd-input type="text" v-model="dataJson.organization" placeholder="Enter issuing organization" />
+        <wd-input
+          type="text"
+          v-model="dataJson.organization"
+          placeholder="Enter issuing organization"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Expire Date">
-        <wd-datetime-picker type="date" v-model="dataJson.expireDate" placeholder="Select expire date" />
+        <wd-datetime-picker
+          type="date"
+          v-model="dataJson.expireDate"
+          placeholder="Select expire date"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Country of Issue">
-        <wd-input type="text" v-model="dataJson.country" placeholder="Enter issuing country" />
+        <wd-input
+          type="text"
+          v-model="dataJson.country"
+          placeholder="Enter issuing country"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Place of Issue">
-        <wd-input type="text" v-model="dataJson.place" placeholder="Enter issuing place" />
+        <wd-input
+          type="text"
+          v-model="dataJson.place"
+          placeholder="Enter issuing place"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Original Sighted">
-        <wd-switch v-model="dataJson.sighted" size="medium" />
+        <wd-switch v-model="dataJson.sighted" size="medium" :disabled="isViewApplication" />
       </FormItem>
       <FormItem label="Name Verified">
-        <wd-switch v-model="dataJson.nameVerified" size="medium" />
+        <wd-switch v-model="dataJson.nameVerified" size="medium" :disabled="isViewApplication" />
       </FormItem>
       <FormItem label="Photograph Verified">
-        <wd-switch v-model="dataJson.photoVerified" size="medium" />
+        <wd-switch v-model="dataJson.photoVerified" size="medium" :disabled="isViewApplication" />
       </FormItem>
       <FormItem label="DOB Verified">
-        <wd-switch v-model="dataJson.dobVerified" size="medium" />
+        <wd-switch v-model="dataJson.dobVerified" size="medium" :disabled="isViewApplication" />
       </FormItem>
       <FormItem label="Residential Address Verified">
-        <wd-switch v-model="dataJson.addressVerified" size="medium" />
+        <wd-switch v-model="dataJson.addressVerified" size="medium" :disabled="isViewApplication" />
       </FormItem>
       <FormItem label="Location Document Verified">
-        <wd-switch v-model="dataJson.locationVerified" size="medium" />
+        <wd-switch v-model="dataJson.locationVerified" size="medium" :disabled="isViewApplication" />
       </FormItem>
       <FormItem label="Signature Verified">
-        <wd-switch v-model="dataJson.signVerified" size="medium" />
+        <wd-switch v-model="dataJson.signVerified" size="medium" :disabled="isViewApplication" />
       </FormItem>
       <FormItem label="Date Document Verified">
-        <wd-datetime-picker type="date" v-model="dataJson.verifyDate" placeholder="Select verify date" />
+        <wd-datetime-picker
+          type="date"
+          v-model="dataJson.verifyDate"
+          placeholder="Select verify date"
+          :disabled="isViewApplication"
+        />
       </FormItem>
     </wd-form>
-    <view class="flex-col gap-1 mt-3 w-full">
+    <view class="flex-col gap-1 mt-3 w-full" v-if="!isViewApplication">
       <wd-button type="primary" block class="bg-#FF754C!" size="large" @click="handleSubmit">Save</wd-button>
     </view>
   </BasePage>
@@ -75,7 +115,7 @@ import { proofOfIdentityItems } from '../../constants'
 const { putIdentity } = applicationApi
 type IIdentity = Application.IBorrowerDetail['identities'][0]
 const applicationStore = useApplicationStore()
-const { applicationInfo, currentIdentityItem } = toRefs(applicationStore)
+const { applicationInfo, currentIdentityItem, isViewApplication } = toRefs(applicationStore)
 const formRef = ref()
 const formData = reactive<IIdentity>({
   documentType: '',

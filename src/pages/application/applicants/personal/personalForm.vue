@@ -4,73 +4,142 @@
       <view class="text-28rpx font-bold">
         {{ currentBorrower?.firstName }} ({{ currentBorrower?.applicantType }})
       </view>
-      <wd-button type="primary" size="small" class="bg-#FF754C!" @click="handleSubmit">Save</wd-button>
+      <wd-button type="primary" size="small" class="bg-#FF754C!" @click="handleSubmit" v-if="!isViewApplication"
+        >Save</wd-button
+      >
     </view>
     <wd-form ref="form" :model="formData" class="flex-col gap-4">
       <FormItem label="Applicant Type" labelBold>
         <wd-input type="text" v-model="formData.applicantType" placeholder="Enter applicant type" disabled />
       </FormItem>
       <FormItem label="Name Title">
-        <wd-picker :columns="nameTitleColumns" v-model="formData.nameTitle" placeholder="Select name title" />
+        <wd-picker
+          :columns="nameTitleColumns"
+          v-model="formData.nameTitle"
+          placeholder="Select name title"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="First Name">
-        <wd-input type="text" v-model="formData.firstName" placeholder="Enter first name" />
+        <wd-input
+          type="text"
+          v-model="formData.firstName"
+          placeholder="Enter first name"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Middle Name">
-        <wd-input type="text" v-model="formData.middleName" placeholder="Enter middle name" />
+        <wd-input
+          type="text"
+          v-model="formData.middleName"
+          placeholder="Enter middle name"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Surname">
-        <wd-input type="text" v-model="formData.lastName" placeholder="Enter surname" />
+        <wd-input type="text" v-model="formData.lastName" placeholder="Enter surname" :disabled="isViewApplication" />
       </FormItem>
       <FormItem label="Known As">
-        <wd-input type="text" v-model="formData.knownAs" placeholder="Enter known as" />
+        <wd-input type="text" v-model="formData.knownAs" placeholder="Enter known as" :disabled="isViewApplication" />
       </FormItem>
       <FormItem label="Mother's Maiden Name ">
-        <wd-input type="text" v-model="formData.maidenName" placeholder="Enter mother's maiden name" />
+        <wd-input
+          type="text"
+          v-model="formData.maidenName"
+          placeholder="Enter mother's maiden name"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Has Previous Name" labelBold>
-        <wd-switch v-model="formData.hasPreName" />
+        <wd-switch v-model="formData.hasPreName" :disabled="isViewApplication" />
       </FormItem>
       <FormItem label="Previous Name Title" v-if="formData.hasPreName">
-        <wd-input type="text" v-model="formData.preNameTitle" placeholder="Enter previous name title" />
+        <wd-input
+          type="text"
+          v-model="formData.preNameTitle"
+          placeholder="Enter previous name title"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Previous First Name" v-if="formData.hasPreName">
-        <wd-input type="text" v-model="formData.preFirstName" placeholder="Enter previous first name" />
+        <wd-input
+          type="text"
+          v-model="formData.preFirstName"
+          placeholder="Enter previous first name"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Previous Middle Name" v-if="formData.hasPreName">
-        <wd-input type="text" v-model="formData.preMiddleName" placeholder="Enter previous middle name" />
+        <wd-input
+          type="text"
+          v-model="formData.preMiddleName"
+          placeholder="Enter previous middle name"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Previous Surname" v-if="formData.hasPreName">
-        <wd-input type="text" v-model="formData.preLastName" placeholder="Enter previous surname" />
+        <wd-input
+          type="text"
+          v-model="formData.preLastName"
+          placeholder="Enter previous surname"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Gender">
-        <wd-picker :columns="genderColumns" v-model="formData.gender" placeholder="Select gender" />
+        <wd-picker
+          :columns="genderColumns"
+          v-model="formData.gender"
+          placeholder="Select gender"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Date of Birth">
-        <wd-datetime-picker v-model="formData.dob" type="date" placeholder="Select date of birth" />
+        <wd-datetime-picker
+          v-model="formData.dob"
+          type="date"
+          placeholder="Select date of birth"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Residency Status" labelBold>
         <wd-picker
           :columns="residencyStatusColumns"
           v-model="formData.residencyStatus"
           placeholder="Select residency status"
+          :disabled="isViewApplication"
         />
       </FormItem>
       <FormItem label="Citizenship">
-        <wd-input type="text" v-model="formData.citizenship" placeholder="Enter citizenship" />
+        <wd-input
+          type="text"
+          v-model="formData.citizenship"
+          placeholder="Enter citizenship"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Marital Status" labelBold>
         <wd-picker
           :columns="maritalStatusColumns"
           v-model="formData.maritalStatus"
           placeholder="Select marital status"
+          :disabled="isViewApplication"
         />
       </FormItem>
       <FormItem label="Next of Kin">
-        <wd-input type="text" v-model="formData.kinId" placeholder="Enter Next of Kin ID" />
+        <wd-input
+          type="text"
+          v-model="formData.kinId"
+          placeholder="Enter Next of Kin ID"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Kin Relationship">
-        <wd-picker :columns="kinRelationColumns" v-model="formData.kinRelation" placeholder="Select kin relation" />
+        <wd-picker
+          :columns="kinRelationColumns"
+          v-model="formData.kinRelation"
+          placeholder="Select kin relation"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Household and Living Expenses" labelBold>
         <view class="flex-y-center gap-20rpx">
@@ -79,10 +148,12 @@
             v-model="formData.livingExpensesId"
             placeholder="Select living expenses"
             class="flex-1"
+            :disabled="isViewApplication"
           />
           <view
             class="bg-#FF754C! rounded-full p-0 flex-center text-white p-1 w-40rpx h-40rpx"
             @click="handleCreateHousehold"
+            v-if="!isViewApplication"
           >
             <wd-icon name="add" size="18px"></wd-icon>
           </view>
@@ -95,8 +166,9 @@
             v-model="formData.solicitorId"
             placeholder="Select solicitor"
             class="flex-1"
+            :disabled="isViewApplication"
           />
-          <add-button @click="handleCreateSolicitor" />
+          <add-button @click="handleCreateSolicitor" v-if="!isViewApplication" />
         </view>
       </FormItem>
       <FormItem label="Accountant">
@@ -106,8 +178,9 @@
             v-model="formData.accountantId"
             placeholder="Select accountant"
             class="flex-1"
+            :disabled="isViewApplication"
           />
-          <add-button @click="handleCreateAccountant" />
+          <add-button @click="handleCreateAccountant" v-if="!isViewApplication" />
         </view>
       </FormItem>
     </wd-form>
@@ -119,7 +192,7 @@ import { useApplicationStore } from '@/store/modules/application'
 import { api } from '@/api'
 
 const applicationStore = useApplicationStore()
-const { currentBorrower, applicationInfo } = toRefs(applicationStore)
+const { currentBorrower, applicationInfo, isViewApplication } = toRefs(applicationStore)
 
 const formData = reactive<Application.IBorrowerDetail>({} as Application.IBorrowerDetail)
 const nameTitleColumns = ref(['Mr', 'Miss', 'Mrs'])

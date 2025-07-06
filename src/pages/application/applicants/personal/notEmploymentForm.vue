@@ -5,16 +5,26 @@
         <wd-input type="text" :modelValue="currentEmploymentItem?.typeStatus" placeholder="Enter status" disabled />
       </FormItem>
       <FormItem label="Reason">
-        <wd-textarea v-model="incomeJson.reason" placeholder="Enter reason" rows="3" />
+        <wd-textarea v-model="incomeJson.reason" placeholder="Enter reason" rows="3" :disabled="isViewApplication" />
       </FormItem>
       <FormItem label="Start Date">
-        <wd-datetime-picker type="date" v-model="incomeJson.startDate" placeholder="Select start date" />
+        <wd-datetime-picker
+          type="date"
+          v-model="incomeJson.startDate"
+          placeholder="Select start date"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="End Date">
-        <wd-datetime-picker type="date" v-model="incomeJson.endDate" placeholder="Select end date" />
+        <wd-datetime-picker
+          type="date"
+          v-model="incomeJson.endDate"
+          placeholder="Select end date"
+          :disabled="isViewApplication"
+        />
       </FormItem>
     </wd-form>
-    <view class="flex-col gap-1 mt-3 w-full">
+    <view class="flex-col gap-1 mt-3 w-full" v-if="!isViewApplication">
       <wd-button type="primary" block class="bg-#FF754C!" size="large" @click="handleSubmit">Save</wd-button>
     </view>
   </BasePage>
@@ -27,7 +37,7 @@ import { applicationApi } from '@/api/application'
 const { putNotEmployment } = applicationApi
 type INotEmploymentDetails = Application.IBorrowerDetail['employmentStatuses'][0]['notEmployedDetails']
 const applicationStore = useApplicationStore()
-const { applicationInfo, currentEmploymentItem } = toRefs(applicationStore)
+const { applicationInfo, currentEmploymentItem, isViewApplication } = toRefs(applicationStore)
 const formRef = ref()
 const formData = reactive<INotEmploymentDetails>({
   endDate: '',

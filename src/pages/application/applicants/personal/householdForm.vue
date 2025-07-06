@@ -2,28 +2,52 @@
   <BasePage :title="applicationInfo?.applicationName || 'Create Application'" hasBack>
     <wd-form ref="form" :model="formData" class="flex-col gap-4">
       <FormItem label="Household Name">
-        <wd-input type="text" v-model="formData.name" placeholder="Enter household name" />
+        <wd-input
+          type="text"
+          v-model="formData.name"
+          placeholder="Enter household name"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Number of Adults">
-        <wd-input type="number" v-model="formData.adultsCount" placeholder="Enter number of adults" />
+        <wd-input
+          type="number"
+          v-model="formData.adultsCount"
+          placeholder="Enter number of adults"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Number of Dependants">
-        <wd-input type="number" v-model="formData.dependantsCount" placeholder="Enter number of dependants" />
+        <wd-input
+          type="number"
+          v-model="formData.dependantsCount"
+          placeholder="Enter number of dependants"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <view class="text-28rpx font-bold">Living Expenses and Other Commitments</view>
       <FormItem v-for="item in expensesJson" :key="item.name" :label="item.name">
         <view class="flex-y-center gap-20rpx">
-          <wd-input type="number" v-model="item.amount" placeholder="$" class="w-2/5" />
+          <wd-input type="number" v-model="item.amount" placeholder="$" class="w-2/5" :disabled="isViewApplication" />
           <wd-picker
             :columns="livingExpensesColumns"
             v-model="item.frequency"
             placeholder="Select living expenses"
             class="flex-1"
+            :disabled="isViewApplication"
           />
         </view>
       </FormItem>
     </wd-form>
-    <wd-button type="primary" block class="bg-#FF754C! mt-3" size="large" @click="handleSubmit">Save</wd-button>
+    <wd-button
+      type="primary"
+      block
+      class="bg-#FF754C! mt-3"
+      size="large"
+      @click="handleSubmit"
+      v-if="!isViewApplication"
+      >Save</wd-button
+    >
   </BasePage>
 </template>
 
@@ -33,7 +57,7 @@ import { api } from '@/api'
 
 const applicationStore = useApplicationStore()
 
-const { applicationInfo, currentBorrower } = toRefs(applicationStore)
+const { applicationInfo, currentBorrower, isViewApplication } = toRefs(applicationStore)
 
 const formData = ref<Application.IHousehold>({} as Application.IHousehold)
 

@@ -2,22 +2,47 @@
   <BasePage :title="applicationInfo?.applicationName || 'Create Application'" hasBack>
     <wd-form ref="form" :model="formData" class="flex-col gap-4">
       <FormItem label="Name Title">
-        <wd-picker :columns="nameTitleColumns" v-model="formData.contactTitle" placeholder="Select name title" />
+        <wd-picker
+          :columns="nameTitleColumns"
+          v-model="formData.contactTitle"
+          placeholder="Select name title"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="First Name">
-        <wd-input type="text" v-model="formData.contactFirstName" placeholder="Enter first name" />
+        <wd-input
+          type="text"
+          v-model="formData.contactFirstName"
+          placeholder="Enter first name"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Surname">
-        <wd-input type="text" v-model="formData.contactLastName" placeholder="Enter surname" />
+        <wd-input
+          type="text"
+          v-model="formData.contactLastName"
+          placeholder="Enter surname"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Company Name">
-        <wd-input type="text" v-model="formData.companyName" placeholder="Enter company name" />
+        <wd-input
+          type="text"
+          v-model="formData.companyName"
+          placeholder="Enter company name"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="ABN">
-        <wd-input type="text" v-model="formData.abn" placeholder="Enter ABN" />
+        <wd-input type="text" v-model="formData.abn" placeholder="Enter ABN" :disabled="isViewApplication" />
       </FormItem>
       <FormItem label="Office Phone">
-        <wd-input type="text" v-model="formData.officePhone" placeholder="Enter office phone" />
+        <wd-input
+          type="text"
+          v-model="formData.officePhone"
+          placeholder="Enter office phone"
+          :disabled="isViewApplication"
+        />
       </FormItem>
       <FormItem label="Email">
         <wd-input
@@ -25,6 +50,7 @@
           v-model="formData.email"
           placeholder="Enter email"
           prop="email"
+          :disabled="isViewApplication"
           :rules="[
             {
               required: true,
@@ -34,7 +60,7 @@
           ]"
         />
       </FormItem>
-      <view class="flex-col gap-1 mt-3 w-full">
+      <view class="flex-col gap-1 mt-3 w-full" v-if="!isViewApplication">
         <wd-button type="primary" block class="bg-#FF754C!" size="large" @click="handleSubmit">Save</wd-button>
       </view>
     </wd-form>
@@ -47,7 +73,7 @@ import { api } from '@/api'
 
 const applicationStore = useApplicationStore()
 
-const { applicationInfo } = storeToRefs(applicationStore)
+const { applicationInfo, isViewApplication } = storeToRefs(applicationStore)
 
 const nameTitleColumns = ref([
   { value: 'Mr', label: 'Mr' },
