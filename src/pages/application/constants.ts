@@ -130,6 +130,7 @@ export const borrowerSummaryItems = ref<Application.IItem[]>([
     title: 'Proof of Identity',
     name: 'proofOfIdentity',
     checked: false,
+    isCollapse: true,
     children: [
       {
         title: 'Australian Driver Licence',
