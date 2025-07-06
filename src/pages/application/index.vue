@@ -46,8 +46,14 @@ const documents = ref([
 ])
 const documentValue = ref<string>('')
 const inputValue = ref<string>('')
+const isLoading = ref(false)
+const hasMore = ref(true)
+const isRefreshing = ref(false)
 
-const fetchApplicationList = async () => {
+const fetchApplicationList = async (isLoadMore = false) => {
+  if (isLoading.value || (!isLoadMore && !hasMore.value)) return
+
+  isLoading.value = true
   let params = JSON.parse(JSON.stringify(searchParams.value))
   if (documentValue.value) {
     params.documentType = documentValue.value
@@ -62,14 +68,26 @@ const fetchApplicationList = async () => {
   const [e, res] = await api.getApplicationList(params)
   if (!e && res) {
     console.log(res)
-    applicationList.value = res.content
+    if (isLoadMore) {
+      // 加载更多时追加数据
+      applicationList.value = [...applicationList.value, ...res.content]
+    } else {
+      // 首次加载或刷新时替换数据
+      applicationList.value = res.content
+    }
+    // 检查是否还有更多数据
+    hasMore.value = res.content.length === params.limit
   }
+  isLoading.value = false
+  isRefreshing.value = false
 }
 
 const handleActive = (index: number) => {
   tabActive.value = index
   searchParams.value.status = index === 0 ? 'DRAFT' : 'ACTIVE'
-  fetchApplicationList()
+  searchParams.value.offset = 0
+  hasMore.value = true
+  fetchApplicationList(false)
 }
 
 const handleToCreate = () => {
@@ -87,7 +105,8 @@ const handleSearch = (value: string) => {
   console.log('🚀 ~ handleSearch ~ value:', value)
   inputValue.value = value
   searchParams.value.offset = 0
-  fetchApplicationList()
+  hasMore.value = true
+  fetchApplicationList(false)
 }
 
 const handleFilter = () => {
@@ -97,8 +116,9 @@ const handleFilter = () => {
 
 const handleToFilter = () => {
   searchParams.value.offset = 0
+  hasMore.value = true
   show.value = false
-  fetchApplicationList()
+  fetchApplicationList(false)
 }
 
 const handleToReset = () => {
@@ -106,13 +126,35 @@ const handleToReset = () => {
   dateValue.value = []
   inputValue.value = ''
   searchParams.value.offset = 0
+  hasMore.value = true
   show.value = false
-  fetchApplicationList()
+  fetchApplicationList(false)
+}
+
+const upper = (e: any) => {
+  console.log(e)
+}
+const lower = (e: any) => {
+  if (hasMore.value && !isLoading.value) {
+    searchParams.value.offset += 1
+    fetchApplicationList(true)
+  }
+}
+const scroll = (e: any) => {
+  // console.log(e)
+}
+
+// 下拉刷新处理
+const onRefresh = () => {
+  isRefreshing.value = true
+  searchParams.value.offset = 0
+  hasMore.value = true
+  fetchApplicationList(false)
 }
 </script>
 
 <template>
-  <view class="home">
+  <view class="home flex-col overflow-hidden h-screen">
     <NavBar v-bind="navBar">
       <template #content>
         <view class="bar-title act">Application</view>
@@ -120,7 +162,7 @@ const handleToReset = () => {
       <template #right> </template>
     </NavBar>
 
-    <view class="content">
+    <view class="content flex-1 flex-col overflow-hidden">
       <Search @search="handleSearch">
         <template #right>
           <view class="icon">
@@ -144,12 +186,31 @@ const handleToReset = () => {
           Add New Application
         </view>
       </view>
-
-      <view class="p-4 flex-col gap-20rpx">
-        <view v-for="item in applicationList" :key="item.applicationId">
-          <ApplicationItem :application="item"></ApplicationItem>
+      <scroll-view
+        :scroll-top="0"
+        scroll-y="true"
+        class="scroll-container"
+        refresher-enabled="true"
+        :refresher-triggered="isRefreshing"
+        @scrolltoupper="upper"
+        @scrolltolower="lower"
+        @scroll="scroll"
+        @refresherrefresh="onRefresh"
+      >
+        <view class="p-4 flex-col gap-20rpx">
+          <view v-for="item in applicationList" :key="item.applicationId">
+            <ApplicationItem :application="item"></ApplicationItem>
+          </view>
+          <!-- 加载更多指示器 -->
+          <view v-if="isLoading" class="flex justify-center items-center py-4">
+            <text class="text-gray-500">加载中...</text>
+          </view>
+          <!-- 没有更多数据提示 -->
+          <view v-if="!hasMore && applicationList.length > 0" class="flex justify-center items-center py-4">
+            <text class="text-gray-500">没有更多数据了</text>
+          </view>
         </view>
-      </view>
+      </scroll-view>
     </view>
 
     <wd-action-sheet v-model="show" title="Filter">
@@ -174,7 +235,20 @@ const handleToReset = () => {
 </template>
 
 <style lang="scss" scoped>
+.home {
+  height: 100vh;
+  overflow: hidden;
+}
+
 .content {
+  height: calc(100vh - 88rpx - 120rpx); /* 减去NavBar和TabBar的高度 */
+  overflow: hidden;
+
+  .scroll-container {
+    height: calc(100% - 68rpx - 28rpx); /* 减去tab-wrapper的高度和margin */
+    overflow-y: auto;
+  }
+
   .tab-wrapper {
     height: 68rpx;
     border-bottom: 1px solid #e8ebee;
