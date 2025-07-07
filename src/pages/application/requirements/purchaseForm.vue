@@ -139,7 +139,6 @@ onLoad((options) => {
   }
   if (currentNewPurchase.value) {
     Object.assign(formData.value, currentNewPurchase.value)
-    console.log(currentNewPurchase.value)
     if (!formData.value.percentJson) {
       formData.value.percentJson = { owner: [{ id: '', percentage: 0 }] }
     }

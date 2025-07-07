@@ -17,10 +17,15 @@
         <wd-switch v-model="formData.isTaxable" />
       </FormItem>
       <FormItem label="Start Date" labelBold>
-        <wd-datetime-picker type="date" v-model="formData.startDate" placeholder="Select Start Date" />
+        <wd-datetime-picker
+          type="date"
+          v-model="formData.startDate"
+          placeholder="Select Start Date"
+          :minDate="MIN_DATE"
+        />
       </FormItem>
       <FormItem label="End Date" labelBold>
-        <wd-datetime-picker type="date" v-model="formData.endDate" placeholder="Select End Date" />
+        <wd-datetime-picker type="date" v-model="formData.endDate" placeholder="Select End Date" :minDate="MIN_DATE" />
       </FormItem>
       <FormItem label="Previous Year Amount" labelBold>
         <view class="flex items-center gap-2">
@@ -72,6 +77,7 @@
 import { useApplicationStore } from '@/store/modules/application'
 import { cloneDeep } from 'lodash'
 import dayjs from 'dayjs'
+import { MIN_DATE } from '../../constants'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo, currentOtherIncome, isViewApplication } = toRefs(applicationStore)

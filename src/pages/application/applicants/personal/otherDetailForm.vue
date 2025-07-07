@@ -10,6 +10,7 @@
           v-model="formData.signedDate"
           placeholder="Select signed date"
           :disabled="isViewApplication"
+          :minDate="MIN_DATE"
         />
       </FormItem>
     </wd-form>
@@ -22,6 +23,7 @@
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
 import { applicationApi } from '@/api/application'
+import { MIN_DATE } from '../../constants'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo, isViewApplication } = toRefs(applicationStore)
@@ -53,7 +55,7 @@ const handleSubmit = async () => {
   }
 }
 
-onLoad(() => {
+onShow(() => {
   Object.assign(formData, applicationStore.currentBorrower)
 })
 </script>

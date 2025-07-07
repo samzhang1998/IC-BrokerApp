@@ -65,6 +65,7 @@
           v-model="formData.startDate"
           placeholder="Select start date"
           :disabled="isViewApplication"
+          :minDate="MIN_DATE"
         />
       </FormItem>
       <FormItem label="End Date">
@@ -73,6 +74,7 @@
           v-model="formData.endDate"
           placeholder="Select end date"
           :disabled="isViewApplication"
+          :minDate="MIN_DATE"
         />
       </FormItem>
       <FormItem v-for="item in incomeJson" :key="item.name" :label="item.name">
@@ -97,6 +99,7 @@
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
 import { applicationApi } from '@/api/application'
+import { MIN_DATE } from '../../constants'
 const { putPaygEmployment } = applicationApi
 type IPaygDetails = Application.IBorrowerDetail['employmentStatuses'][0]['paygDetails']
 const applicationStore = useApplicationStore()
@@ -153,7 +156,8 @@ const handleSubmit = async () => {
   uni.navigateBack()
 }
 
-onLoad(() => {
+onShow(() => {
+  if (!currentEmploymentItem.value) return
   Object.assign(formData, currentEmploymentItem.value?.paygDetails)
 })
 </script>

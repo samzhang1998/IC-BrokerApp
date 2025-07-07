@@ -7,10 +7,10 @@
         :key="index"
       >
         <FormItem label="Start Date">
-          <wd-datetime-picker type="date" v-model="item.start" placeholder="Select start date" />
+          <wd-datetime-picker type="date" v-model="item.start" placeholder="Select start date" :minDate="MIN_DATE" />
         </FormItem>
         <FormItem label="End Date">
-          <wd-datetime-picker type="date" v-model="item.end" placeholder="Select end date" />
+          <wd-datetime-picker type="date" v-model="item.end" placeholder="Select end date" :minDate="MIN_DATE" />
         </FormItem>
         <FormItem label="Salary">
           <wd-input type="text" v-model="item.salary" placeholder="Enter salary" />
@@ -30,13 +30,14 @@
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
 import { applicationApi } from '@/api/application'
+import { MIN_DATE } from '../../constants'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo } = toRefs(applicationStore)
 const formRef = ref()
 const formData = reactive<Application.ITrustApplicant>({} as Application.ITrustApplicant)
 
-const incomeJson = ref({
+const incomeJson = ref<Application.ITrustApplicant['incomeJson']>({
   income: [
     {
       end: '',
@@ -169,7 +170,7 @@ const handleSubmit = async () => {
     applicationStore.currentTrustApplicant?.id,
     {
       ...formData,
-      incomeJson: JSON.stringify(incomeJson.value)
+      incomeJson: incomeJson.value
     }
   )
   if (!e && r) {
@@ -183,15 +184,18 @@ const handleSubmit = async () => {
         return String(item.id) === String(applicationStore.currentTrustApplicant?.id)
       })
       Object.assign(formData, applicationStore.currentTrustApplicant)
-      incomeJson.value = JSON.parse(applicationStore.currentTrustApplicant?.incomeJson || '{}')
+      incomeJson.value = applicationStore.currentTrustApplicant
+        ?.incomeJson as unknown as Application.ITrustApplicant['incomeJson']
     }
   }
 }
 
-onLoad(() => {
+onShow(() => {
+  if (!applicationStore.currentTrustApplicant) return
   Object.assign(formData, applicationStore.currentTrustApplicant)
   if (applicationStore.currentTrustApplicant?.incomeJson) {
-    incomeJson.value = JSON.parse(applicationStore.currentTrustApplicant?.incomeJson)
+    incomeJson.value = applicationStore.currentTrustApplicant
+      ?.incomeJson as unknown as Application.ITrustApplicant['incomeJson']
   }
 })
 </script>

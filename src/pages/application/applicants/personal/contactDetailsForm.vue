@@ -53,6 +53,7 @@
           v-model="formData.address.current_address.start_date"
           placeholder="Select start date"
           :disabled="isViewApplication"
+          :minDate="MIN_DATE"
         />
       </FormItem>
       <FormItem label="Housing Status">
@@ -107,6 +108,7 @@
               v-model="item.start_date"
               placeholder="Select start date"
               :disabled="isViewApplication"
+              :minDate="MIN_DATE"
             />
           </FormItem>
           <FormItem label="End Date">
@@ -115,6 +117,7 @@
               v-model="item.end_date"
               placeholder="Select end date"
               :disabled="isViewApplication"
+              :minDate="MIN_DATE"
             />
           </FormItem>
           <FormItem label="Housing Status">
@@ -163,6 +166,7 @@
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
 import { applicationApi } from '@/api/application'
+import { MIN_DATE } from '../../constants'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo, currentBorrower, isViewApplication } = toRefs(applicationStore)
@@ -248,37 +252,65 @@ const handleDeletePreviewsAddress = (index: number) => {
   formData.address.previous_addresses.splice(index, 1)
 }
 
-watch(
-  currentBorrower,
-  (newVal) => {
-    if (!newVal) return
-    Object.assign(formData, {
-      ...newVal,
-      email: newVal.email === null ? [{ address: '', type: '', email_address: '', email_type: '' }] : newVal.email,
-      address:
-        newVal.address === null
-          ? {
-              current_address: {
-                residential_address: '',
-                start_date: '',
-                housing_status: '',
-                mailing_address: ''
-              },
-              previous_addresses: [{ residential_address: '', start_date: '', end_date: '', housing_status: '' }],
-              post_settlement_address: {
-                residential_address: '',
-                housing_status: '',
-                mailing_address: ''
-              }
+// watch(
+//   currentBorrower,
+//   (newVal) => {
+//     if (!newVal) return
+//     Object.assign(formData, {
+//       ...newVal,
+//       email: newVal.email === null ? [{ address: '', type: '', email_address: '', email_type: '' }] : newVal.email,
+//       address:
+//         newVal.address === null
+//           ? {
+//               current_address: {
+//                 residential_address: '',
+//                 start_date: '',
+//                 housing_status: '',
+//                 mailing_address: ''
+//               },
+//               previous_addresses: [{ residential_address: '', start_date: '', end_date: '', housing_status: '' }],
+//               post_settlement_address: {
+//                 residential_address: '',
+//                 housing_status: '',
+//                 mailing_address: ''
+//               }
+//             }
+//           : newVal.address
+//     })
+//   },
+//   {
+//     deep: true,
+//     immediate: true
+//   }
+// )
+
+onShow(() => {
+  if (!currentBorrower.value) return
+  Object.assign(formData, {
+    ...currentBorrower.value,
+    email:
+      currentBorrower.value.email === null
+        ? [{ address: '', type: '', email_address: '', email_type: '' }]
+        : currentBorrower.value.email,
+    address:
+      currentBorrower.value.address === null
+        ? {
+            current_address: {
+              residential_address: '',
+              start_date: '',
+              housing_status: '',
+              mailing_address: ''
+            },
+            previous_addresses: [{ residential_address: '', start_date: '', end_date: '', housing_status: '' }],
+            post_settlement_address: {
+              residential_address: '',
+              housing_status: '',
+              mailing_address: ''
             }
-          : newVal.address
-    })
-  },
-  {
-    deep: true,
-    immediate: true
-  }
-)
+          }
+        : currentBorrower.value.address
+  })
+})
 </script>
 
 <style scoped></style>

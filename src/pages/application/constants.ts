@@ -1,3 +1,5 @@
+export const MIN_DATE = -1577952000000
+
 export const currentSituationItems = ref<Application.IItem[]>([
   {
     title: 'Borrower and Guarantor',

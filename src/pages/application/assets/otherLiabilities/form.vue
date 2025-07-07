@@ -184,7 +184,6 @@ const handleDeleteOwner = (index: number) => {
 
 const handleSubmit = async () => {
   let data = cloneDeep(formData.value)
-  console.log(data)
 
   const [e, r] = await api.putOtherLiabilities(
     applicationInfo.value?.applicationId as unknown as string,

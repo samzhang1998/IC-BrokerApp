@@ -47,7 +47,7 @@
         <wd-picker :columns="genderColumns" v-model="formData.gender" placeholder="Select gender" />
       </FormItem>
       <FormItem label="Date of Birth">
-        <wd-datetime-picker v-model="formData.dob" type="date" placeholder="Select date of birth" />
+        <wd-datetime-picker v-model="formData.dob" type="date" placeholder="Select date of birth" :minDate="MIN_DATE" />
       </FormItem>
       <FormItem label="Residency Status" labelBold>
         <wd-picker
@@ -94,6 +94,7 @@
 
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
+import { MIN_DATE } from '../constants'
 
 const applicationStore = useApplicationStore()
 const { currentBorrower, applicationInfo } = toRefs(applicationStore)

@@ -173,7 +173,7 @@ declare namespace Application {
     dataJson: string
     dateRegistered: string
     id: number
-    incomeJson: string
+    incomeJson: any
     numberOfDirectors: number
     officePhone: string
     registeredAddress: string
@@ -196,7 +196,7 @@ declare namespace Application {
     numberOfBeneficiaries: number
     officePhone: string
     dataJson: string
-    incomeJson: string
+    incomeJson: any
     tradingAddress: string
     registeredAddress: string
   }

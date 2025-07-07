@@ -17,7 +17,12 @@
         <wd-input type="text" v-model="dataJson.abn" placeholder="Enter ABN" />
       </FormItem>
       <FormItem label="Establishment Date">
-        <wd-datetime-picker type="date" v-model="formData.establishmentDate" placeholder="Enter establishment date" />
+        <wd-datetime-picker
+          type="date"
+          v-model="formData.establishmentDate"
+          placeholder="Enter establishment date"
+          :minDate="MIN_DATE"
+        />
       </FormItem>
       <FormItem label="Country Established">
         <wd-picker
@@ -43,6 +48,7 @@
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
 import { applicationApi } from '@/api/application'
+import { MIN_DATE } from '../../constants'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo } = toRefs(applicationStore)
@@ -81,6 +87,12 @@ const handleSubmit = async () => {
     })
   }
 }
+
+onShow(() => {
+  if (!applicationStore.currentTrustApplicant) return
+  Object.assign(formData, applicationStore.currentTrustApplicant)
+  dataJson.value = JSON.parse(applicationStore.currentTrustApplicant?.dataJson || '{}')
+})
 </script>
 
 <style scoped></style>

@@ -15,7 +15,12 @@
       </FormItem>
 
       <FormItem label="Date Registered" name="dateRegistered">
-        <wd-datetime-picker v-model="formData.dateRegistered" type="date" placeholder="Select date registered" />
+        <wd-datetime-picker
+          v-model="formData.dateRegistered"
+          type="date"
+          placeholder="Select date registered"
+          :minDate="MIN_DATE"
+        />
       </FormItem>
       <FormItem label="Registered in Country" name="registeredInCountry">
         <wd-input v-model="formData.registeredCountry" placeholder="Enter registered in country" disabled />
@@ -58,6 +63,7 @@
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
 import { applicationApi } from '@/api/application'
+import { MIN_DATE } from '../../constants'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo, currentCompanyApplicant } = toRefs(applicationStore)

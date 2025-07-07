@@ -31,6 +31,7 @@
           v-model="formData.issueDate"
           placeholder="Select issue date"
           :disabled="isViewApplication"
+          :minDate="MIN_DATE"
         />
       </FormItem>
       <FormItem label="Name on Document">
@@ -53,6 +54,7 @@
           v-model="dataJson.expireDate"
           placeholder="Select expire date"
           :disabled="isViewApplication"
+          :minDate="MIN_DATE"
         />
       </FormItem>
       <FormItem label="Country of Issue">
@@ -98,6 +100,7 @@
           v-model="dataJson.verifyDate"
           placeholder="Select verify date"
           :disabled="isViewApplication"
+          :minDate="MIN_DATE"
         />
       </FormItem>
     </wd-form>
@@ -110,7 +113,7 @@
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
 import { applicationApi } from '@/api/application'
-import { proofOfIdentityItems } from '../../constants'
+import { proofOfIdentityItems, MIN_DATE } from '../../constants'
 
 const { putIdentity } = applicationApi
 type IIdentity = Application.IBorrowerDetail['identities'][0]
@@ -150,7 +153,7 @@ const handleSubmit = async () => {
   if (!applicationInfo.value?.applicationId || !currentIdentityItem.value?.id) return
   const postData = {
     ...formData,
-    dataJson: JSON.stringify(dataJson.value)
+    dataJson: dataJson.value
   }
   const [e, r] = await putIdentity(
     applicationInfo.value.applicationId,
@@ -167,8 +170,9 @@ const handleSubmit = async () => {
   uni.navigateBack()
 }
 
-onLoad(() => {
+onShow(() => {
   Object.assign(formData, currentIdentityItem.value)
+  dataJson.value = JSON.parse(currentIdentityItem.value?.dataJson || '{}')
 })
 </script>
 

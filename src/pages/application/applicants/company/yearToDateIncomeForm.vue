@@ -7,10 +7,10 @@
         :key="index"
       >
         <FormItem label="Start Date">
-          <wd-datetime-picker type="date" v-model="item.start" placeholder="Select start date" />
+          <wd-datetime-picker type="date" v-model="item.start" placeholder="Select start date" :minDate="MIN_DATE" />
         </FormItem>
         <FormItem label="End Date">
-          <wd-datetime-picker type="date" v-model="item.end" placeholder="Select end date" />
+          <wd-datetime-picker type="date" v-model="item.end" placeholder="Select end date" :minDate="MIN_DATE" />
         </FormItem>
         <FormItem label="Salary">
           <wd-input type="text" v-model="item.salary" placeholder="Enter salary" />
@@ -30,13 +30,14 @@
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
 import { applicationApi } from '@/api/application'
+import { MIN_DATE } from '../../constants'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo } = toRefs(applicationStore)
 const formRef = ref()
 const formData = reactive<Application.ICompanyApplicant>({} as Application.ICompanyApplicant)
 
-const incomeJson = ref({
+const incomeJson = ref<Application.ICompanyApplicant['incomeJson']>({
   income: [
     {
       end: '',
@@ -188,7 +189,8 @@ const handleSubmit = async () => {
   }
 }
 
-onLoad(() => {
+onShow(() => {
+  if (!applicationStore.currentCompanyApplicant) return
   Object.assign(formData, applicationStore.currentCompanyApplicant)
   if (applicationStore.currentCompanyApplicant?.incomeJson) {
     incomeJson.value = JSON.parse(applicationStore.currentCompanyApplicant?.incomeJson)

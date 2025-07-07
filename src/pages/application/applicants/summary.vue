@@ -2,34 +2,40 @@
   <BasePage :title="applicationInfo?.applicationName || 'Create Application'" hasBack>
     <BorrowerHead @createBorrower="handleCreateBorrower" :type="borrowerType" />
     <view>
-      <AppCard
-        v-for="borrower in borrowerDetails"
-        :key="borrower.id"
-        :title="`${borrower.firstName ?? 'New Applicant'} (${borrower.applicantType})`"
-        :data="getBorrowerSummaryItems(borrower)"
-        @item-click="(name, item) => handlePersonalItemClick(name, item, borrower)"
-        @header-click="handlePersonalHeaderClick(borrower)"
-        @collapse-click="(item) => handleCollapseClick(item, borrower)"
-      >
-      </AppCard>
-      <AppCard
-        v-for="borrower in companyApplicants"
-        :key="borrower.id"
-        :title="`${borrower.companyName ?? 'New Applicant'} (${borrower.type})`"
-        v-model:data="companyApplicantSummaryItems"
-        @item-click="(name, item) => handleCompanyItemClick(name, item, borrower)"
-        @header-click="handleCompanyHeaderClick(borrower)"
-      >
-      </AppCard>
-      <AppCard
-        v-for="borrower in trustApplicants"
-        :key="borrower.id"
-        :title="`${borrower.trustName ?? 'New Applicant'}`"
-        v-model:data="trustApplicantSummaryItems"
-        @item-click="(name, item) => handleTrustItemClick(name, item, borrower)"
-        @header-click="handleTrustHeaderClick(borrower)"
-      >
-      </AppCard>
+      <template v-if="borrowerType === 'personalApplicants'">
+        <AppCard
+          v-for="borrower in borrowerDetails"
+          :key="borrower.id"
+          :title="`${borrower.firstName ?? 'New Applicant'} (${borrower.applicantType})`"
+          :data="getBorrowerSummaryItems(borrower)"
+          @item-click="(name, item) => handlePersonalItemClick(name, item, borrower)"
+          @header-click="handlePersonalHeaderClick(borrower)"
+          @collapse-click="(item) => handleCollapseClick(item, borrower)"
+        >
+        </AppCard>
+      </template>
+      <template v-if="borrowerType === 'companyApplicants'">
+        <AppCard
+          v-for="borrower in companyApplicants"
+          :key="borrower.id"
+          :title="`${borrower.companyName ?? 'New Applicant'} (${borrower.type})`"
+          v-model:data="companyApplicantSummaryItems"
+          @item-click="(name, item) => handleCompanyItemClick(name, item, borrower)"
+          @header-click="handleCompanyHeaderClick(borrower)"
+        >
+        </AppCard>
+      </template>
+      <template v-if="borrowerType === 'trustApplicants'">
+        <AppCard
+          v-for="borrower in trustApplicants"
+          :key="borrower.id"
+          :title="`${borrower.trustName ?? 'New Applicant'}`"
+          v-model:data="trustApplicantSummaryItems"
+          @item-click="(name, item) => handleTrustItemClick(name, item, borrower)"
+          @header-click="handleTrustHeaderClick(borrower)"
+        >
+        </AppCard>
+      </template>
     </view>
   </BasePage>
 </template>
@@ -102,6 +108,7 @@ const handleCompanyHeaderClick = (borrower: Application.ICompanyApplicant) => {
 }
 
 const handleTrustHeaderClick = (borrower: Application.ITrustApplicant) => {
+  console.log('🚀 ~ handleTrustHeaderClick ~ borrower:', borrower)
   applicationStore.currentTrustApplicant = borrower
   uni.navigateTo({
     url: `/pages/application/applicants/trust/trustForm`

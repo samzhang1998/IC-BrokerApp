@@ -99,6 +99,7 @@
           type="date"
           placeholder="Select date of birth"
           :disabled="isViewApplication"
+          :minDate="MIN_DATE"
         />
       </FormItem>
       <FormItem label="Residency Status" labelBold>
@@ -190,6 +191,7 @@
 <script setup lang="ts">
 import { useApplicationStore } from '@/store/modules/application'
 import { api } from '@/api'
+import { MIN_DATE } from '../../constants'
 
 const applicationStore = useApplicationStore()
 const { currentBorrower, applicationInfo, isViewApplication } = toRefs(applicationStore)

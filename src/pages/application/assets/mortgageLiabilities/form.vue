@@ -151,8 +151,8 @@ const handleSubmit = async () => {
     currentMortgageLiability.value?.id || '',
     {
       ...formData,
-      dataJson: JSON.stringify(dataJson.value),
-      percentJson: JSON.stringify(percentJson.value)
+      dataJson: dataJson.value,
+      percentJson: percentJson.value
     }
   )
   if (!e && r) {
@@ -186,12 +186,10 @@ watch(
     if (newVal) {
       Object.assign(formData, newVal)
       if (newVal.dataJson) {
-        dataJson.value = JSON.parse(newVal.dataJson as unknown as string) as Application.IMortgageLiability['dataJson']
+        dataJson.value = newVal.dataJson as unknown as Application.IMortgageLiability['dataJson']
       }
       if (newVal.percentJson) {
-        percentJson.value = JSON.parse(
-          newVal.percentJson as unknown as string
-        ) as Application.IMortgageLiability['percentJson']
+        percentJson.value = newVal.percentJson as unknown as Application.IMortgageLiability['percentJson']
       }
     }
   },

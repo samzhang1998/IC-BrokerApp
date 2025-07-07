@@ -109,7 +109,8 @@ const handleDeleteMailingAddress = (index: number) => {
   dataJson.value.MailingAddress.splice(index, 1)
 }
 
-onLoad(() => {
+onShow(() => {
+  if (!applicationStore.currentTrustApplicant) return
   Object.assign(formData, applicationStore.currentTrustApplicant)
   dataJson.value = JSON.parse(applicationStore.currentTrustApplicant?.dataJson || '{}')
 })

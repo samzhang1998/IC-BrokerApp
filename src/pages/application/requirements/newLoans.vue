@@ -8,7 +8,12 @@
         <wd-input type="text" v-model="formData.productName" :placeholder="formData.productName" disabled />
       </FormItem>
       <FormItem label="Estimate Settlement Date" labelBold>
-        <wd-datetime-picker type="date" v-model="formData.settlementDate" placeholder="Select settlement date" />
+        <wd-datetime-picker
+          type="date"
+          v-model="formData.settlementDate"
+          placeholder="Select settlement date"
+          :minDate="MIN_DATE"
+        />
       </FormItem>
       <FormItem label="Amount Requested" labelBold>
         <view class="flex items-center gap-2">
@@ -152,6 +157,7 @@
 import { useApplicationStore } from '@/store/modules/application'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash'
+import { MIN_DATE } from '../constants'
 
 const applicationStore = useApplicationStore()
 const { applicationInfo, currentNewLoan, isViewApplication } = toRefs(applicationStore)
@@ -181,7 +187,6 @@ onLoad((options) => {
   }
   if (currentNewLoan.value) {
     Object.assign(formData.value, currentNewLoan.value)
-    console.log(currentNewLoan.value)
     if (formData.value.settlementDate) {
       formData.value.settlementDate = dayjs(formData.value.settlementDate).valueOf()
     }
@@ -216,8 +221,6 @@ const getProperties = async () => {
         label: item.primaryUsage + '-' + (item.dataJson?.address || 'No address provided')
       }
     })
-
-    console.log(newPurchaseList.value)
   }
 }
 
